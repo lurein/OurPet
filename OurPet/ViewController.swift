@@ -26,19 +26,23 @@ class ViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         pets = Pets()
+        
     }
 
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         pets.loadData {
-            self.tableView.reloadData()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) { // change 2 to desired number of seconds
+                self.tableView.reloadData()
+            }
         }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         signIn()
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -123,6 +127,7 @@ extension ViewController: FUIAuthDelegate {
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // change zero below to appropriate datasource.count
+        print(pets.petArray.count)
         return pets.petArray.count
     }
     

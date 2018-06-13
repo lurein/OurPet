@@ -16,6 +16,7 @@
 		9509FFBF209419FE00B7A094 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9509FFBE209419FE00B7A094 /* DetailViewController.swift */; };
 		9509FFC12095506400B7A094 /* Pet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9509FFC02095506400B7A094 /* Pet.swift */; };
 		9509FFC3209556A000B7A094 /* Pets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9509FFC2209556A000B7A094 /* Pets.swift */; };
+		95B72CE720CED1AC00B9AC71 /* OPUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B72CE620CED1AB00B9AC71 /* OPUser.swift */; };
 		F0E10FEDA435962057303965 /* Pods_OurPet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73477B6A72B31D71A31F9E3C /* Pods_OurPet.framework */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +34,7 @@
 		9509FFBE209419FE00B7A094 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		9509FFC02095506400B7A094 /* Pet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pet.swift; sourceTree = "<group>"; };
 		9509FFC2209556A000B7A094 /* Pets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pets.swift; sourceTree = "<group>"; };
+		95B72CE620CED1AB00B9AC71 /* OPUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OPUser.swift; path = /Users/enokajayamanne/Desktop/OurPet/OurPet/OPUser.swift; sourceTree = "<absolute>"; };
 		E2208159BC9C8392D1F2FB6F /* Pods-OurPet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OurPet.release.xcconfig"; path = "Pods/Target Support Files/Pods-OurPet/Pods-OurPet.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -81,6 +83,7 @@
 				9509FFAC2092D3C500B7A094 /* ViewController.swift */,
 				9509FFAE2092D3C500B7A094 /* Main.storyboard */,
 				9509FFBE209419FE00B7A094 /* DetailViewController.swift */,
+				95B72CE620CED1AB00B9AC71 /* OPUser.swift */,
 				9509FFC02095506400B7A094 /* Pet.swift */,
 				9509FFC2209556A000B7A094 /* Pets.swift */,
 				9509FFB12092D3C800B7A094 /* Assets.xcassets */,
@@ -281,6 +284,7 @@
 				9509FFBF209419FE00B7A094 /* DetailViewController.swift in Sources */,
 				9509FFC12095506400B7A094 /* Pet.swift in Sources */,
 				9509FFAD2092D3C500B7A094 /* ViewController.swift in Sources */,
+				95B72CE720CED1AC00B9AC71 /* OPUser.swift in Sources */,
 				9509FFC3209556A000B7A094 /* Pets.swift in Sources */,
 				9509FFAB2092D3C500B7A094 /* AppDelegate.swift in Sources */,
 			);
