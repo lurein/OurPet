@@ -51,6 +51,7 @@ class Pets {
                             print(petDescription!)
                             let pet = Pet(dictionary: petDescription!)
                             print(pet)
+                            pet.documentID = document2!.documentID
                             self.petArray.append(pet)
                             print(self.petArray)
                         }

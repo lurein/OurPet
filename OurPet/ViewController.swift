@@ -33,7 +33,7 @@ class ViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         pets.loadData {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) { // change 2 to desired number of seconds
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5) { // change 5 to desired number of seconds
                 self.tableView.reloadData()
             }
         }
