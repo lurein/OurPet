@@ -13,6 +13,7 @@ class Pets {
     var petArray: [Pet] = []
     var db: Firestore!
     var userPetsArray2 : [String] = []
+    var OPuser = OPUser()
     
     init() {
         db = Firestore.firestore()
@@ -41,6 +42,8 @@ class Pets {
             if let document = document, document.exists {
                 let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
                 print("Document data: \(dataDescription)")
+                let OPuser2 = OPUser(dictionary: document.data()!)
+                self.OPuser = OPuser2
                 var userPetsArray = document.get("userPets")
                 self.userPetsArray2 = userPetsArray as! [String]
                 for userPet in self.userPetsArray2 {

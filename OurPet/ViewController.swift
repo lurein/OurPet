@@ -51,6 +51,11 @@ class ViewController: UIViewController {
             let selectedIndex = tableView.indexPathForSelectedRow!
             destination.pet = pets.petArray[selectedIndex.row]
         }
+        if segue.identifier == "MyProfile" {
+            let nav = segue.destination as! UINavigationController
+            let destination = nav.topViewController as! UserProfileViewController
+            destination.OPuser = pets.OPuser
+        }
     }
     
     func signIn() {

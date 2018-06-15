@@ -19,9 +19,6 @@ class OPUser  {
         return ["fullName": fullName, "userName": userName, "userPets": userPets]
     }
     
-    //    var dictionary2: [String: [String]] {
-    //        return ["coCarers": coCarers, "userPets": userPets]
-    //    }
     
     init(fullName: String, userName: String,
          userPets: [String], postingUserID: String) {
