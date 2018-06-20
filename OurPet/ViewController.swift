@@ -27,15 +27,23 @@ class ViewController: UIViewController {
         tableView.dataSource = self
         pets = Pets()
         
+
+        
+        var bgimage = UIImage(named: "moon_purple.jpg") as! UIImage
+        self.navigationController!.navigationBar.setBackgroundImage(bgimage,
+                                                                    for: .default)
     }
 
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        if Auth.auth().currentUser?.uid != nil {
         pets.loadData {
             DispatchQueue.main.asyncAfter(deadline: .now() + 5) { // change 5 to desired number of seconds
                 self.tableView.reloadData()
             }
+            
+        }
         }
     }
     
@@ -123,6 +131,16 @@ extension ViewController: FUIAuthDelegate {
     
     func authUI(_ authUI: FUIAuth, didSignInWith user: User?, error: Error?) {
         if let user = user {
+            let db = Firestore.firestore()
+            let userDocRef = db.collection("opusers").document((authUI.auth?.currentUser?.uid)!)
+            userDocRef.getDocument { (document, error) in
+                if let document = document {
+                    if document.exists{
+                    } else {
+                        db.collection("opusers").document((authUI.auth?.currentUser?.uid)!).setData(["fullName" : "", "userName" : "", "userPets" : [""] ])
+                    }
+                }
+            }
             tableView.isHidden = false
             print("^^^ We signed in with the user \(user.email ?? "unknown e-mail")")
         }

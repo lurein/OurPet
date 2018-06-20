@@ -60,6 +60,7 @@ class Pets {
                         }
                     }
                 }
+              
 
             } else {
                 print("Document does not exist")

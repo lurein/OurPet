@@ -18,15 +18,17 @@ class Pet  {
     var eveningFedStatus: String
     var eveningFedBy: String
     var documentID: String
+    var carers: [String]
+    var userPets : [String] = [""]
     
     
     var dictionary: [String: Any] {
         return ["petName": petName, "walkedToday": walkedToday, "morningFedStatus": morningFedStatus,
-                "morningFedBy": morningFedBy, "eveningFedStatus": eveningFedStatus, "eveningFedBy": eveningFedBy,  "postingUserID": postingUserID]
+                "morningFedBy": morningFedBy, "eveningFedStatus": eveningFedStatus, "eveningFedBy": eveningFedBy,  "postingUserID": postingUserID, "carers": carers]
     }
     
     init(petName: String, walkedToday: String,
-         morningFedStatus: String, morningFedBy: String, eveningFedStatus: String, postingUserID: String, eveningFedBy: String, documentID: String) {
+         morningFedStatus: String, morningFedBy: String, eveningFedStatus: String, postingUserID: String, eveningFedBy: String, documentID: String, carers: [String]) {
         self.petName = petName
         self.walkedToday = walkedToday
         self.morningFedStatus = morningFedStatus
@@ -35,10 +37,11 @@ class Pet  {
         self.postingUserID = postingUserID
         self.eveningFedBy = eveningFedBy
         self.documentID = documentID
+        self.carers = carers
     }
     
     convenience init() {
-        self.init(petName: "", walkedToday: "", morningFedStatus: "", morningFedBy: "", eveningFedStatus: "", postingUserID: "", eveningFedBy: "", documentID: "")
+        self.init(petName: "", walkedToday: "", morningFedStatus: "", morningFedBy: "", eveningFedStatus: "", postingUserID: "", eveningFedBy: "", documentID: "", carers: [(Auth.auth().currentUser?.uid)!])
     }
     
     convenience init(dictionary: [String: Any]) {
@@ -49,7 +52,8 @@ class Pet  {
         let eveningFedStatus = dictionary["eveningFedStatus"] as! String? ?? ""
         let eveningFedBy = dictionary["eveningFedBy"] as! String? ?? ""
         let postingUserID = dictionary["postingUserID"] as! String? ?? ""
-        self.init(petName: petName, walkedToday: walkedToday, morningFedStatus: morningFedStatus, morningFedBy: morningFedBy, eveningFedStatus: eveningFedStatus, postingUserID: postingUserID, eveningFedBy: eveningFedBy, documentID: "")
+        let carers = dictionary["carers"] as! [String]? ?? [(Auth.auth().currentUser?.uid)!]
+        self.init(petName: petName, walkedToday: walkedToday, morningFedStatus: morningFedStatus, morningFedBy: morningFedBy, eveningFedStatus: eveningFedStatus, postingUserID: postingUserID, eveningFedBy: eveningFedBy, documentID: "", carers: carers)
     }
     
     func saveData(completed: @escaping (Bool) -> ()) {
@@ -65,7 +69,7 @@ class Pet  {
         // if we HAVE saved a record, we'll have a documentID
         if self.documentID != "" {
             let ref = db.collection("pets").document(self.documentID)
-            ref.setData(dataToSave) { (error) in
+            ref.updateData(dataToSave) { (error) in
                 if let error = error {
                     print("*** ERROR: updating document \(self.documentID) \(error.localizedDescription)")
                     completed(false)
@@ -84,6 +88,15 @@ class Pet  {
                 } else {
                     print("^^^ new document created with ref ID \(ref?.documentID ?? "unknown")")
                     self.documentID = ref!.documentID
+                    let userDocRef = db.collection("opusers").document((Auth.auth().currentUser?.uid)!)
+                    userDocRef.getDocument { (document, error) in
+                        if let document = document, document.exists {
+                            self.userPets = document.get("userPets") as! [String]
+                            
+                            self.userPets.append(self.documentID)
+                            userDocRef.updateData(["userPets" : self.userPets])
+                        }
+                    }
                     completed(true)
                 }
             }

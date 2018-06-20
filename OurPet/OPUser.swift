@@ -35,7 +35,7 @@ class OPUser  {
     convenience init(dictionary: [String: Any]) {
         let fullName = dictionary["fullName"] as! String? ?? ""
         let userName = dictionary["userName"] as! String? ?? ""
-        let userPets = dictionary["morningFedBy"] as! [String]? ?? [""]
+        let userPets = dictionary["userPets"] as! [String]? ?? [""]
         
         self.init(fullName: fullName, userName: userName, userPets: userPets, postingUserID: "")
     }

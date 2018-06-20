@@ -19,6 +19,10 @@ class DetailViewController: UIViewController {
     
     @IBOutlet weak var saveButtonPressed: UIBarButtonItem!
     
+    @IBOutlet weak var morningLabel: UILabel!
+    
+    @IBOutlet weak var eveningLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if pet == nil {
@@ -29,7 +33,25 @@ class DetailViewController: UIViewController {
         } else {
             updateUserInterface()
         }
+        morningLabel.backgroundColor = UIColor(patternImage: UIImage(named: "moon_purple.jpg")!)
+        eveningLabel.backgroundColor = UIColor(patternImage: UIImage(named: "moon_purple.jpg")!)
         
+        var bgimage = UIImage(named: "moon_purple.jpg") as! UIImage
+        self.navigationController!.navigationBar.setBackgroundImage(bgimage,
+                                                                    for: .default)
+        morningFedByField.layer.cornerRadius = 8.0
+        morningFedByField.layer.masksToBounds = true
+        var lilac = UIColor(red:0.67, green:0.22, blue:0.96, alpha:1.0)
+        morningFedByField.layer.borderColor = lilac.cgColor
+        morningFedByField.layer.borderWidth = 1.0
+        eveningFedByField.layer.cornerRadius = 8.0
+        eveningFedByField.layer.masksToBounds = true
+        eveningFedByField.layer.borderColor = lilac.cgColor
+        eveningFedByField.layer.borderWidth = 1.0
+        petNameField.layer.cornerRadius = 8.0
+        petNameField.layer.masksToBounds = true
+        petNameField.layer.borderColor = lilac.cgColor
+        petNameField.layer.borderWidth = 1.0
     }
     
     func updateUserInterface() {
@@ -51,7 +73,16 @@ class DetailViewController: UIViewController {
     }
     
     @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
+        walkedTodaySegment.resignFirstResponder()
         leaveViewController()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ManageCarers" {
+            let nav = segue.destination as! UINavigationController
+            let destination = nav.topViewController as! ManageCarers
+            destination.pet = self.pet
+        }
     }
     
     @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
