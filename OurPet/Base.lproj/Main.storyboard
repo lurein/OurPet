@@ -135,7 +135,7 @@
                                     <action selector="usernameEditingDone:" destination="zgN-XQ-Dw5" eventType="editingChanged" id="wtK-YJ-gv8"/>
                                 </connections>
                             </textField>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ldR-IT-2xk">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ldR-IT-2xk">
                                 <rect key="frame" x="67" y="120" width="240" height="226"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -198,9 +198,13 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="doggo2" translatesAutoresizingMaskIntoConstraints="NO" id="5fS-i7-NFb">
+                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="doggo2" translatesAutoresizingMaskIntoConstraints="NO" id="5fS-i7-NFb">
                                 <rect key="frame" x="150" y="163" width="199" height="194"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="Eok-mI-KgQ" appends="YES" id="gxl-Fk-u5L"/>
+                                </connections>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Walked Today?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mYB-rk-kJH">
                                 <rect key="frame" x="16" y="182" width="126" height="73"/>
@@ -330,6 +334,7 @@
                         <outlet property="eveningFedByField" destination="Hgt-j4-It4" id="56M-Cq-h3O"/>
                         <outlet property="eveningFedSegment" destination="3lr-Xf-K7q" id="sHg-35-Bg1"/>
                         <outlet property="eveningLabel" destination="RT6-pV-xrL" id="yqQ-yL-mQ1"/>
+                        <outlet property="imageView" destination="5fS-i7-NFb" id="KlE-0k-hVs"/>
                         <outlet property="morningFedByField" destination="XOO-D4-52y" id="YiA-Hn-OAs"/>
                         <outlet property="morningFedSegment" destination="F9Z-hj-2aI" id="YDC-95-neb"/>
                         <outlet property="morningLabel" destination="q8q-Qe-FS8" id="jSY-TU-etJ"/>
@@ -339,6 +344,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iJ0-id-4ha" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="Eok-mI-KgQ">
+                    <connections>
+                        <action selector="imageViewTapped:" destination="6YG-vm-2j1" id="tSF-E8-EQr"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="2525.5999999999999" y="114.53201970443351"/>
         </scene>

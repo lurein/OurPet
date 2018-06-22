@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import Firebase
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBOutlet weak var petNameField: UITextField!
     @IBOutlet weak var walkedTodaySegment: UISegmentedControl!
     @IBOutlet weak var morningFedSegment: UISegmentedControl!
@@ -16,8 +17,10 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var eveningFedSegment: UISegmentedControl!
     @IBOutlet weak var eveningFedByField: UITextField!
     var pet: Pet!
-    
+    var imagePicker = UIImagePickerController()
     @IBOutlet weak var saveButtonPressed: UIBarButtonItem!
+    
+    @IBOutlet weak var imageView: UIImageView!
     
     @IBOutlet weak var morningLabel: UILabel!
     
@@ -73,7 +76,6 @@ class DetailViewController: UIViewController {
     }
     
     @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
-        walkedTodaySegment.resignFirstResponder()
         leaveViewController()
     }
     
@@ -85,7 +87,47 @@ class DetailViewController: UIViewController {
         }
     }
     
+    @IBAction func imageViewTapped(_ sender: UITapGestureRecognizer) {
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        let selectedImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+        imageView.image = selectedImage
+        dismiss(animated: true, completion: nil)
+        uploadImagePic(img1: imageView.image!)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func uploadImagePic(img1 :UIImage){
+        var data = NSData()
+        data = UIImageJPEGRepresentation(img1, 0.8)! as NSData
+        // set upload path
+        let filePath = "pets/\(pet.documentID)" // path where you wanted to store img in storage
+        let metaData = StorageMetadata()
+        metaData.contentType = "image/jpg"
+        
+        let storageRef = Storage.storage().reference()
+        storageRef.child(filePath).putData(data as Data, metadata: metaData){(metaData,error) in
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            }else{
+                //store downloadURL
+                let downloadURL = metaData!.downloadURL()!.absoluteString
+                print("Uploaded image")
+            }
+        }
+        
+    }
+    
     @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
+        let sv = UIViewController.displaySpinner(onView: self.view)
         pet.petName = petNameField.text!
         pet.walkedToday = String(walkedTodaySegment.selectedSegmentIndex)
         pet.morningFedStatus = String(morningFedSegment.selectedSegmentIndex)
@@ -94,11 +136,40 @@ class DetailViewController: UIViewController {
         pet.eveningFedBy = eveningFedByField.text!
         pet.saveData { success in
             if success {
-                self.leaveViewController()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // Time delay to allow upload to process
+                    UIViewController.removeSpinner(spinner: sv)
+                    self.leaveViewController()
+                }
+               
             } else {
                 print("*** ERROR: Couldn't leave this view controller because data wasn’t saved.")
             }
         }
     }
     
+}
+
+// This extension is for the Activity Indicatior
+
+extension UIViewController {
+    class func displaySpinner(onView : UIView) -> UIView {
+        let spinnerView = UIView.init(frame: onView.bounds)
+        spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+        let ai = UIActivityIndicatorView.init(activityIndicatorStyle: .whiteLarge)
+        ai.startAnimating()
+        ai.center = spinnerView.center
+        
+        DispatchQueue.main.async {
+            spinnerView.addSubview(ai)
+            onView.addSubview(spinnerView)
+        }
+        
+        return spinnerView
+    }
+    
+    class func removeSpinner(spinner :UIView) {
+        DispatchQueue.main.async {
+            spinner.removeFromSuperview()
+        }
+    }
 }

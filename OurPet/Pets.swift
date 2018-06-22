@@ -14,9 +14,11 @@ class Pets {
     var db: Firestore!
     var userPetsArray2 : [String] = []
     var OPuser = OPUser()
+   
     
     init() {
         db = Firestore.firestore()
+   
     }
     
     func loadData(completed: @escaping () -> ()) {
@@ -60,13 +62,13 @@ class Pets {
                         }
                     }
                 }
-              
+                
 
             } else {
                 print("Document does not exist")
             }
-
         }
+        
         completed()
 
     }

@@ -39,11 +39,38 @@ class ViewController: UIViewController {
         super.viewWillAppear(animated)
         if Auth.auth().currentUser?.uid != nil {
         pets.loadData {
+            let sv = UIViewController.displaySpinner(onView: self.view)
+            self.tableView.reloadData()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 5 to desired number of seconds
+                self.tableView.reloadData()
+                if self.pets.petArray.count != 0 {
+                UIViewController.removeSpinner(spinner: sv)
+                }
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) { // change 5 to desired number of seconds
+                self.tableView.reloadData()
+                if self.pets.petArray.count != 0 {
+                    UIViewController.removeSpinner(spinner: sv)
+                }
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) { // change 5 to desired number of seconds
+                self.tableView.reloadData()
+                if self.pets.petArray.count != 0 {
+                    UIViewController.removeSpinner(spinner: sv)
+                }
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 4) { // change 5 to desired number of seconds
+                self.tableView.reloadData()
+                if self.pets.petArray.count != 0 {
+                    UIViewController.removeSpinner(spinner: sv)
+                }
+            }
             DispatchQueue.main.asyncAfter(deadline: .now() + 5) { // change 5 to desired number of seconds
                 self.tableView.reloadData()
+                UIViewController.removeSpinner(spinner: sv)
             }
-            
         }
+
         }
     }
     
@@ -57,7 +84,9 @@ class ViewController: UIViewController {
         if segue.identifier == "ShowDetail" {
             let destination = segue.destination as! DetailViewController
             let selectedIndex = tableView.indexPathForSelectedRow!
-            destination.pet = pets.petArray[selectedIndex.row]
+            if pets.petArray.count != 0 {
+                destination.pet = pets.petArray[selectedIndex.row]
+            }
         }
         if segue.identifier == "MyProfile" {
             let nav = segue.destination as! UINavigationController
@@ -65,6 +94,7 @@ class ViewController: UIViewController {
             destination.OPuser = pets.OPuser
         }
     }
+    
     
     func signIn() {
         let providers: [FUIAuthProvider] = [
@@ -156,10 +186,14 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell" , for: indexPath)
-        let pet = pets.petArray[indexPath.row]
-        cell.textLabel?.text = "\(pet.petName)"
-        if(Int(pet.walkedToday) == 0){cell.detailTextLabel?.text = "Not Walked Today"}
-        else{cell.detailTextLabel?.text = "Walked Today"}
+        if pets.petArray.count != 0 {
+            let pet = pets.petArray[indexPath.row]
+            cell.textLabel?.text = "\(pet.petName)"
+            if(Int(pet.walkedToday) == 0){cell.detailTextLabel?.text = "Not Walked Today"}
+            else{cell.detailTextLabel?.text = "Walked Today"}
+        }
         return cell
     }
 }
+
+
