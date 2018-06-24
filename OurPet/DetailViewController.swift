@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import SDWebImage
 
 class DetailViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBOutlet weak var petNameField: UITextField!
@@ -55,9 +56,16 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         petNameField.layer.masksToBounds = true
         petNameField.layer.borderColor = lilac.cgColor
         petNameField.layer.borderWidth = 1.0
+        
+        let anyAvatarImage = imageView.image
+        imageView.maskCircle(anyImage: anyAvatarImage!)
+        imageView.layer.borderWidth = 1.0
+        imageView.layer.borderColor = lilac.cgColor
+        
     }
     
     func updateUserInterface() {
+        downloadPetImage()
         petNameField.text = pet.petName
         walkedTodaySegment.selectedSegmentIndex = Int(pet.walkedToday)!
         morningFedSegment.selectedSegmentIndex = Int(pet.morningFedStatus)!
@@ -88,6 +96,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     @IBAction func imageViewTapped(_ sender: UITapGestureRecognizer) {
+        print("tapped")
         imagePicker.sourceType = .photoLibrary
         imagePicker.delegate = self
         present(imagePicker, animated: true, completion: nil)
@@ -97,11 +106,36 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         let selectedImage = info[UIImagePickerControllerOriginalImage] as! UIImage
         imageView.image = selectedImage
         dismiss(animated: true, completion: nil)
+        if let compressedImage = imageView.image?.lowerJpegQuality(.lowest) {
+            print("image compressed")
+            uploadImagePic(img1: imageView.image!)
+        } else{
         uploadImagePic(img1: imageView.image!)
+        }
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    func downloadPetImage(){
+        let ispinner = UIViewController.imageSpinner(onView: self.imageView)
+        let storageRef = Storage.storage().reference()
+        let reference = storageRef.child("pets/\(pet.documentID)")
+        let imageView: UIImageView = self.imageView
+        let placeholderImage = UIImage(named: "Avatar_Dog-512.jpg")
+        reference.downloadURL { url, error in
+            if let error = error {
+                // Handle any errors
+                print("error getting download URL")
+                UIViewController.removeSpinner(spinner: ispinner)
+            } else {
+                // Get the download URL
+                imageView.sd_setImage(with: url, placeholderImage: placeholderImage)
+                UIViewController.removeSpinner(spinner: ispinner)
+            }
+        }
+        
     }
     
     func uploadImagePic(img1 :UIImage){
@@ -171,5 +205,44 @@ extension UIViewController {
         DispatchQueue.main.async {
             spinner.removeFromSuperview()
         }
+    }
+}
+
+extension UIViewController {
+    class func imageSpinner(onView : UIImageView) -> UIView {
+        let spinnerView = UIImageView.init(frame: onView.bounds)
+        spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+        let ai = UIActivityIndicatorView.init(activityIndicatorStyle: .whiteLarge)
+        ai.startAnimating()
+        ai.center = spinnerView.center
+        
+        DispatchQueue.main.async {
+            spinnerView.addSubview(ai)
+            onView.addSubview(spinnerView)
+        }
+        
+        return spinnerView
+    }
+    
+
+}
+
+
+
+// This reduces the quality of uploaded file
+extension UIImage {
+    enum JPEGQuality: CGFloat {
+        case lowest  = 0
+        case low     = 0.25
+        case medium  = 0.5
+        case high    = 0.75
+        case highest = 1
+    }
+    
+    /// Returns the data for the specified image in JPEG format.
+    /// If the image object’s underlying image data has been purged, calling this function forces that data to be reloaded into memory.
+    /// - returns: A data object containing the JPEG data, or nil if there was a problem generating the data. This function may return nil if the image has no data or if the underlying CGImageRef contains data in an unsupported bitmap format.
+    func lowerJpegQuality(_ quality: JPEGQuality) -> Data? {
+        return UIImageJPEGRepresentation(self, quality.rawValue)
     }
 }

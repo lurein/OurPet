@@ -10,6 +10,9 @@ import UIKit
 import Firebase
 import FirebaseAuthUI
 import FirebaseGoogleAuthUI
+import AlertOnboarding
+
+
 
 class ViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
@@ -17,7 +20,18 @@ class ViewController: UIViewController {
     
     var authUI: FUIAuth!
     var pets: Pets!
+   
+    // Setting up the onboarding alert
+    var arrayOfImage = ["dog_avatar2", "Avatar_Dog-512", "friend_avatar"]
+    var arrayOfTitle = ["WELCOME TO OURPET", "SET-UP YOUR PETS", "ADD CO-CARERS"]
+    var arrayOfDescription = ["Welcome to OurPet, the simplest way for a group of people to effectively care for their pets. Invite your friends and family to get the group pet care started!",
+                              "Press the '+' button on the OurPet home screen to set-up your pet, then use the simple one-tap logging to let the other carers know everytime you feed or walk your pet! ",
+                              "Tap 'Manage Carers' on your Pet's details to add family, friends, and everyone else that helps take care of your pet and create your Carer Groups."]
     
+ 
+    
+    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +41,7 @@ class ViewController: UIViewController {
         tableView.dataSource = self
         pets = Pets()
         
-
+   
         
         var bgimage = UIImage(named: "moon_purple.jpg") as! UIImage
         self.navigationController!.navigationBar.setBackgroundImage(bgimage,
@@ -37,6 +51,12 @@ class ViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        var alertView = AlertOnboarding(arrayOfImage: arrayOfImage, arrayOfTitle: arrayOfTitle, arrayOfDescription: arrayOfDescription)
+        //Modify size of alertview (Purcentage of screen height and width)
+        alertView.percentageRatioHeight = 0.6
+        alertView.percentageRatioWidth = 0.7
+        alertView.titleGotItButton = "GOT IT!"
+        
         if Auth.auth().currentUser?.uid != nil {
         pets.loadData {
             let sv = UIViewController.displaySpinner(onView: self.view)
@@ -68,6 +88,7 @@ class ViewController: UIViewController {
             DispatchQueue.main.asyncAfter(deadline: .now() + 5) { // change 5 to desired number of seconds
                 self.tableView.reloadData()
                 UIViewController.removeSpinner(spinner: sv)
+                alertView.show()
             }
         }
 

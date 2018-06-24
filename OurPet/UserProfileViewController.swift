@@ -10,13 +10,14 @@ import UIKit
 import Firebase
 import QuartzCore
 
-class UserProfileViewController: UIViewController {
+class UserProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var saveBarButton: UIBarButtonItem!
     @IBOutlet weak var usernameUnavailableMessage: UILabel!
     var OPuser : OPUser!
-    
+    @IBOutlet weak var imageView: UIImageView!
+    var imagePicker = UIImagePickerController()
     override func viewDidLoad() {
         super.viewDidLoad()
         if OPuser == nil {
@@ -39,6 +40,12 @@ class UserProfileViewController: UIViewController {
         var bgimage = UIImage(named: "moon_purple.jpg") as! UIImage
         self.navigationController!.navigationBar.setBackgroundImage(bgimage,
                                                                     for: .default)
+        
+        let anyAvatarImage = imageView.image
+        imageView.maskCircle(anyImage: anyAvatarImage!)
+        imageView.layer.borderWidth = 1.0
+        imageView.layer.borderColor = lilac.cgColor
+        
         }
     
    
@@ -95,11 +102,96 @@ class UserProfileViewController: UIViewController {
         }
     }
     
+    @IBAction func imageTapped(_ sender: UITapGestureRecognizer) {
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+        present(imagePicker, animated: true, completion: nil)
+    }
     
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        let selectedImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+        imageView.image = selectedImage
+        dismiss(animated: true, completion: nil)
+        if let compressedImage = imageView.image?.lowerJpegQuality(.lowest) {
+            print("image compressed")
+            uploadImagePic(img1: imageView.image!)
+        } else{
+            uploadImagePic(img1: imageView.image!)
+        }
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
 
+ 
+    
+    func downloadUserImage(){
+        let ispinner = UIViewController.imageSpinner(onView: self.imageView)
+        let storageRef = Storage.storage().reference()
+        let reference = storageRef.child("opusers/\((Auth.auth().currentUser?.uid)!)")
+        let imageView: UIImageView = self.imageView
+        let placeholderImage = UIImage(named: "PhotoAvatar.jpg")
+        reference.downloadURL { url, error in
+            if let error = error {
+                // Handle any errors
+                print("error getting download URL")
+                UIViewController.removeSpinner(spinner: ispinner)
+            } else {
+                // Get the download URL
+                imageView.sd_setImage(with: url, placeholderImage: placeholderImage)
+                UIViewController.removeSpinner(spinner: ispinner)
+            }
+        }
+        
+    }
+    
+    
+    func uploadImagePic(img1 :UIImage){
+        var data = NSData()
+        data = UIImageJPEGRepresentation(img1, 0.8)! as NSData
+        // set upload path
+        let filePath = "opusers/\((Auth.auth().currentUser?.uid)!)" // path where you wanted to store img in storage
+        let metaData = StorageMetadata()
+        metaData.contentType = "image/jpg"
+        
+        let storageRef = Storage.storage().reference()
+        storageRef.child(filePath).putData(data as Data, metadata: metaData){(metaData,error) in
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            }else{
+                //store downloadURL
+                let downloadURL = metaData!.downloadURL()!.absoluteString
+                print("Uploaded image")
+            }
+        }
+        
+    }
+    
+    
+    
     
     func updateUserInterface(){
+        downloadUserImage()
         nameField.text = OPuser.fullName
         usernameField.text = OPuser.userName
     }
 }
+
+extension UIImageView {
+    public func maskCircle(anyImage: UIImage) {
+        self.contentMode = UIViewContentMode.scaleAspectFill
+        self.layer.cornerRadius = self.frame.height / 2
+        self.layer.masksToBounds = false
+        self.clipsToBounds = true
+        
+        // make square(* must to make circle),
+        // resize(reduce the kilobyte) and
+        // fix rotation.
+        self.image = anyImage
+    }
+}
+
+
+
