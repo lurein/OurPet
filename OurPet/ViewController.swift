@@ -11,7 +11,7 @@ import Firebase
 import FirebaseAuthUI
 import FirebaseGoogleAuthUI
 import AlertOnboarding
-
+import GoogleMobileAds
 
 
 class ViewController: UIViewController {
@@ -20,6 +20,7 @@ class ViewController: UIViewController {
     
     var authUI: FUIAuth!
     var pets: Pets!
+    var bannerView: GADBannerView!
    
     // Setting up the onboarding alert
     var arrayOfImage = ["dog_avatar2", "Avatar_Dog-512", "friend_avatar"]
@@ -41,6 +42,12 @@ class ViewController: UIViewController {
         tableView.dataSource = self
         pets = Pets()
         
+        // Banner Ad Setup
+        bannerView = GADBannerView(adSize: kGADAdSizeLargeBanner)
+        addBannerViewToView(bannerView)
+        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716" // Real UnitID: ca-app-pub-5053341811681547/6605210108
+        bannerView.rootViewController = self
+        bannerView.load(GADRequest())
    
         
         var bgimage = UIImage(named: "moon_purple.jpg") as! UIImage
@@ -51,11 +58,7 @@ class ViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        var alertView = AlertOnboarding(arrayOfImage: arrayOfImage, arrayOfTitle: arrayOfTitle, arrayOfDescription: arrayOfDescription)
-        //Modify size of alertview (Purcentage of screen height and width)
-        alertView.percentageRatioHeight = 0.6
-        alertView.percentageRatioWidth = 0.7
-        alertView.titleGotItButton = "GOT IT!"
+        
         
         if Auth.auth().currentUser?.uid != nil {
         pets.loadData {
@@ -88,7 +91,6 @@ class ViewController: UIViewController {
             DispatchQueue.main.asyncAfter(deadline: .now() + 5) { // change 5 to desired number of seconds
                 self.tableView.reloadData()
                 UIViewController.removeSpinner(spinner: sv)
-                alertView.show()
             }
         }
 
@@ -100,6 +102,29 @@ class ViewController: UIViewController {
         signIn()
         
     }
+    
+    
+    func addBannerViewToView(_ bannerView: GADBannerView) {
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(bannerView)
+        view.addConstraints(
+            [NSLayoutConstraint(item: bannerView,
+                                attribute: .bottom,
+                                relatedBy: .equal,
+                                toItem: bottomLayoutGuide,
+                                attribute: .top,
+                                multiplier: 1,
+                                constant: 0),
+             NSLayoutConstraint(item: bannerView,
+                                attribute: .centerX,
+                                relatedBy: .equal,
+                                toItem: view,
+                                attribute: .centerX,
+                                multiplier: 1,
+                                constant: 0)
+            ])
+    }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ShowDetail" {
@@ -160,9 +185,9 @@ class ViewController: UIViewController {
         let logoFrame = CGRect(x: self.view.frame.origin.x + marginInsets, y: imageY, width:
             self.view.frame.width - (marginInsets*2), height: imageHeight)
         
-        // Create the UIImageView using the frame created above & add the "logo" image
+        // Create the UIImageView using the frame created above & add the "logo_2" image
         let logoImageView = UIImageView(frame: logoFrame)
-        logoImageView.image = UIImage(named: "logo")
+        logoImageView.image = UIImage(named: "logo_2")
         logoImageView.contentMode = .scaleAspectFit // Set imageView to Aspect Fit
         loginViewController.view.addSubview(logoImageView) // Add ImageView to the login controller's main view
         return loginViewController
@@ -194,6 +219,13 @@ extension ViewController: FUIAuthDelegate {
             }
             tableView.isHidden = false
             print("^^^ We signed in with the user \(user.email ?? "unknown e-mail")")
+            // Alert Onboarding Code
+            var alertView = AlertOnboarding(arrayOfImage: arrayOfImage, arrayOfTitle: arrayOfTitle, arrayOfDescription: arrayOfDescription)
+            //Modify size of alertview (Purcentage of screen height and width)
+            alertView.percentageRatioHeight = 0.6
+            alertView.percentageRatioWidth = 0.7
+            alertView.titleGotItButton = "GOT IT!"
+            alertView.show()
         }
     }
 }

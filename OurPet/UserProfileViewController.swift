@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import QuartzCore
+import GoogleMobileAds
 
 class UserProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBOutlet weak var nameField: UITextField!
@@ -18,6 +19,10 @@ class UserProfileViewController: UIViewController, UIImagePickerControllerDelega
     var OPuser : OPUser!
     @IBOutlet weak var imageView: UIImageView!
     var imagePicker = UIImagePickerController()
+    var bannerView: GADBannerView!
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if OPuser == nil {
@@ -46,6 +51,13 @@ class UserProfileViewController: UIViewController, UIImagePickerControllerDelega
         imageView.layer.borderWidth = 1.0
         imageView.layer.borderColor = lilac.cgColor
         
+        
+        // Banner Ad Setup
+        bannerView = GADBannerView(adSize: kGADAdSizeLargeBanner)
+        addBannerViewToView(bannerView)
+        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716" // Real UnitID: ca-app-pub-5053341811681547/6605210108
+        bannerView.rootViewController = self
+        bannerView.load(GADRequest())
         }
     
    
@@ -77,6 +89,7 @@ class UserProfileViewController: UIViewController, UIImagePickerControllerDelega
                 }
         }
     }
+    
     
     
     @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
@@ -131,7 +144,7 @@ class UserProfileViewController: UIViewController, UIImagePickerControllerDelega
         let storageRef = Storage.storage().reference()
         let reference = storageRef.child("opusers/\((Auth.auth().currentUser?.uid)!)")
         let imageView: UIImageView = self.imageView
-        let placeholderImage = UIImage(named: "PhotoAvatar.jpg")
+        let placeholderImage = UIImage(named: "profile_image.png")
         reference.downloadURL { url, error in
             if let error = error {
                 // Handle any errors
@@ -169,7 +182,26 @@ class UserProfileViewController: UIViewController, UIImagePickerControllerDelega
         
     }
     
-    
+    func addBannerViewToView(_ bannerView: GADBannerView) {
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(bannerView)
+        view.addConstraints(
+            [NSLayoutConstraint(item: bannerView,
+                                attribute: .bottom,
+                                relatedBy: .equal,
+                                toItem: bottomLayoutGuide,
+                                attribute: .top,
+                                multiplier: 1,
+                                constant: 0),
+             NSLayoutConstraint(item: bannerView,
+                                attribute: .centerX,
+                                relatedBy: .equal,
+                                toItem: view,
+                                attribute: .centerX,
+                                multiplier: 1,
+                                constant: 0)
+            ])
+    }
     
     
     func updateUserInterface(){

@@ -123,7 +123,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         let storageRef = Storage.storage().reference()
         let reference = storageRef.child("pets/\(pet.documentID)")
         let imageView: UIImageView = self.imageView
-        let placeholderImage = UIImage(named: "Avatar_Dog-512.jpg")
+        let placeholderImage = UIImage(named: "pet_image.png")
         reference.downloadURL { url, error in
             if let error = error {
                 // Handle any errors

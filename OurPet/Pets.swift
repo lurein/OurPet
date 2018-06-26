@@ -49,16 +49,18 @@ class Pets {
                 var userPetsArray = document.get("userPets")
                 self.userPetsArray2 = userPetsArray as! [String]
                 for userPet in self.userPetsArray2 {
-                    let petRef = self.db.collection("pets").document(userPet)
-                    petRef.getDocument { (document2, error) in
-                        if let petDetails = document2, document2!.exists {
-                            let petDescription = document2!.data()
-                            print(petDescription!)
-                            let pet = Pet(dictionary: petDescription!)
-                            print(pet)
-                            pet.documentID = document2!.documentID
-                            self.petArray.append(pet)
-                            print(self.petArray)
+                    if userPet != "" {
+                        let petRef = self.db.collection("pets").document(userPet)
+                        petRef.getDocument { (document2, error) in
+                            if let petDetails = document2, document2!.exists {
+                                let petDescription = document2!.data()
+                                print(petDescription!)
+                                let pet = Pet(dictionary: petDescription!)
+                                print(pet)
+                                pet.documentID = document2!.documentID
+                                self.petArray.append(pet)
+                                print(self.petArray)
+                            }
                         }
                     }
                 }
