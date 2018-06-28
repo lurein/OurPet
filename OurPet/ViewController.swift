@@ -66,25 +66,25 @@ class ViewController: UIViewController {
             self.tableView.reloadData()
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 5 to desired number of seconds
                 self.tableView.reloadData()
-                if self.pets.petArray.count != 0 {
+                if self.pets.loadedBinary != 0 {
                 UIViewController.removeSpinner(spinner: sv)
                 }
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { // change 5 to desired number of seconds
                 self.tableView.reloadData()
-                if self.pets.petArray.count != 0 {
+                if self.pets.loadedBinary != 0 {
                     UIViewController.removeSpinner(spinner: sv)
                 }
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) { // change 5 to desired number of seconds
                 self.tableView.reloadData()
-                if self.pets.petArray.count != 0 {
+                if self.pets.loadedBinary != 0 {
                     UIViewController.removeSpinner(spinner: sv)
                 }
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 4) { // change 5 to desired number of seconds
                 self.tableView.reloadData()
-                if self.pets.petArray.count != 0 {
+                if self.pets.loadedBinary != 0 {
                     UIViewController.removeSpinner(spinner: sv)
                 }
             }

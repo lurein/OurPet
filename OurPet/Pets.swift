@@ -14,6 +14,7 @@ class Pets {
     var db: Firestore!
     var userPetsArray2 : [String] = []
     var OPuser = OPUser()
+    var loadedBinary = 0
    
     
     init() {
@@ -63,6 +64,7 @@ class Pets {
                             }
                         }
                     }
+                    self.loadedBinary = 1
                 }
                 
 
