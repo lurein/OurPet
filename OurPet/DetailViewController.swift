@@ -21,6 +21,8 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     var imagePicker = UIImagePickerController()
     @IBOutlet weak var saveButtonPressed: UIBarButtonItem!
     
+    @IBOutlet weak var manageCarersButton: UIView!
+    
     @IBOutlet weak var imageView: UIImageView!
     
     @IBOutlet weak var morningLabel: UILabel!
@@ -34,6 +36,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         }
         let isPresentingInAddMode = presentingViewController is UINavigationController
         if isPresentingInAddMode {
+            manageCarersButton.isHidden = true
         } else {
             updateUserInterface()
         }
@@ -123,7 +126,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         let storageRef = Storage.storage().reference()
         let reference = storageRef.child("pets/\(pet.documentID)")
         let imageView: UIImageView = self.imageView
-        let placeholderImage = UIImage(named: "pet_image.png")
+        let placeholderImage = UIImage(named: "pet_image.jpg")
         reference.downloadURL { url, error in
             if let error = error {
                 // Handle any errors
