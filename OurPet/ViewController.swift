@@ -11,7 +11,8 @@ import Firebase
 import FirebaseAuthUI
 import FirebaseGoogleAuthUI
 import AlertOnboarding
-import GoogleMobileAds
+
+
 
 
 class ViewController: UIViewController {
@@ -20,8 +21,8 @@ class ViewController: UIViewController {
     
     var authUI: FUIAuth!
     var pets: Pets!
-    var bannerView: GADBannerView!
-   
+  
+    
     // Setting up the onboarding alert
     var arrayOfImage = ["dog_avatar2", "Avatar_Dog-512", "friend_avatar"]
     var arrayOfTitle = ["WELCOME TO OURPET", "SET-UP YOUR PETS", "ADD CO-CARERS"]
@@ -42,17 +43,12 @@ class ViewController: UIViewController {
         tableView.dataSource = self
         pets = Pets()
         
-        // Banner Ad Setup
-        bannerView = GADBannerView(adSize: kGADAdSizeLargeBanner)
-        addBannerViewToView(bannerView)
-        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716" // Real UnitID: ca-app-pub-5053341811681547/6605210108
-        bannerView.rootViewController = self
-        bannerView.load(GADRequest())
    
         
         var bgimage = UIImage(named: "moon_purple.jpg") as! UIImage
         self.navigationController!.navigationBar.setBackgroundImage(bgimage,
                                                                     for: .default)
+    
     }
 
     
@@ -91,6 +87,14 @@ class ViewController: UIViewController {
             DispatchQueue.main.asyncAfter(deadline: .now() + 5) { // change 5 to desired number of seconds
                 self.tableView.reloadData()
                 UIViewController.removeSpinner(spinner: sv)
+                if self.pets.loadedBinary == 0{
+                    // Creates the Check Internet Connection Alert
+                    let internetAlert = UIAlertController(title: "Poor Network Connection", message: "The internet connection was too slow, try open and close 'My Profile' or restarting the app", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
+                    internetAlert.addAction(action)
+                    self.present(internetAlert, animated: true, completion: nil)
+                    
+                }
             }
         }
 
@@ -103,27 +107,6 @@ class ViewController: UIViewController {
         
     }
     
-    
-    func addBannerViewToView(_ bannerView: GADBannerView) {
-        bannerView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(bannerView)
-        view.addConstraints(
-            [NSLayoutConstraint(item: bannerView,
-                                attribute: .bottom,
-                                relatedBy: .equal,
-                                toItem: bottomLayoutGuide,
-                                attribute: .top,
-                                multiplier: 1,
-                                constant: 0),
-             NSLayoutConstraint(item: bannerView,
-                                attribute: .centerX,
-                                relatedBy: .equal,
-                                toItem: view,
-                                attribute: .centerX,
-                                multiplier: 1,
-                                constant: 0)
-            ])
-    }
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -168,7 +151,7 @@ class ViewController: UIViewController {
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
     }
     
-    
+
     func authPickerViewController(forAuthUI authUI: FUIAuth) -> FUIAuthPickerViewController {
         
         // Create an instance of the FirebaseAuth login view controller
@@ -248,5 +231,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
 }
+
 
 
