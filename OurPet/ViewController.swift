@@ -16,7 +16,6 @@ class ViewController: UIViewController{
     
     // MARK: Outlets and Declarations
     
-    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addButtonPressed: UIBarButtonItem!
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -41,8 +40,6 @@ class ViewController: UIViewController{
         super.viewDidLoad()
         authUI = FUIAuth.defaultAuthUI()
         authUI?.delegate = self
-        tableView.delegate = self
-        tableView.dataSource = self
         pets = Pets()
         
    
@@ -147,7 +144,7 @@ class ViewController: UIViewController{
             self.authUI?.providers = providers
             present(authUI.authViewController(), animated: true, completion: nil)
         } else {
-            tableView.isHidden = false
+            collectionView.isHidden = false
         }
     }
     
@@ -155,10 +152,10 @@ class ViewController: UIViewController{
         do {
             try authUI!.signOut()
             print("^^^ Successfully signed out!")
-            tableView.isHidden = true
+            collectionView.isHidden = true
             signIn()
         } catch {
-            tableView.isHidden = true
+            collectionView.isHidden = true
             print("*** ERROR: Couldn't sign out")
         }
     }
@@ -230,7 +227,7 @@ extension ViewController: FUIAuthDelegate {
                     }
                 }
             }
-            tableView.isHidden = false
+            collectionView.isHidden = false
             print("^^^ We signed in with the user \(user.email ?? "unknown e-mail")")
             // Alert Onboarding Code
             var alertView = AlertOnboarding(arrayOfImage: arrayOfImage, arrayOfTitle: arrayOfTitle, arrayOfDescription: arrayOfDescription)
@@ -242,25 +239,6 @@ extension ViewController: FUIAuthDelegate {
         }
     }
     
-}
-
-extension ViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // change zero below to appropriate datasource.count
-        print(pets.petArray.count)
-        return pets.petArray.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell" , for: indexPath)
-        if pets.petArray.count != 0 {
-            let pet = pets.petArray[indexPath.row]
-            cell.textLabel?.text = "\(pet.petName)"
-            if(Int(pet.walkedToday) == 0){cell.detailTextLabel?.text = "Not Walked Today"}
-            else{cell.detailTextLabel?.text = "Walked Today"}
-        }
-        return cell
-    }
 }
 
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {

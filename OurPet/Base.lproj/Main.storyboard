@@ -56,39 +56,6 @@
                                     <outletCollection property="gestureRecognizers" destination="Hn9-qx-jyz" appends="YES" id="hsY-mD-nxv"/>
                                 </connections>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="b03-hj-okx">
-                                <rect key="frame" x="16" y="87" width="343" height="296"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="KgE-0w-6uX" detailTextLabel="lBf-sZ-NvM" style="IBUITableViewCellStyleSubtitle" id="5sh-rf-IaY">
-                                        <rect key="frame" x="0.0" y="28" width="343" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5sh-rf-IaY" id="q1E-FT-PtP">
-                                            <rect key="frame" x="0.0" y="0.0" width="343" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KgE-0w-6uX">
-                                                    <rect key="frame" x="15" y="5" width="33.5" height="20.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lBf-sZ-NvM">
-                                                    <rect key="frame" x="15" y="25.5" width="44" height="14.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="6YG-vm-2j1" kind="show" identifier="Show" id="gNj-FZ-5Pk"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </prototypes>
-                            </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1aa-hn-Pvy" customClass="LGButton" customModule="LGButton">
                                 <rect key="frame" x="210" y="520" width="149" height="46"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -202,14 +169,10 @@
                         </subviews>
                         <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="ase-1R-fLj" firstAttribute="top" secondItem="b03-hj-okx" secondAttribute="bottom" constant="137" id="3Wi-Dd-Ev6"/>
                             <constraint firstItem="ase-1R-fLj" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="49i-l6-U7d"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="1aa-hn-Pvy" secondAttribute="bottom" constant="101" id="Ldh-GH-wT3"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="ase-1R-fLj" secondAttribute="bottom" constant="101" id="RLJ-zl-6w4"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="b03-hj-okx" secondAttribute="trailing" constant="16" id="TZ5-3Q-bMK"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="1aa-hn-Pvy" secondAttribute="trailing" constant="16" id="W7j-ob-fBP"/>
-                            <constraint firstItem="b03-hj-okx" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="23" id="XYO-2e-ZWr"/>
-                            <constraint firstItem="b03-hj-okx" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="iFm-TS-tlS"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -231,7 +194,6 @@
                     <connections>
                         <outlet property="addButtonPressed" destination="s6N-bf-MJl" id="7DJ-rV-oKU"/>
                         <outlet property="collectionView" destination="xWD-rQ-4sj" id="Wc2-9v-B7P"/>
-                        <outlet property="tableView" destination="b03-hj-okx" id="ugd-m4-QXw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -951,6 +913,6 @@
         <image name="walking-with-dog" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="gNj-FZ-5Pk"/>
+        <segue reference="niN-fM-jbK"/>
     </inferredMetricsTieBreakers>
 </document>

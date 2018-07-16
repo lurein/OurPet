@@ -67,19 +67,6 @@ class OPUser  {
             }
         }
         
-        //        else {
-        //            var ref: DocumentReference? = nil // Let firestore create the new documentID
-        //            ref = db.collection("pets").addDocument(data: dataToSave) { error in
-        //                if let error = error {
-        //                    print("*** ERROR: creating new document \(error.localizedDescription)")
-        //                    completed(false)
-        //                } else {
-        //                    print("^^^ new document created with ref ID \(ref?.documentID ?? "unknown")")
-        //                    self.documentID = ref!.documentID
-        //                    completed(true)
-        //                }
-        //            }
-        //        }
     }
     
 }
