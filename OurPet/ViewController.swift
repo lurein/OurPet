@@ -8,19 +8,21 @@
 
 import UIKit
 import Firebase
-import FirebaseAuthUI
-import FirebaseGoogleAuthUI
+import FirebaseUI
 import AlertOnboarding
 
 
-
-
-class ViewController: UIViewController {
+class ViewController: UIViewController{
+    
+    // MARK: Outlets and Declarations
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addButtonPressed: UIBarButtonItem!
+    @IBOutlet weak var collectionView: UICollectionView!
     
     var authUI: FUIAuth!
     var pets: Pets!
+    var globalIndexPath : IndexPath?
   
     
     // Setting up the onboarding alert
@@ -33,7 +35,7 @@ class ViewController: UIViewController {
  
     
     
-
+    // MARK: View Setup
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,11 +46,17 @@ class ViewController: UIViewController {
         pets = Pets()
         
    
-        
+        // Sets the navigation bar gradient
         var bgimage = UIImage(named: "moon_purple.jpg") as! UIImage
         self.navigationController!.navigationBar.setBackgroundImage(bgimage,
                                                                     for: .default)
     
+        // Card Cell Setup
+        collectionView.collectionViewLayout = CardsCollectionViewLayout()
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.isPagingEnabled = true
+        collectionView.showsHorizontalScrollIndicator = false
     }
 
     
@@ -58,34 +66,34 @@ class ViewController: UIViewController {
         
         if Auth.auth().currentUser?.uid != nil {
         pets.loadData {
-            let sv = UIViewController.displaySpinner(onView: self.view)
-            self.tableView.reloadData()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 5 to desired number of seconds
-                self.tableView.reloadData()
+            let sv = UIViewController.displaySpinner(onView: self.view) // Creates the loading spinner
+            self.collectionView.reloadData()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 1 to desired number of seconds
+                self.collectionView.reloadData()
                 if self.pets.loadedBinary != 0 {
                 UIViewController.removeSpinner(spinner: sv)
                 }
             }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) { // change 5 to desired number of seconds
-                self.tableView.reloadData()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) { // change 2 to desired number of seconds
+               self.collectionView.reloadData()
                 if self.pets.loadedBinary != 0 {
                     UIViewController.removeSpinner(spinner: sv)
                 }
             }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) { // change 5 to desired number of seconds
-                self.tableView.reloadData()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) { // change 3 to desired number of seconds
+                self.collectionView.reloadData()
                 if self.pets.loadedBinary != 0 {
                     UIViewController.removeSpinner(spinner: sv)
                 }
             }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 4) { // change 5 to desired number of seconds
-                self.tableView.reloadData()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 4) { // change 4 to desired number of seconds
+                self.collectionView.reloadData()
                 if self.pets.loadedBinary != 0 {
                     UIViewController.removeSpinner(spinner: sv)
                 }
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 5) { // change 5 to desired number of seconds
-                self.tableView.reloadData()
+                self.collectionView.reloadData()
                 UIViewController.removeSpinner(spinner: sv)
                 if self.pets.loadedBinary == 0{
                     // Creates the Check Internet Connection Alert
@@ -107,16 +115,21 @@ class ViewController: UIViewController {
         
     }
     
-    
+    // MARK: Segue Preperations
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Passes pet information to PetDetails Scene
         if segue.identifier == "ShowDetail" {
             let destination = segue.destination as! DetailViewController
-            let selectedIndex = tableView.indexPathForSelectedRow!
+            self.collectionView.allowsMultipleSelection = false
+            let selectedIndex = self.collectionView.indexPathsForSelectedItems?.first
             if pets.petArray.count != 0 {
-                destination.pet = pets.petArray[selectedIndex.row]
+                destination.pet = pets.petArray[selectedIndex!.row]
+                
+                
             }
         }
+        // Passes user information tp UserProfile scene
         if segue.identifier == "MyProfile" {
             let nav = segue.destination as! UINavigationController
             let destination = nav.topViewController as! UserProfileViewController
@@ -124,6 +137,7 @@ class ViewController: UIViewController {
         }
     }
     
+    // MARK: Auth Code
     
     func signIn() {
         let providers: [FUIAuthProvider] = [
@@ -175,7 +189,23 @@ class ViewController: UIViewController {
         loginViewController.view.addSubview(logoImageView) // Add ImageView to the login controller's main view
         return loginViewController
     }
+    
+    // MARK: Card Cell Functions
+    
+    // The various background colour options for cards
+    var colors: [UIColor]  = [
+        UIColor(red: 237, green: 37, blue: 78),
+        UIColor(red: 249, green: 220, blue: 92),
+        UIColor(red: 194, green: 234, blue: 189),
+        UIColor(red: 1, green: 25, blue: 54),
+        UIColor(red: 255, green: 184, blue: 209)
+    ]
+    
+    
+    
 }
+
+// MARK: Extensions
 
 extension ViewController: FUIAuthDelegate {
     func application(_ app: UIApplication, open url: URL,
@@ -211,6 +241,7 @@ extension ViewController: FUIAuthDelegate {
             alertView.show()
         }
     }
+    
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
@@ -232,5 +263,57 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    
+    
+    // This determines how many cards there are (by the number of pets)
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return pets.petArray.count
+    }
 
+    // This determines the content of each card
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCellReuseIdentifier", for: indexPath) as! CollectionViewCell
+        
+        
+        // This function downloads the pet image and masks it
+        func downloadPetImage(){
+            let ispinner = UIViewController.imageSpinner(onView: cell.petImage)
+            let storageRef = Storage.storage().reference()
+            let reference = storageRef.child("pets/\(pets.petArray[indexPath.row].documentID)")
+            let imageView: UIImageView = cell.petImage
+            let placeholderImage = UIImage(named: "dog_avatar2.jpg")
+            reference.downloadURL { url, error in
+                if let error = error {
+                    // Handle any errors
+                    print("No Image Available")
+                    UIViewController.removeSpinner(spinner: ispinner)
+                } else {
+                    // Get the download URL
+                    imageView.sd_setImage(with: url, placeholderImage: placeholderImage)
+                    UIViewController.removeSpinner(spinner: ispinner)
+                    let imageToBeMasked = cell.petImage.image
+                    imageView.maskCircle(anyImage: imageToBeMasked!)
+                    imageView.layer.borderWidth = 2.0
+                    imageView.layer.borderColor = UIColor.white.cgColor
+                }
+            }
+        }
+        if pets.petArray.count != 0 {
+           // downloadPetImage()
+            let pet = pets.petArray[indexPath.row]
+            cell.layer.cornerRadius = 7.0
+            cell.backgroundColor = colors[indexPath.row]
+            cell.petNameLabel.text = pet.petName
+            if(Int(pet.walkedToday) == 1){cell.walkedTodayLabel.text = "Walked today"}
+            else{cell.walkedTodayLabel.text = "Not walked today"}
+            if(Int(pet.morningFedStatus) == 0){cell.morningFedLabel.text = "Not fed"}
+            else{cell.morningFedLabel.text = "Fed"}
+            if(Int(pet.eveningFedStatus) == 0){cell.eveningFedLabel.text = "Not fed"}
+            else{cell.eveningFedLabel.text = "Fed"}
+        }
+        return cell
+    }
+}
 

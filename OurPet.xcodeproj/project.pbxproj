@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		95091A0620F3CD0D00EFC7C3 /* CardsCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95091A0520F3CD0D00EFC7C3 /* CardsCollectionViewLayout.swift */; };
 		9509FFAB2092D3C500B7A094 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9509FFAA2092D3C500B7A094 /* AppDelegate.swift */; };
 		9509FFAD2092D3C500B7A094 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9509FFAC2092D3C500B7A094 /* ViewController.swift */; };
 		9509FFB02092D3C500B7A094 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9509FFAE2092D3C500B7A094 /* Main.storyboard */; };
@@ -20,12 +21,14 @@
 		95B72CE920D2B16F00B9AC71 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B72CE820D2B16F00B9AC71 /* UserProfileViewController.swift */; };
 		95B72CEB20D6750F00B9AC71 /* ManageCarers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B72CEA20D6750F00B9AC71 /* ManageCarers.swift */; };
 		95B72CED20DD638F00B9AC71 /* AboutOPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B72CEC20DD638F00B9AC71 /* AboutOPViewController.swift */; };
+		95C8294520FA2777006651DB /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C8294420FA2777006651DB /* CollectionViewCell.swift */; };
 		F0E10FEDA435962057303965 /* Pods_OurPet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73477B6A72B31D71A31F9E3C /* Pods_OurPet.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		19996D37050E10713D61FAC9 /* Pods-OurPet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OurPet.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OurPet/Pods-OurPet.debug.xcconfig"; sourceTree = "<group>"; };
 		73477B6A72B31D71A31F9E3C /* Pods_OurPet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OurPet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		95091A0520F3CD0D00EFC7C3 /* CardsCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsCollectionViewLayout.swift; sourceTree = "<group>"; };
 		9509FFA72092D3C500B7A094 /* OurPet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OurPet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9509FFAA2092D3C500B7A094 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9509FFAC2092D3C500B7A094 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -41,6 +44,7 @@
 		95B72CE820D2B16F00B9AC71 /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		95B72CEA20D6750F00B9AC71 /* ManageCarers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageCarers.swift; sourceTree = "<group>"; };
 		95B72CEC20DD638F00B9AC71 /* AboutOPViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AboutOPViewController.swift; path = /Users/enokajayamanne/Desktop/OurPet/OurPet/AboutOPViewController.swift; sourceTree = "<absolute>"; };
+		95C8294420FA2777006651DB /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		E2208159BC9C8392D1F2FB6F /* Pods-OurPet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OurPet.release.xcconfig"; path = "Pods/Target Support Files/Pods-OurPet/Pods-OurPet.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -86,8 +90,10 @@
 			isa = PBXGroup;
 			children = (
 				9509FFAA2092D3C500B7A094 /* AppDelegate.swift */,
+				95091A0520F3CD0D00EFC7C3 /* CardsCollectionViewLayout.swift */,
 				95B72CEC20DD638F00B9AC71 /* AboutOPViewController.swift */,
 				9509FFAC2092D3C500B7A094 /* ViewController.swift */,
+				95C8294420FA2777006651DB /* CollectionViewCell.swift */,
 				9509FFAE2092D3C500B7A094 /* Main.storyboard */,
 				95B72CEA20D6750F00B9AC71 /* ManageCarers.swift */,
 				95B72CE820D2B16F00B9AC71 /* UserProfileViewController.swift */,
@@ -298,6 +304,7 @@
 			files = (
 				9509FFBF209419FE00B7A094 /* DetailViewController.swift in Sources */,
 				95B72CED20DD638F00B9AC71 /* AboutOPViewController.swift in Sources */,
+				95091A0620F3CD0D00EFC7C3 /* CardsCollectionViewLayout.swift in Sources */,
 				9509FFC12095506400B7A094 /* Pet.swift in Sources */,
 				95B72CE920D2B16F00B9AC71 /* UserProfileViewController.swift in Sources */,
 				9509FFAD2092D3C500B7A094 /* ViewController.swift in Sources */,
@@ -305,6 +312,7 @@
 				9509FFC3209556A000B7A094 /* Pets.swift in Sources */,
 				95B72CEB20D6750F00B9AC71 /* ManageCarers.swift in Sources */,
 				9509FFAB2092D3C500B7A094 /* AppDelegate.swift in Sources */,
+				95C8294520FA2777006651DB /* CollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

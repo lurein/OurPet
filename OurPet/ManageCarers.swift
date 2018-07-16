@@ -9,6 +9,8 @@
 import UIKit
 import Firebase
 class ManageCarers: UIViewController {
+    
+    // MARK: Outlets and Declarations
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var messageLabel: UILabel!
@@ -18,6 +20,8 @@ class ManageCarers: UIViewController {
     var pet: Pet!
     var foundUserID = ""
     var userPets = [""]
+    
+    // MARK: View Setup
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +45,7 @@ class ManageCarers: UIViewController {
         carersLabel.backgroundColor = UIColor(patternImage: UIImage(named: "moon_purple.jpg")!)
     }
     
+    // MARK: Bar Buttons
     
     @IBAction func doneButtonPressed(_ sender: UIBarButtonItem) {
         usernameField.resignFirstResponder()
@@ -68,7 +73,7 @@ class ManageCarers: UIViewController {
         usernameField.resignFirstResponder()
     }
 
-        
+    // MARK: Username Field Code
     
     @IBAction func usernameEditingChanged(_ sender: UITextField) {
         let db = Firestore.firestore()
@@ -100,6 +105,8 @@ class ManageCarers: UIViewController {
     
 }
 }
+
+// MARK: Extensions
 
 extension ManageCarers: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -9,6 +9,7 @@ import Foundation
 import Firebase
 
 class OPUser  {
+    // MARK: Declarations
     var fullName: String
     var userName: String
     var postingUserID: String
@@ -19,6 +20,7 @@ class OPUser  {
         return ["fullName": fullName, "userName": userName, "userPets": userPets]
     }
     
+    // MARK: Initializers
     
     init(fullName: String, userName: String,
          userPets: [String], postingUserID: String) {
@@ -39,6 +41,8 @@ class OPUser  {
         
         self.init(fullName: fullName, userName: userName, userPets: userPets, postingUserID: "")
     }
+    
+    // MARK: Class Functions
     
     func saveData(completed: @escaping (Bool) -> ()) {
         let db = Firestore.firestore()

@@ -9,9 +9,12 @@
 import UIKit
 import Firebase
 import QuartzCore
-import GoogleMobileAds
+
+
 
 class UserProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    // MARK: Outlets and Declarations
+    
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var saveBarButton: UIBarButtonItem!
@@ -19,9 +22,9 @@ class UserProfileViewController: UIViewController, UIImagePickerControllerDelega
     var OPuser : OPUser!
     @IBOutlet weak var imageView: UIImageView!
     var imagePicker = UIImagePickerController()
-    var bannerView: GADBannerView!
+
     
-    
+    // MARK: View Setup
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,14 +55,15 @@ class UserProfileViewController: UIViewController, UIImagePickerControllerDelega
         imageView.layer.borderColor = lilac.cgColor
         
         
-        // Banner Ad Setup
-        bannerView = GADBannerView(adSize: kGADAdSizeLargeBanner)
-        addBannerViewToView(bannerView)
-        bannerView.adUnitID = "ca-app-pub-3940256099942544/2934735716" // Real UnitID: ca-app-pub-5053341811681547/6605210108
-        bannerView.rootViewController = self
-        bannerView.load(GADRequest())
         }
     
+    func updateUserInterface(){
+        downloadUserImage()
+        nameField.text = OPuser.fullName
+        usernameField.text = OPuser.userName
+    }
+    
+    //MARK: Textfield Actions
    
     @IBAction func nameEditingChanged(_ sender: UITextField) {
         if usernameUnavailableMessage.isHidden == true {
@@ -90,7 +94,7 @@ class UserProfileViewController: UIViewController, UIImagePickerControllerDelega
         }
     }
     
-    
+    // MARK: Bar Buttons
     
     @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
         usernameField.resignFirstResponder()
@@ -114,6 +118,8 @@ class UserProfileViewController: UIViewController, UIImagePickerControllerDelega
        
         }
     }
+    
+    // MARK: Image Functions
     
     @IBAction func imageTapped(_ sender: UITapGestureRecognizer) {
         imagePicker.sourceType = .photoLibrary
@@ -174,42 +180,15 @@ class UserProfileViewController: UIViewController, UIImagePickerControllerDelega
                 print(error.localizedDescription)
                 return
             }else{
-                //store downloadURL
-                let downloadURL = metaData!.downloadURL()!.absoluteString
                 print("Uploaded image")
             }
         }
         
     }
     
-    func addBannerViewToView(_ bannerView: GADBannerView) {
-        bannerView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(bannerView)
-        view.addConstraints(
-            [NSLayoutConstraint(item: bannerView,
-                                attribute: .bottom,
-                                relatedBy: .equal,
-                                toItem: bottomLayoutGuide,
-                                attribute: .top,
-                                multiplier: 1,
-                                constant: 0),
-             NSLayoutConstraint(item: bannerView,
-                                attribute: .centerX,
-                                relatedBy: .equal,
-                                toItem: view,
-                                attribute: .centerX,
-                                multiplier: 1,
-                                constant: 0)
-            ])
-    }
     
-    
-    func updateUserInterface(){
-        downloadUserImage()
-        nameField.text = OPuser.fullName
-        usernameField.text = OPuser.userName
-    }
 }
+// MARK: Extensions
 
 extension UIImageView {
     public func maskCircle(anyImage: UIImage) {
@@ -224,6 +203,5 @@ extension UIImageView {
         self.image = anyImage
     }
 }
-
 
 

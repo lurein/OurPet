@@ -10,6 +10,8 @@ import Foundation
 import Firebase
 
 class Pet  {
+    // MARK: Declarations
+    
     var petName: String
     var walkedToday: String
     var morningFedStatus: String
@@ -26,6 +28,8 @@ class Pet  {
         return ["petName": petName, "walkedToday": walkedToday, "morningFedStatus": morningFedStatus,
                 "morningFedBy": morningFedBy, "eveningFedStatus": eveningFedStatus, "eveningFedBy": eveningFedBy,  "postingUserID": postingUserID, "carers": carers]
     }
+    
+    //MARK: Initializers
     
     init(petName: String, walkedToday: String,
          morningFedStatus: String, morningFedBy: String, eveningFedStatus: String, postingUserID: String, eveningFedBy: String, documentID: String, carers: [String]) {
@@ -55,6 +59,8 @@ class Pet  {
         let carers = dictionary["carers"] as! [String]? ?? [(Auth.auth().currentUser?.uid)!]
         self.init(petName: petName, walkedToday: walkedToday, morningFedStatus: morningFedStatus, morningFedBy: morningFedBy, eveningFedStatus: eveningFedStatus, postingUserID: postingUserID, eveningFedBy: eveningFedBy, documentID: "", carers: carers)
     }
+    
+    // MARK: Class Functions
     
     func saveData(completed: @escaping (Bool) -> ()) {
         let db = Firestore.firestore()

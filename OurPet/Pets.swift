@@ -10,17 +10,21 @@ import Foundation
 import Firebase
 
 class Pets {
+    // MARK: Declarations
     var petArray: [Pet] = []
     var db: Firestore!
     var userPetsArray2 : [String] = []
     var OPuser = OPUser()
     var loadedBinary = 0
    
+    // MARK: Initializers
     
     init() {
         db = Firestore.firestore()
    
     }
+    
+    // MARK: Class Functions
     
     func loadData(completed: @escaping () -> ()) {
 //        db.collection("pets").addSnapshotListener { (querySnapshot, error) in
@@ -64,9 +68,8 @@ class Pets {
                             }
                         }
                     }
-                    self.loadedBinary = 1
                 }
-                
+                self.loadedBinary = 1
 
             } else {
                 print("Document does not exist")

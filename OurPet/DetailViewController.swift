@@ -11,6 +11,7 @@ import Firebase
 import SDWebImage
 
 class DetailViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    // MARK: Outlets and Declarations
     @IBOutlet weak var petNameField: UITextField!
     @IBOutlet weak var walkedTodaySegment: UISegmentedControl!
     @IBOutlet weak var morningFedSegment: UISegmentedControl!
@@ -28,6 +29,8 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet weak var morningLabel: UILabel!
     
     @IBOutlet weak var eveningLabel: UILabel!
+    
+    // MARK: View Setup
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,6 +80,8 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         eveningFedByField.text = pet.eveningFedBy
     }
     
+    // MARK: Segue Control
+    
     func leaveViewController() {
         let isPrestingInAddMode = presentingViewController is UINavigationController
         if isPrestingInAddMode {
@@ -97,6 +102,8 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
             destination.pet = self.pet
         }
     }
+    
+    // MARK: Image Functions
     
     @IBAction func imageViewTapped(_ sender: UITapGestureRecognizer) {
         print("tapped")
@@ -155,13 +162,13 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
                 print(error.localizedDescription)
                 return
             }else{
-                //store downloadURL
-                let downloadURL = metaData!.downloadURL()!.absoluteString
                 print("Uploaded image")
             }
         }
         
     }
+    
+    // MARK: Bar Buttons
     
     @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
         let sv = UIViewController.displaySpinner(onView: self.view)
@@ -185,6 +192,8 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
 }
+
+// MARK: Extensions
 
 // This extension is for the Activity Indicatior
 
