@@ -22,7 +22,7 @@ class ViewController: UIViewController{
     var authUI: FUIAuth!
     var pets: Pets!
     var globalIndexPath : IndexPath?
-  
+   
     
     // Setting up the onboarding alert
     var arrayOfImage = ["dog_avatar2", "Avatar_Dog-512", "friend_avatar"]
@@ -54,6 +54,8 @@ class ViewController: UIViewController{
         collectionView.delegate = self
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
+        
+       
     }
 
     
@@ -191,13 +193,19 @@ class ViewController: UIViewController{
     
     // The various background colour options for cards
     var colors: [UIColor]  = [
-        UIColor(red: 237, green: 37, blue: 78),
-        UIColor(red: 249, green: 220, blue: 92),
-        UIColor(red: 194, green: 234, blue: 189),
-        UIColor(red: 1, green: 25, blue: 54),
-        UIColor(red: 255, green: 184, blue: 209)
+        UIColor(red: 194, green: 234, blue: 189), // green
+        UIColor(red: 255, green: 184, blue: 184), // young salmon
+        UIColor(red: 249, green: 220, blue: 92), // yellow
+        UIColor(red: 52, green: 231, blue: 228), // fresh turquoise
+        UIColor(red: 243, green: 166, blue: 131), // creamy peach
+        UIColor(red: 205, green: 132, blue: 241), // bright lilac
+        UIColor(red: 255, green: 184, blue: 209), // pink
+        UIColor(red: 75, green: 207, blue: 250), // megaman blue
+        UIColor(red: 11, green: 232, blue: 129), // minty green
+        UIColor(red: 255, green: 192, blue: 72), // nãrenji orange
+        UIColor(red: 197, green: 108, blue: 240) // light purple
     ]
-    
+
     
     
 }
@@ -284,7 +292,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
             }
             let pet = pets.petArray[indexPath.row]
             cell.layer.cornerRadius = 7.0
-            cell.backgroundColor = colors[indexPath.row]
+            cell.backgroundColor = colors[indexPath.row % colors.count] // picks a random color
             cell.petNameLabel.text = pet.petName
             if(Int(pet.walkedToday) == 1){cell.walkedTodayLabel.text = "Walked today"}
             else{cell.walkedTodayLabel.text = "Not walked today"}
