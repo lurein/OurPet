@@ -22,17 +22,17 @@ class Pet  {
     var documentID: String
     var carers: [String]
     var userPets : [String] = [""]
-    
+    var hasImage : Int
     
     var dictionary: [String: Any] {
         return ["petName": petName, "walkedToday": walkedToday, "morningFedStatus": morningFedStatus,
-                "morningFedBy": morningFedBy, "eveningFedStatus": eveningFedStatus, "eveningFedBy": eveningFedBy,  "postingUserID": postingUserID, "carers": carers]
+                "morningFedBy": morningFedBy, "eveningFedStatus": eveningFedStatus, "eveningFedBy": eveningFedBy,  "postingUserID": postingUserID, "carers": carers, "hasImage": hasImage]
     }
     
     //MARK: Initializers
     
     init(petName: String, walkedToday: String,
-         morningFedStatus: String, morningFedBy: String, eveningFedStatus: String, postingUserID: String, eveningFedBy: String, documentID: String, carers: [String]) {
+         morningFedStatus: String, morningFedBy: String, eveningFedStatus: String, postingUserID: String, eveningFedBy: String, documentID: String, carers: [String], hasImage: Int) {
         self.petName = petName
         self.walkedToday = walkedToday
         self.morningFedStatus = morningFedStatus
@@ -42,10 +42,11 @@ class Pet  {
         self.eveningFedBy = eveningFedBy
         self.documentID = documentID
         self.carers = carers
+        self.hasImage = hasImage
     }
     
     convenience init() {
-        self.init(petName: "", walkedToday: "", morningFedStatus: "", morningFedBy: "", eveningFedStatus: "", postingUserID: "", eveningFedBy: "", documentID: "", carers: [(Auth.auth().currentUser?.uid)!])
+        self.init(petName: "", walkedToday: "", morningFedStatus: "", morningFedBy: "", eveningFedStatus: "", postingUserID: "", eveningFedBy: "", documentID: "", carers: [(Auth.auth().currentUser?.uid)!], hasImage: 0)
     }
     
     convenience init(dictionary: [String: Any]) {
@@ -57,7 +58,8 @@ class Pet  {
         let eveningFedBy = dictionary["eveningFedBy"] as! String? ?? ""
         let postingUserID = dictionary["postingUserID"] as! String? ?? ""
         let carers = dictionary["carers"] as! [String]? ?? [(Auth.auth().currentUser?.uid)!]
-        self.init(petName: petName, walkedToday: walkedToday, morningFedStatus: morningFedStatus, morningFedBy: morningFedBy, eveningFedStatus: eveningFedStatus, postingUserID: postingUserID, eveningFedBy: eveningFedBy, documentID: "", carers: carers)
+        let hasImage = dictionary["hasImage"] as! Int? ?? 0
+        self.init(petName: petName, walkedToday: walkedToday, morningFedStatus: morningFedStatus, morningFedBy: morningFedBy, eveningFedStatus: eveningFedStatus, postingUserID: postingUserID, eveningFedBy: eveningFedBy, documentID: "", carers: carers, hasImage: hasImage)
     }
     
     // MARK: Class Functions

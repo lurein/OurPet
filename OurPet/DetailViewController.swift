@@ -163,9 +163,20 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
                 return
             }else{
                 print("Uploaded image")
+                // Updates hasImage
+                let db = Firestore.firestore()
+                let petRef = db.collection("pets").document(self.pet.documentID)
+                petRef.updateData([
+                    "hasImage": 1
+                ]) { err in
+                    if let err = err {
+                        print("Error updating hasImage: \(err)")
+                    } else {
+                        print("hasImage successfully updated")
+                    }
+                }
             }
         }
-        
     }
     
     // MARK: Bar Buttons

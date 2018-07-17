@@ -279,7 +279,9 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
             }
         }
         if pets.petArray.count != 0 {
-           // downloadPetImage()
+            if pets.petArray[indexPath.row].hasImage == 1{
+                downloadPetImage()
+            }
             let pet = pets.petArray[indexPath.row]
             cell.layer.cornerRadius = 7.0
             cell.backgroundColor = colors[indexPath.row]
