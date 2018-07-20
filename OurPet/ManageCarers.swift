@@ -43,6 +43,11 @@ class ManageCarers: UIViewController {
         usernameField.layer.borderWidth = 1.0
         searchLabel.backgroundColor = UIColor(patternImage: UIImage(named: "moon_purple.jpg")!)
         carersLabel.backgroundColor = UIColor(patternImage: UIImage(named: "moon_purple.jpg")!)
+        
+        // This creates the tap dismisser for the keyboard
+        let tap = UITapGestureRecognizer(target: self.view, action: Selector("endEditing:"))
+        tap.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(tap)
     }
     
     // MARK: Bar Buttons

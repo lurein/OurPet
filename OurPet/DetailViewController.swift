@@ -31,6 +31,8 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     @IBOutlet weak var eveningLabel: UILabel!
     
+    @IBOutlet weak var deleteButton: UIButton!
+    
     // MARK: View Setup
     
     override func viewDidLoad() {
@@ -41,6 +43,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         let isPresentingInAddMode = presentingViewController is UINavigationController
         if isPresentingInAddMode {
             manageCarersButton.isHidden = true
+            deleteButton.isHidden = true
         } else {
             updateUserInterface()
         }
@@ -69,6 +72,10 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         imageView.layer.borderWidth = 1.0
         imageView.layer.borderColor = lilac.cgColor
         
+        // This creates the tap dismisser for the keyboard
+        let tap = UITapGestureRecognizer(target: self.view, action: Selector("endEditing:"))
+        tap.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(tap)
     }
     
     func updateUserInterface() {
@@ -203,6 +210,45 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         }
     }
     
+    // MARK: Additional Functions
+    
+    @IBAction func deleteButtonPressed(_ sender: UIButton) {
+        let deleteAlert = UIAlertController(title: "Delete Pet", message: "Are you sure you want to delete \(pet.petName)? This action cannot be undone. ", preferredStyle: UIAlertControllerStyle.alert)
+        
+        deleteAlert.addAction(UIAlertAction(title: "Confirm", style: .destructive , handler: { (action: UIAlertAction!) in
+            self.deletePet()
+        }))
+        
+        deleteAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel , handler: { (action: UIAlertAction!) in
+            // Any functions go here
+        }))
+        
+        present(deleteAlert, animated: true, completion: nil)
+    }
+    
+    
+    func deletePet() {
+        let db = Firestore.firestore()
+        db.collection("pets").document(pet.documentID).delete() { err in
+            if let err = err {
+                print("Error deleting pet: \(err)")
+            } else {
+                print("Pet deleted from pets collection")  // Delete the pet from the pets collection
+            }
+        }
+        for eachUser in pet.carers {  // For every user in petCarers, delete the pet from userPets
+            let docRef = db.collection("opusers").document(eachUser)
+            docRef.getDocument { (document, error) in
+                if let document = document, document.exists {
+                    var eachUserPets = document.get("userPets") as! [String]
+                    eachUserPets = eachUserPets.filter{$0 != self.pet.documentID}
+                    docRef.updateData(["userPets" : eachUserPets])
+                }
+            }
+            print("Pet deleted from \(eachUser)'s userPets")
+        }
+        leaveViewController()
+    }
 }
 
 // MARK: Extensions

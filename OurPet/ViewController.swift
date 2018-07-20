@@ -18,7 +18,7 @@ class ViewController: UIViewController{
     
     @IBOutlet weak var addButtonPressed: UIBarButtonItem!
     @IBOutlet weak var collectionView: UICollectionView!
-    
+    @IBOutlet weak var squigglyArrow: UIImageView!
     var authUI: FUIAuth!
     var pets: Pets!
     var globalIndexPath : IndexPath?
@@ -41,7 +41,7 @@ class ViewController: UIViewController{
         authUI = FUIAuth.defaultAuthUI()
         authUI?.delegate = self
         pets = Pets()
-        
+        squigglyArrow.isHidden = true
    
         // Sets the navigation bar gradient
         var bgimage = UIImage(named: "moon_purple.jpg") as! UIImage
@@ -61,7 +61,7 @@ class ViewController: UIViewController{
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        squigglyArrow.isHidden = true
         
         if Auth.auth().currentUser?.uid != nil {
         pets.loadData {
@@ -71,27 +71,59 @@ class ViewController: UIViewController{
                 self.collectionView.reloadData()
                 if self.pets.loadedBinary != 0 {
                 UIViewController.removeSpinner(spinner: sv)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+                        if self.pets.petArray.count == 0 {
+                            self.squigglyArrow.isHidden = false
+                        }
+                    }
                 }
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { // change 2 to desired number of seconds
                self.collectionView.reloadData()
                 if self.pets.loadedBinary != 0 {
                     UIViewController.removeSpinner(spinner: sv)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+                        if self.pets.petArray.count == 0 {
+                            self.squigglyArrow.isHidden = false
+                        }
+                    }
                 }
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) { // change 3 to desired number of seconds
                 self.collectionView.reloadData()
                 if self.pets.loadedBinary != 0 {
                     UIViewController.removeSpinner(spinner: sv)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+                        if self.pets.petArray.count == 0 {
+                            self.squigglyArrow.isHidden = false
+                        }
+                    }
                 }
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 4) { // change 4 to desired number of seconds
                 self.collectionView.reloadData()
                 if self.pets.loadedBinary != 0 {
                     UIViewController.removeSpinner(spinner: sv)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+                        if self.pets.petArray.count == 0 {
+                            self.squigglyArrow.isHidden = false
+                        }
+                    }
+                    
                 }
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 5) { // change 5 to desired number of seconds
+                self.collectionView.reloadData()
+                if self.pets.loadedBinary != 0 {
+                    UIViewController.removeSpinner(spinner: sv)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+                        if self.pets.petArray.count == 0 {
+                            self.squigglyArrow.isHidden = false
+                        }
+                    }
+                }
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 6) { // change 6 to desired number of seconds
                 self.collectionView.reloadData()
                 UIViewController.removeSpinner(spinner: sv)
                 if self.pets.loadedBinary == 0{
@@ -262,7 +294,11 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCellReuseIdentifier", for: indexPath) as! CollectionViewCell
         
-        
+        if pets.petArray.count == 1{
+            cell.activateShadowBinary = 1   // This enables the card shadow if there is just 1 card
+        } else {
+            cell.activateShadowBinary = 0
+        }
         // This function downloads the pet image and masks it
         func downloadPetImage(){
             let ispinner = UIViewController.imageSpinner(onView: cell.petImage)

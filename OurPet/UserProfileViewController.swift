@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 import QuartzCore
-
+import WXImageCompress
 
 
 class UserProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -54,6 +54,10 @@ class UserProfileViewController: UIViewController, UIImagePickerControllerDelega
         imageView.layer.borderWidth = 1.0
         imageView.layer.borderColor = lilac.cgColor
         
+        // This creates the tap dismisser for the keyboard
+        let tap = UITapGestureRecognizer(target: self.view, action: Selector("endEditing:"))
+        tap.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(tap)
         
         }
     
@@ -131,9 +135,9 @@ class UserProfileViewController: UIViewController, UIImagePickerControllerDelega
         let selectedImage = info[UIImagePickerControllerOriginalImage] as! UIImage
         imageView.image = selectedImage
         dismiss(animated: true, completion: nil)
-        if let compressedImage = imageView.image?.lowerJpegQuality(.lowest) {
+        if let compressedImage = imageView.image?.wxCompress() {
             print("image compressed")
-            uploadImagePic(img1: imageView.image!)
+            uploadImagePic(img1: compressedImage)
         } else{
             uploadImagePic(img1: imageView.image!)
         }
