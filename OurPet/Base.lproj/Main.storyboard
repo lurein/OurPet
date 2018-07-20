@@ -445,6 +445,9 @@
                                     <segment title="Yes"/>
                                 </segments>
                                 <color key="tintColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="morningFedValueChanged:" destination="6YG-vm-2j1" eventType="valueChanged" id="Jne-MY-bGW"/>
+                                </connections>
                             </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="by:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S2u-8e-Phr">
                                 <rect key="frame" x="96" y="415" width="46" height="34"/>
@@ -481,6 +484,9 @@
                                     <segment title="Yes"/>
                                 </segments>
                                 <color key="tintColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="eveningFedValueChanged:" destination="6YG-vm-2j1" eventType="valueChanged" id="EhV-SM-sL0"/>
+                                </connections>
                             </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="by:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AeL-X8-aHo">
                                 <rect key="frame" x="91" y="546" width="46" height="33"/>
@@ -505,6 +511,9 @@
                                     <segment title="Yes"/>
                                 </segments>
                                 <color key="tintColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="walkedTodayValueChanged:" destination="6YG-vm-2j1" eventType="valueChanged" id="yWC-BO-a7O"/>
+                                </connections>
                             </segmentedControl>
                             <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pet_image" translatesAutoresizingMaskIntoConstraints="NO" id="5fS-i7-NFb">
                                 <rect key="frame" x="160" y="126" width="199" height="194"/>

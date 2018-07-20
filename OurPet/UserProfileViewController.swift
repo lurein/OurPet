@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import QuartzCore
 import WXImageCompress
-
+import OneSignal
 
 class UserProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     // MARK: Outlets and Declarations
@@ -22,7 +22,9 @@ class UserProfileViewController: UIViewController, UIImagePickerControllerDelega
     var OPuser : OPUser!
     @IBOutlet weak var imageView: UIImageView!
     var imagePicker = UIImagePickerController()
-
+    var playerId : String?
+    var pushToken : String?
+    
     
     // MARK: View Setup
     
@@ -59,6 +61,10 @@ class UserProfileViewController: UIViewController, UIImagePickerControllerDelega
         tap.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tap)
         
+        // This generates the player_id for OneSignal
+        let status: OSPermissionSubscriptionState = OneSignal.getPermissionSubscriptionState()
+        pushToken = status.subscriptionStatus.pushToken
+        playerId = status.subscriptionStatus.userId
         }
     
     func updateUserInterface(){
@@ -109,6 +115,23 @@ class UserProfileViewController: UIViewController, UIImagePickerControllerDelega
     @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
         let db = Firestore.firestore()
         let ref = db.collection("opusers").document((Auth.auth().currentUser?.uid)!)
+        
+        OneSignal.sendTag("userID", value: Auth.auth().currentUser?.uid)
+        
+        // Updates the player
+        if pushToken != nil {
+            ref.updateData([
+                "notificationID": playerId
+            ]) { err in
+                if let err = err {
+                    print("Error updating notificationID: \(err)")
+                } else {
+                    print("notificationID successfully updated")
+                }
+                
+            }
+        }
+        // Updates userProfile details
         ref.updateData([
             "fullName": nameField.text,
             "userName": usernameField.text

@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import SDWebImage
 import WXImageCompress
+import OneSignal
 
 class DetailViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     // MARK: Outlets and Declarations
@@ -32,6 +33,10 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet weak var eveningLabel: UILabel!
     
     @IBOutlet weak var deleteButton: UIButton!
+    
+    var walkedValueChangedBinary : Int = 0
+    var morningFedValueChangedBinary : Int = 0
+    var eveningFedValueChangedBinary : Int = 0
     
     // MARK: View Setup
     
@@ -199,6 +204,36 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         pet.eveningFedBy = eveningFedByField.text!
         pet.saveData { success in
             if success {
+                // This large block below handles push notifications
+                for eachCarer in self.pet.carers {
+                    if eachCarer != Auth.auth().currentUser?.uid && self.pet.carers.count >= 1 {
+                        let db = Firestore.firestore()
+                        let carerRef = db.collection("opusers").document(eachCarer)
+                        carerRef.getDocument { (document, error) in
+                            if let document = document, document.exists {
+                                var notificationID = document.get("notificationID")
+                                if self.walkedValueChangedBinary == 1 && self.walkedTodaySegment.selectedSegmentIndex == 1 {
+                                    OneSignal.postNotification([
+                                        "include_player_ids": [notificationID],
+                                        "headings": ["en": "\(self.pet.petName) has been walked"],
+                                        "contents": ["en": "Tap to see details"],
+                                        ])
+                                }
+                                if (self.morningFedValueChangedBinary == 1 && self.morningFedSegment.selectedSegmentIndex == 1) || (self.eveningFedValueChangedBinary == 1 && self.eveningFedSegment.selectedSegmentIndex == 1) {
+                                    OneSignal.postNotification([
+                                        "include_player_ids": [notificationID],
+                                        "headings": ["en": "\(self.pet.petName) has been fed"],
+                                        "contents": ["en": "Tap to see details"],
+                                        ])
+                                }
+                                
+                            }
+                
+                        }
+                    }
+                }
+                    
+                    
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // Time delay to allow upload to process
                     UIViewController.removeSpinner(spinner: sv)
                     self.leaveViewController()
@@ -211,6 +246,18 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     // MARK: Additional Functions
+    
+    @IBAction func walkedTodayValueChanged(_ sender: UISegmentedControl) {
+        walkedValueChangedBinary = 1
+    }
+    
+    @IBAction func morningFedValueChanged(_ sender: UISegmentedControl) {
+        morningFedValueChangedBinary = 1
+    }
+    
+    @IBAction func eveningFedValueChanged(_ sender: UISegmentedControl) {
+        eveningFedValueChangedBinary = 1
+    }
     
     @IBAction func deleteButtonPressed(_ sender: UIButton) {
         let deleteAlert = UIAlertController(title: "Delete Pet", message: "Are you sure you want to delete \(pet.petName)? This action cannot be undone. ", preferredStyle: UIAlertControllerStyle.alert)
