@@ -7,16 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		95090890214EEEE000D1F261 /* KeyboardLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9509088F214EEEE000D1F261 /* KeyboardLayoutConstraint.swift */; };
 		95091A0620F3CD0D00EFC7C3 /* CardsCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95091A0520F3CD0D00EFC7C3 /* CardsCollectionViewLayout.swift */; };
 		9509FFAB2092D3C500B7A094 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9509FFAA2092D3C500B7A094 /* AppDelegate.swift */; };
 		9509FFAD2092D3C500B7A094 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9509FFAC2092D3C500B7A094 /* ViewController.swift */; };
 		9509FFB02092D3C500B7A094 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9509FFAE2092D3C500B7A094 /* Main.storyboard */; };
-		9509FFB22092D3C800B7A094 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9509FFB12092D3C800B7A094 /* Assets.xcassets */; };
 		9509FFB52092D3C800B7A094 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9509FFB32092D3C800B7A094 /* LaunchScreen.storyboard */; };
 		9509FFBD2092D71A00B7A094 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9509FFBC2092D71A00B7A094 /* GoogleService-Info.plist */; };
 		9509FFBF209419FE00B7A094 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9509FFBE209419FE00B7A094 /* DetailViewController.swift */; };
 		9509FFC12095506400B7A094 /* Pet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9509FFC02095506400B7A094 /* Pet.swift */; };
 		9509FFC3209556A000B7A094 /* Pets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9509FFC2209556A000B7A094 /* Pets.swift */; };
+		95930CAE2125CA6B00B7E2BF /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95930CAD2125CA6B00B7E2BF /* CardView.swift */; };
+		95930CB02126FE4800B7E2BF /* Assets 15-00-24-161.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95930CAF2126FE4700B7E2BF /* Assets 15-00-24-161.xcassets */; };
 		95B72CE720CED1AC00B9AC71 /* OPUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B72CE620CED1AB00B9AC71 /* OPUser.swift */; };
 		95B72CE920D2B16F00B9AC71 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B72CE820D2B16F00B9AC71 /* UserProfileViewController.swift */; };
 		95B72CEB20D6750F00B9AC71 /* ManageCarers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B72CEA20D6750F00B9AC71 /* ManageCarers.swift */; };
@@ -56,18 +58,21 @@
 		19996D37050E10713D61FAC9 /* Pods-OurPet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OurPet.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OurPet/Pods-OurPet.debug.xcconfig"; sourceTree = "<group>"; };
 		6E734293AA67C75045456E17 /* Pods_OneSignalNotificationServiceExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OneSignalNotificationServiceExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		73477B6A72B31D71A31F9E3C /* Pods_OurPet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OurPet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9509088F214EEEE000D1F261 /* KeyboardLayoutConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardLayoutConstraint.swift; sourceTree = "<group>"; };
 		95091A0520F3CD0D00EFC7C3 /* CardsCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsCollectionViewLayout.swift; sourceTree = "<group>"; };
 		9509FFA72092D3C500B7A094 /* OurPet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OurPet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9509FFAA2092D3C500B7A094 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9509FFAC2092D3C500B7A094 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		9509FFAF2092D3C500B7A094 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		9509FFB12092D3C800B7A094 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9509FFB42092D3C800B7A094 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9509FFB62092D3C800B7A094 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9509FFBC2092D71A00B7A094 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9509FFBE209419FE00B7A094 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		9509FFC02095506400B7A094 /* Pet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pet.swift; sourceTree = "<group>"; };
 		9509FFC2209556A000B7A094 /* Pets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pets.swift; sourceTree = "<group>"; };
+		95930C9F2125C61A00B7E2BF /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DetailViewController.swift; path = Cards/Sources/DetailViewController.swift; sourceTree = "<group>"; };
+		95930CAD2125CA6B00B7E2BF /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		95930CAF2126FE4700B7E2BF /* Assets 15-00-24-161.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets 15-00-24-161.xcassets"; sourceTree = "<group>"; };
 		95B72CE620CED1AB00B9AC71 /* OPUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OPUser.swift; path = /Users/enokajayamanne/Desktop/OurPet/OurPet/OPUser.swift; sourceTree = "<absolute>"; };
 		95B72CE820D2B16F00B9AC71 /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		95B72CEA20D6750F00B9AC71 /* ManageCarers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageCarers.swift; sourceTree = "<group>"; };
@@ -115,6 +120,7 @@
 		9509FF9E2092D3C500B7A094 = {
 			isa = PBXGroup;
 			children = (
+				95930C9F2125C61A00B7E2BF /* DetailViewController.swift */,
 				9509FFA92092D3C500B7A094 /* OurPet */,
 				95E6867521021D760090028B /* OneSignalNotificationServiceExtension */,
 				9509FFA82092D3C500B7A094 /* Products */,
@@ -142,16 +148,18 @@
 				9509FFAC2092D3C500B7A094 /* ViewController.swift */,
 				95C8294420FA2777006651DB /* CollectionViewCell.swift */,
 				9509FFAE2092D3C500B7A094 /* Main.storyboard */,
+				9509088F214EEEE000D1F261 /* KeyboardLayoutConstraint.swift */,
 				95B72CEA20D6750F00B9AC71 /* ManageCarers.swift */,
 				95B72CE820D2B16F00B9AC71 /* UserProfileViewController.swift */,
 				9509FFBE209419FE00B7A094 /* DetailViewController.swift */,
 				95B72CE620CED1AB00B9AC71 /* OPUser.swift */,
 				9509FFC02095506400B7A094 /* Pet.swift */,
 				9509FFC2209556A000B7A094 /* Pets.swift */,
-				9509FFB12092D3C800B7A094 /* Assets.xcassets */,
+				95930CAD2125CA6B00B7E2BF /* CardView.swift */,
 				9509FFB32092D3C800B7A094 /* LaunchScreen.storyboard */,
 				9509FFB62092D3C800B7A094 /* Info.plist */,
 				9509FFBC2092D71A00B7A094 /* GoogleService-Info.plist */,
+				95930CAF2126FE4700B7E2BF /* Assets 15-00-24-161.xcassets */,
 			);
 			path = OurPet;
 			sourceTree = "<group>";
@@ -280,7 +288,7 @@
 			files = (
 				9509FFB52092D3C800B7A094 /* LaunchScreen.storyboard in Resources */,
 				9509FFBD2092D71A00B7A094 /* GoogleService-Info.plist in Resources */,
-				9509FFB22092D3C800B7A094 /* Assets.xcassets in Resources */,
+				95930CB02126FE4800B7E2BF /* Assets 15-00-24-161.xcassets in Resources */,
 				9509FFB02092D3C500B7A094 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -426,6 +434,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95090890214EEEE000D1F261 /* KeyboardLayoutConstraint.swift in Sources */,
 				9509FFBF209419FE00B7A094 /* DetailViewController.swift in Sources */,
 				95B72CED20DD638F00B9AC71 /* AboutOPViewController.swift in Sources */,
 				95091A0620F3CD0D00EFC7C3 /* CardsCollectionViewLayout.swift in Sources */,
@@ -436,6 +445,7 @@
 				9509FFC3209556A000B7A094 /* Pets.swift in Sources */,
 				95B72CEB20D6750F00B9AC71 /* ManageCarers.swift in Sources */,
 				9509FFAB2092D3C500B7A094 /* AppDelegate.swift in Sources */,
+				95930CAE2125CA6B00B7E2BF /* CardView.swift in Sources */,
 				95C8294520FA2777006651DB /* CollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -529,7 +539,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -583,7 +593,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -602,6 +612,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8UM3CC38Z4;
 				INFOPLIST_FILE = OurPet/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -623,6 +634,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8UM3CC38Z4;
 				INFOPLIST_FILE = OurPet/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

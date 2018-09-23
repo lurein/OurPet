@@ -50,6 +50,7 @@ class UserProfileViewController: UIViewController, UIImagePickerControllerDelega
         var bgimage = UIImage(named: "moon_purple.jpg") as! UIImage
         self.navigationController!.navigationBar.setBackgroundImage(bgimage,
                                                                     for: .default)
+        assignbackground()
         
         let anyAvatarImage = imageView.image
         imageView.maskCircle(anyImage: anyAvatarImage!)
@@ -170,7 +171,18 @@ class UserProfileViewController: UIViewController, UIImagePickerControllerDelega
         dismiss(animated: true, completion: nil)
     }
 
- 
+    func assignbackground(){
+        let patternBackground = UIImage(named: "bgImage.pdf")
+        
+        var patternImageView : UIImageView!
+        patternImageView = UIImageView(frame: view.bounds)
+        patternImageView.contentMode =  UIViewContentMode.scaleAspectFill
+        patternImageView.clipsToBounds = true
+        patternImageView.image = patternBackground
+        patternImageView.center = patternImageView.center
+        view.addSubview(patternImageView)
+        self.view.sendSubview(toBack: patternImageView)
+    }
     
     func downloadUserImage(){
         let ispinner = UIViewController.imageSpinner(onView: self.imageView)

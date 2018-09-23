@@ -23,16 +23,17 @@ class Pet  {
     var carers: [String]
     var userPets : [String] = [""]
     var hasImage : Int
+    var lastReset : String
     
     var dictionary: [String: Any] {
         return ["petName": petName, "walkedToday": walkedToday, "morningFedStatus": morningFedStatus,
-                "morningFedBy": morningFedBy, "eveningFedStatus": eveningFedStatus, "eveningFedBy": eveningFedBy,  "postingUserID": postingUserID, "carers": carers, "hasImage": hasImage]
+                "morningFedBy": morningFedBy, "eveningFedStatus": eveningFedStatus, "eveningFedBy": eveningFedBy,  "postingUserID": postingUserID, "carers": carers, "hasImage": hasImage, "lastReset": lastReset]
     }
     
     //MARK: Initializers
     
     init(petName: String, walkedToday: String,
-         morningFedStatus: String, morningFedBy: String, eveningFedStatus: String, postingUserID: String, eveningFedBy: String, documentID: String, carers: [String], hasImage: Int) {
+         morningFedStatus: String, morningFedBy: String, eveningFedStatus: String, postingUserID: String, eveningFedBy: String, documentID: String, carers: [String], hasImage: Int, lastReset: String) {
         self.petName = petName
         self.walkedToday = walkedToday
         self.morningFedStatus = morningFedStatus
@@ -43,10 +44,12 @@ class Pet  {
         self.documentID = documentID
         self.carers = carers
         self.hasImage = hasImage
+        self.lastReset = lastReset
     }
     
+    
     convenience init() {
-        self.init(petName: "", walkedToday: "", morningFedStatus: "", morningFedBy: "", eveningFedStatus: "", postingUserID: "", eveningFedBy: "", documentID: "", carers: [(Auth.auth().currentUser?.uid)!], hasImage: 0)
+        self.init(petName: "", walkedToday: "", morningFedStatus: "", morningFedBy: "", eveningFedStatus: "", postingUserID: "", eveningFedBy: "", documentID: "", carers: [(Auth.auth().currentUser?.uid)!], hasImage: 0, lastReset: "")
     }
     
     convenience init(dictionary: [String: Any]) {
@@ -59,7 +62,8 @@ class Pet  {
         let postingUserID = dictionary["postingUserID"] as! String? ?? ""
         let carers = dictionary["carers"] as! [String]? ?? [(Auth.auth().currentUser?.uid)!]
         let hasImage = dictionary["hasImage"] as! Int? ?? 0
-        self.init(petName: petName, walkedToday: walkedToday, morningFedStatus: morningFedStatus, morningFedBy: morningFedBy, eveningFedStatus: eveningFedStatus, postingUserID: postingUserID, eveningFedBy: eveningFedBy, documentID: "", carers: carers, hasImage: hasImage)
+        let lastReset = dictionary["lastReset"] as! String? ?? ""
+        self.init(petName: petName, walkedToday: walkedToday, morningFedStatus: morningFedStatus, morningFedBy: morningFedBy, eveningFedStatus: eveningFedStatus, postingUserID: postingUserID, eveningFedBy: eveningFedBy, documentID: "", carers: carers, hasImage: hasImage, lastReset: lastReset)
     }
     
     // MARK: Class Functions
@@ -73,7 +77,8 @@ class Pet  {
         }
         self.postingUserID = postingUserID
         // Create the dictionary representing the data we want to save
-        let dataToSave = self.dictionary
+        var dataToSave = self.dictionary
+        dataToSave["lastReset"] = dateStringer()
         // if we HAVE saved a record, we'll have a documentID
         if self.documentID != "" {
             let ref = db.collection("pets").document(self.documentID)
@@ -111,5 +116,13 @@ class Pet  {
         }
     }
     
+    func dateStringer() -> String {
+        let currentDate = Date()
+        let dateformatter = DateFormatter()
+        dateformatter.dateStyle = .short
+        dateformatter.timeStyle = .none
+        return dateformatter.string(from: currentDate)
+        
+    }
 }
 

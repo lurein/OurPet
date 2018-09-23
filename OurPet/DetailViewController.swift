@@ -11,6 +11,7 @@ import Firebase
 import SDWebImage
 import WXImageCompress
 import OneSignal
+//import Cards
 
 class DetailViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     // MARK: Outlets and Declarations
@@ -34,6 +35,14 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     @IBOutlet weak var deleteButton: UIButton!
     
+    @IBOutlet weak var morningCardView: CardView!
+    
+    @IBOutlet weak var eveningCardView: CardView!
+    
+    @IBOutlet weak var morningImageView: UIImageView!
+    
+    @IBOutlet weak var eveningImageView: UIImageView!
+    
     var walkedValueChangedBinary : Int = 0
     var morningFedValueChangedBinary : Int = 0
     var eveningFedValueChangedBinary : Int = 0
@@ -52,12 +61,12 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         } else {
             updateUserInterface()
         }
-        morningLabel.backgroundColor = UIColor(patternImage: UIImage(named: "moon_purple.jpg")!)
-        eveningLabel.backgroundColor = UIColor(patternImage: UIImage(named: "moon_purple.jpg")!)
         
         var bgimage = UIImage(named: "moon_purple.jpg") as! UIImage
         self.navigationController!.navigationBar.setBackgroundImage(bgimage,
                                                                     for: .default)
+        
+        
         morningFedByField.layer.cornerRadius = 8.0
         morningFedByField.layer.masksToBounds = true
         var lilac = UIColor(red:0.67, green:0.22, blue:0.96, alpha:1.0)
@@ -71,6 +80,9 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         petNameField.layer.masksToBounds = true
         petNameField.layer.borderColor = lilac.cgColor
         petNameField.layer.borderWidth = 1.0
+        
+        //morningCardView.backgroundColor = UIColor(patternImage: UIImage(named: "nightCartoon.jpg")!)
+        assignbackground()
         
         let anyAvatarImage = imageView.image
         imageView.maskCircle(anyImage: anyAvatarImage!)
@@ -118,11 +130,46 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     // MARK: Image Functions
     
+    func assignbackground(){
+        let morningBackground = UIImage(named: "field_sunny_vector.png")
+        let eveningBackground = UIImage(named: "windmill_nightscape.png")
+        let patternBackground = UIImage(named: "bgImage.pdf")
+        
+        morningImageView.contentMode =  UIViewContentMode.scaleAspectFill
+        morningImageView.layer.cornerRadius = 20.0
+        morningImageView.clipsToBounds = true
+        morningImageView.image = morningBackground
+        morningImageView.center = morningImageView.center
+        morningCardView.addSubview(morningImageView)
+        self.morningCardView.sendSubview(toBack: morningImageView)
+       
+        
+        eveningImageView.contentMode =  UIViewContentMode.scaleAspectFill
+        eveningImageView.layer.cornerRadius = 20.0
+        eveningImageView.clipsToBounds = true
+        eveningImageView.image = eveningBackground
+        eveningImageView.center = eveningImageView.center
+        eveningCardView.addSubview(eveningImageView)
+        self.eveningCardView.sendSubview(toBack: eveningImageView)
+        
+        var patternImageView : UIImageView!
+        patternImageView = UIImageView(frame: view.bounds)
+        patternImageView.contentMode =  UIViewContentMode.scaleAspectFill
+        patternImageView.clipsToBounds = true
+        patternImageView.image = patternBackground
+        patternImageView.center = patternImageView.center
+        view.addSubview(patternImageView)
+        self.view.sendSubview(toBack: patternImageView)
+    }
+    
     @IBAction func imageViewTapped(_ sender: UITapGestureRecognizer) {
-        print("tapped")
-        imagePicker.sourceType = .photoLibrary
-        imagePicker.delegate = self
-        present(imagePicker, animated: true, completion: nil)
+        let isPresentingInAddMode = presentingViewController is UINavigationController
+        if !isPresentingInAddMode {
+            print("tapped")
+            imagePicker.sourceType = .photoLibrary
+            imagePicker.delegate = self
+            present(imagePicker, animated: true, completion: nil)
+        }
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
