@@ -17,6 +17,9 @@ class ManageCarers: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchLabel: UILabel!
     @IBOutlet weak var carersLabel: UILabel!
+    @IBOutlet weak var searchCardView: CardView!
+    
+    
     var pet: Pet!
     var foundUserID = ""
     var userPets = [""]
@@ -41,8 +44,28 @@ class ManageCarers: UIViewController {
         var lilac = UIColor(red:0.67, green:0.22, blue:0.96, alpha:1.0)
         usernameField.layer.borderColor = lilac.cgColor
         usernameField.layer.borderWidth = 1.0
-        searchLabel.backgroundColor = UIColor(patternImage: UIImage(named: "moon_purple.jpg")!)
-        carersLabel.backgroundColor = UIColor(patternImage: UIImage(named: "moon_purple.jpg")!)
+        
+        searchLabel.text = "Who else cares for \(pet.petName)?"
+        
+        // This creates the tap dismisser for the keyboard
+        let tap = UITapGestureRecognizer(target: self.view, action: Selector("endEditing:"))
+        tap.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(tap)
+        
+        assignbackground()
+    }
+    
+    func assignbackground(){
+        let patternBackground = UIImage(named: "bgImage.pdf")
+        
+        var patternImageView : UIImageView!
+        patternImageView = UIImageView(frame: view.bounds)
+        patternImageView.contentMode =  UIViewContentMode.scaleAspectFill
+        patternImageView.clipsToBounds = true
+        patternImageView.image = patternBackground
+        patternImageView.center = patternImageView.center
+        view.addSubview(patternImageView)
+        self.view.sendSubview(toBack: patternImageView)
     }
     
     // MARK: Bar Buttons
@@ -104,6 +127,9 @@ class ManageCarers: UIViewController {
     }
     
 }
+    func removeCarer(carer: String){
+        // needs to be done
+    }
 }
 
 // MARK: Extensions
@@ -131,4 +157,15 @@ extension ManageCarers: UITableViewDelegate, UITableViewDataSource {
     }
         return cell
 }
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .delete {
+            pet.carers.remove(at: indexPath.row)
+            self.tableView.reloadData()
+        }
+    }
 }
+

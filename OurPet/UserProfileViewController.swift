@@ -9,8 +9,8 @@
 import UIKit
 import Firebase
 import QuartzCore
-
-
+import WXImageCompress
+import OneSignal
 
 class UserProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     // MARK: Outlets and Declarations
@@ -22,7 +22,9 @@ class UserProfileViewController: UIViewController, UIImagePickerControllerDelega
     var OPuser : OPUser!
     @IBOutlet weak var imageView: UIImageView!
     var imagePicker = UIImagePickerController()
-
+    var playerId : String?
+    var pushToken : String?
+    
     
     // MARK: View Setup
     
@@ -48,13 +50,22 @@ class UserProfileViewController: UIViewController, UIImagePickerControllerDelega
         var bgimage = UIImage(named: "moon_purple.jpg") as! UIImage
         self.navigationController!.navigationBar.setBackgroundImage(bgimage,
                                                                     for: .default)
+        assignbackground()
         
         let anyAvatarImage = imageView.image
         imageView.maskCircle(anyImage: anyAvatarImage!)
         imageView.layer.borderWidth = 1.0
         imageView.layer.borderColor = lilac.cgColor
         
+        // This creates the tap dismisser for the keyboard
+        let tap = UITapGestureRecognizer(target: self.view, action: Selector("endEditing:"))
+        tap.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(tap)
         
+        // This generates the player_id for OneSignal
+        let status: OSPermissionSubscriptionState = OneSignal.getPermissionSubscriptionState()
+        pushToken = status.subscriptionStatus.pushToken
+        playerId = status.subscriptionStatus.userId
         }
     
     func updateUserInterface(){
@@ -105,6 +116,23 @@ class UserProfileViewController: UIViewController, UIImagePickerControllerDelega
     @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
         let db = Firestore.firestore()
         let ref = db.collection("opusers").document((Auth.auth().currentUser?.uid)!)
+        
+        OneSignal.sendTag("userID", value: Auth.auth().currentUser?.uid)
+        
+        // Updates the player
+        if pushToken != nil {
+            ref.updateData([
+                "notificationID": playerId
+            ]) { err in
+                if let err = err {
+                    print("Error updating notificationID: \(err)")
+                } else {
+                    print("notificationID successfully updated")
+                }
+                
+            }
+        }
+        // Updates userProfile details
         ref.updateData([
             "fullName": nameField.text,
             "userName": usernameField.text
@@ -131,9 +159,9 @@ class UserProfileViewController: UIViewController, UIImagePickerControllerDelega
         let selectedImage = info[UIImagePickerControllerOriginalImage] as! UIImage
         imageView.image = selectedImage
         dismiss(animated: true, completion: nil)
-        if let compressedImage = imageView.image?.lowerJpegQuality(.lowest) {
+        if let compressedImage = imageView.image?.wxCompress() {
             print("image compressed")
-            uploadImagePic(img1: imageView.image!)
+            uploadImagePic(img1: compressedImage)
         } else{
             uploadImagePic(img1: imageView.image!)
         }
@@ -143,7 +171,18 @@ class UserProfileViewController: UIViewController, UIImagePickerControllerDelega
         dismiss(animated: true, completion: nil)
     }
 
- 
+    func assignbackground(){
+        let patternBackground = UIImage(named: "bgImage.pdf")
+        
+        var patternImageView : UIImageView!
+        patternImageView = UIImageView(frame: view.bounds)
+        patternImageView.contentMode =  UIViewContentMode.scaleAspectFill
+        patternImageView.clipsToBounds = true
+        patternImageView.image = patternBackground
+        patternImageView.center = patternImageView.center
+        view.addSubview(patternImageView)
+        self.view.sendSubview(toBack: patternImageView)
+    }
     
     func downloadUserImage(){
         let ispinner = UIViewController.imageSpinner(onView: self.imageView)

@@ -12,13 +12,14 @@ import FirebaseUI
 import AlertOnboarding
 
 
+
 class ViewController: UIViewController{
     
     // MARK: Outlets and Declarations
     
     @IBOutlet weak var addButtonPressed: UIBarButtonItem!
     @IBOutlet weak var collectionView: UICollectionView!
-    
+    @IBOutlet weak var squigglyArrow: UIImageView!
     var authUI: FUIAuth!
     var pets: Pets!
     var globalIndexPath : IndexPath?
@@ -41,12 +42,15 @@ class ViewController: UIViewController{
         authUI = FUIAuth.defaultAuthUI()
         authUI?.delegate = self
         pets = Pets()
-        
+        squigglyArrow.isHidden = true
    
         // Sets the navigation bar gradient
         var bgimage = UIImage(named: "moon_purple.jpg") as! UIImage
         self.navigationController!.navigationBar.setBackgroundImage(bgimage,
                                                                     for: .default)
+        
+        assignbackground()
+        collectionView.alpha = 0
     
         // Card Cell Setup
         collectionView.collectionViewLayout = CardsCollectionViewLayout()
@@ -61,7 +65,8 @@ class ViewController: UIViewController{
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        squigglyArrow.isHidden = true
+        let firstSignIn = UserDefaults.standard.integer(forKey: "firstSignIn") ?? 1
         
         if Auth.auth().currentUser?.uid != nil {
         pets.loadData {
@@ -69,33 +74,98 @@ class ViewController: UIViewController{
             self.collectionView.reloadData()
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 1 to desired number of seconds
                 self.collectionView.reloadData()
-                if self.pets.loadedBinary != 0 {
+                if self.pets.loadedBinary == 1 {
                 UIViewController.removeSpinner(spinner: sv)
+                    self.collectionView.alpha = 1
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+                        if self.pets.petArray.count == 0 {
+                            if firstSignIn == 1 {
+                                self.squigglyArrow.isHidden = false
+                                UserDefaults.standard.set(0, forKey: "")
+                            }
+                            
+                        } else {
+                            self.dailyResetting()
+                        }
+                    }
                 }
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { // change 2 to desired number of seconds
                self.collectionView.reloadData()
-                if self.pets.loadedBinary != 0 {
+                if self.pets.loadedBinary == 1 {
                     UIViewController.removeSpinner(spinner: sv)
+                    self.collectionView.alpha = 1
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+                        if self.pets.petArray.count == 0 {
+                            if firstSignIn == 1 {
+                                self.squigglyArrow.isHidden = false
+                                UserDefaults.standard.set(0, forKey: "")
+                            }
+                        }else {
+                            self.dailyResetting()
+                        }
+                    }
                 }
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) { // change 3 to desired number of seconds
                 self.collectionView.reloadData()
-                if self.pets.loadedBinary != 0 {
+                if self.pets.loadedBinary == 1 {
                     UIViewController.removeSpinner(spinner: sv)
+                    self.collectionView.alpha = 1
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+                        if self.pets.petArray.count == 0 {
+                            if firstSignIn == 1 {
+                                self.squigglyArrow.isHidden = false
+                                UserDefaults.standard.set(0, forKey: "")
+                            }
+                        } else {
+                            self.dailyResetting()
+                        }
+                    }
                 }
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 4) { // change 4 to desired number of seconds
                 self.collectionView.reloadData()
-                if self.pets.loadedBinary != 0 {
+                if self.pets.loadedBinary == 1 {
                     UIViewController.removeSpinner(spinner: sv)
+                    self.collectionView.alpha = 1
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+                        if self.pets.petArray.count == 0 {
+                            if firstSignIn == 1 {
+                                self.squigglyArrow.isHidden = false
+                                UserDefaults.standard.set(0, forKey: "")
+                            }
+                        } else {
+                            self.dailyResetting()
+                        }
+                    }
+                    
                 }
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 5) { // change 5 to desired number of seconds
                 self.collectionView.reloadData()
+                if self.pets.loadedBinary == 1 {
+                    UIViewController.removeSpinner(spinner: sv)
+                    self.collectionView.alpha = 1
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+                        if self.pets.petArray.count == 0 {
+                            if firstSignIn == 1 {
+                                self.squigglyArrow.isHidden = false
+                                UserDefaults.standard.set(0, forKey: "")
+                            }
+                        } else {
+                            self.dailyResetting()
+                        }
+                    }
+                }
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 6) { // change 6 to desired number of seconds
+                self.collectionView.reloadData()
                 UIViewController.removeSpinner(spinner: sv)
+                self.collectionView.alpha = 1
                 if self.pets.loadedBinary == 0{
                     // Creates the Check Internet Connection Alert
+                    self.collectionView.alpha = 0
                     let internetAlert = UIAlertController(title: "Poor Network Connection", message: "The internet connection was too slow, try open and close 'My Profile' or restarting the app", preferredStyle: .alert)
                     let action = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
                     internetAlert.addAction(action)
@@ -196,9 +266,9 @@ class ViewController: UIViewController{
         UIColor(red: 194, green: 234, blue: 189), // green
         UIColor(red: 255, green: 184, blue: 184), // young salmon
         UIColor(red: 249, green: 220, blue: 92), // yellow
-        UIColor(red: 52, green: 231, blue: 228), // fresh turquoise
-        UIColor(red: 243, green: 166, blue: 131), // creamy peach
         UIColor(red: 205, green: 132, blue: 241), // bright lilac
+        UIColor(red: 243, green: 166, blue: 131), // creamy peach
+        UIColor(red: 52, green: 231, blue: 228), // fresh turquoise
         UIColor(red: 255, green: 184, blue: 209), // pink
         UIColor(red: 75, green: 207, blue: 250), // megaman blue
         UIColor(red: 11, green: 232, blue: 129), // minty green
@@ -206,7 +276,65 @@ class ViewController: UIViewController{
         UIColor(red: 197, green: 108, blue: 240) // light purple
     ]
 
+    func assignbackground(){
+        let patternBackground = UIImage(named: "bgImage.pdf")
+        
+        var patternImageView : UIImageView!
+        patternImageView = UIImageView(frame: view.bounds)
+        patternImageView.contentMode =  UIViewContentMode.scaleAspectFill
+        patternImageView.clipsToBounds = true
+        patternImageView.image = patternBackground
+        patternImageView.center = patternImageView.center
+        view.addSubview(patternImageView)
+        self.view.sendSubview(toBack: patternImageView)
+    }
     
+// MARK: Date Functions
+    func resetData(petRef: String, dateString: String){
+        // This updates the datestring in the pets Firebase doc
+        let db = Firestore.firestore()
+        let dateRef = db.collection("pets").document(petRef)
+        dateRef.updateData(["lastReset": dateString, "morningFedStatus": "0", "morningFedBy": "", "eveningFedStatus": "0", "eveningFedBy": "", "walkedToday": "0"]) { err in
+            if let err = err {
+                print("Error in Daily Resettingx: \(err)")
+            } else {
+                print("Daily Resetting Successful")
+                self.pets.petArray = []
+                self.pets.loadData {
+                    self.collectionView.reloadData()
+                }
+                
+            }
+        }
+    }
+    
+    func compareDates(dateToCompare: String, petRef: String){
+        // This block gets and formats the current date into a dateString
+        let unformattedCurrentDate = Date()
+        let dateformatter = DateFormatter()
+        dateformatter.dateStyle = .short
+        dateformatter.timeStyle = .none
+        let dateString = dateformatter.string(from: unformattedCurrentDate)
+        let currentDate = dateformatter.date(from: dateString)
+       
+        let lastDate = dateformatter.date(from: dateToCompare)
+        
+        
+        if currentDate! > lastDate! {
+            // update the firebase date with this one, and reset data
+            resetData(petRef: petRef, dateString: dateString)
+        }
+    }
+    
+    func dailyResetting(){
+        for pet in self.pets.petArray {
+            let petID = pet.documentID
+            // Now we need to call on the lastReset date here
+            let lastReset = pet.lastReset
+            print(lastReset)
+            compareDates(dateToCompare: lastReset, petRef: petID)
+        }
+    }
     
 }
 
@@ -262,7 +390,11 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCellReuseIdentifier", for: indexPath) as! CollectionViewCell
         
-        
+        if pets.petArray.count == 1{
+            cell.activateShadowBinary = 1   // This enables the card shadow if there is just 1 card
+        } else {
+            cell.activateShadowBinary = 0
+        }
         // This function downloads the pet image and masks it
         func downloadPetImage(){
             let ispinner = UIViewController.imageSpinner(onView: cell.petImage)
