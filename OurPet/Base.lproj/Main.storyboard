@@ -169,7 +169,7 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="swirly-scribbled-arrow" translatesAutoresizingMaskIntoConstraints="NO" id="rUs-TV-fZZ">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noPets" translatesAutoresizingMaskIntoConstraints="NO" id="rUs-TV-fZZ">
                                 <rect key="frame" x="16" y="70" width="343" height="418"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ase-1R-fLj" customClass="LGButton" customModule="LGButton">
@@ -243,6 +243,7 @@
                         <outlet property="addButtonPressed" destination="s6N-bf-MJl" id="7DJ-rV-oKU"/>
                         <outlet property="collectionView" destination="xWD-rQ-4sj" id="Wc2-9v-B7P"/>
                         <outlet property="squigglyArrow" destination="rUs-TV-fZZ" id="wF6-VS-cvP"/>
+                        <segue destination="Me3-f2-lSM" kind="showDetail" identifier="resetVC" animates="NO" id="AvP-Ni-uE8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -391,6 +392,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="cancelBarButton" destination="itd-PS-fd2" id="v01-y4-v9a"/>
                         <outlet property="imageView" destination="ldR-IT-2xk" id="Ddk-4p-qj7"/>
                         <outlet property="nameField" destination="Edo-4W-muo" id="qgv-TK-KNh"/>
                         <outlet property="saveBarButton" destination="7O7-K3-KOL" id="MX1-nW-Spj"/>
@@ -405,7 +407,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2076" y="886.50674662668678"/>
+            <point key="canvasLocation" x="3015.1999999999998" y="886.50674662668678"/>
         </scene>
         <!--Pet Info-->
         <scene sceneID="a3H-b8-ZBn">
@@ -496,7 +498,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="by:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AeL-X8-aHo">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="at:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AeL-X8-aHo">
                                         <rect key="frame" x="61" y="75" width="32" height="33"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
@@ -608,7 +610,7 @@
                                             <action selector="morningFedValueChanged:" destination="6YG-vm-2j1" eventType="valueChanged" id="Jne-MY-bGW"/>
                                         </connections>
                                     </segmentedControl>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="by:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S2u-8e-Phr">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="at:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S2u-8e-Phr">
                                         <rect key="frame" x="61" y="85" width="46" height="33"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
@@ -749,9 +751,9 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Carer's Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qb4-4h-89Q">
-                                        <rect key="frame" x="8" y="53" width="158" height="40"/>
+                                        <rect key="frame" x="8" y="53" width="220" height="40"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="158" id="YeN-Z6-Z8b"/>
+                                            <constraint firstAttribute="width" constant="220" id="YeN-Z6-Z8b"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                         <color key="textColor" red="0.52277171609999995" green="0.54225569959999997" blue="0.9529882073" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1000,6 +1002,22 @@
             </objects>
             <point key="canvasLocation" x="2526" y="-653"/>
         </scene>
+        <!--Reset View Controller-->
+        <scene sceneID="nlq-ho-9CC">
+            <objects>
+                <viewController id="ZYK-rc-GWr" customClass="ResetViewController" customModule="OurPet" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="PRK-5P-DzW">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="ANC-RI-k7K"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="mJ1-QB-hkL"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AjM-Wj-fmp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1024.8" y="832.53373313343332"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="1Jc-8U-Oeg">
             <objects>
@@ -1016,7 +1034,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YC5-wy-CHj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="966" y="887"/>
+            <point key="canvasLocation" x="1904.8" y="886.50674662668678"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="7UM-Ng-zN9">
@@ -1054,17 +1072,35 @@
             </objects>
             <point key="canvasLocation" x="513" y="-653"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="dXB-v5-KnB">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Me3-f2-lSM" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="8gv-aQ-qbA">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="ZYK-rc-GWr" kind="relationship" relationship="rootViewController" id="pBu-TV-pfz"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ToS-4E-S8b" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="85.599999999999994" y="832.53373313343332"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Flare" width="1280" height="800"/>
         <image name="dog_avatar2" width="630" height="630"/>
         <image name="logo_2" width="1300" height="2078"/>
         <image name="moon" width="24" height="24"/>
+        <image name="noPets" width="1948" height="940"/>
         <image name="pet_image" width="802" height="805"/>
         <image name="profile_image" width="802" height="805"/>
         <image name="rubbish-bin" width="32" height="32"/>
         <image name="sun" width="24" height="24"/>
-        <image name="swirly-scribbled-arrow" width="256" height="256"/>
         <image name="walking-with-dog" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>

@@ -233,10 +233,21 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
                         print("Error updating hasImage: \(err)")
                     } else {
                         print("hasImage successfully updated")
+                        self.pet.hasImage = 1
                     }
                 }
             }
         }
+    }
+    func deleteImage(){
+        let filePath = "pets/\(pet.documentID)"
+        let storageRef = Storage.storage().reference()
+        
+        if pet.hasImage == 1 {
+            storageRef.child(filePath).delete(completion: nil)
+        }
+        // Note that this delete function accompanies the deletion of a pet
+        // therefore we do not bother the updating of the pet's hasImage binary
     }
     
     // MARK: Bar Buttons
@@ -249,6 +260,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         pet.morningFedBy = morningFedByField.text!
         pet.eveningFedStatus = String(eveningFedSegment.selectedSegmentIndex)
         pet.eveningFedBy = eveningFedByField.text!
+
         pet.saveData { success in
             if success {
                 // This large block below handles push notifications
@@ -322,6 +334,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     
     func deletePet() {
+        deleteImage() // removes the pets image from storage, if it has one
         let db = Firestore.firestore()
         db.collection("pets").document(pet.documentID).delete() { err in
             if let err = err {
