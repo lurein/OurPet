@@ -24,7 +24,7 @@ class UserProfileViewController: UIViewController, UIImagePickerControllerDelega
     var imagePicker = UIImagePickerController()
     var playerId : String?
     var pushToken : String?
-    
+    @IBOutlet weak var cancelBarButton: UIBarButtonItem!
     
     // MARK: View Setup
     
@@ -34,7 +34,12 @@ class UserProfileViewController: UIViewController, UIImagePickerControllerDelega
             OPuser = OPUser()
         }
         updateUserInterface()
-
+        
+        let firstSignIn = UserDefaults.standard.integer(forKey: "firstSignIn")
+        if firstSignIn == 1 {
+            cancelBarButton.isEnabled = false
+        }
+        
         usernameUnavailableMessage.isHidden = true
         saveBarButton.isEnabled = false
         nameField.layer.cornerRadius = 8.0

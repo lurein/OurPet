@@ -67,6 +67,9 @@ class ViewController: UIViewController{
         super.viewWillAppear(animated)
         squigglyArrow.isHidden = true
         let firstSignIn = UserDefaults.standard.integer(forKey: "firstSignIn") ?? 1
+        if firstSignIn == 1 {
+            self.performSegue(withIdentifier: "MyProfile", sender: nil)
+        }
         
         if Auth.auth().currentUser?.uid != nil {
         pets.loadData {
@@ -81,7 +84,7 @@ class ViewController: UIViewController{
                         if self.pets.petArray.count == 0 {
                             if firstSignIn == 1 {
                                 self.squigglyArrow.isHidden = false
-                                UserDefaults.standard.set(0, forKey: "")
+                                UserDefaults.standard.set(0, forKey: "firstSignIn")
                             }
                             
                         } else {
@@ -99,7 +102,7 @@ class ViewController: UIViewController{
                         if self.pets.petArray.count == 0 {
                             if firstSignIn == 1 {
                                 self.squigglyArrow.isHidden = false
-                                UserDefaults.standard.set(0, forKey: "")
+                                UserDefaults.standard.set(0, forKey: "firstSignIn")
                             }
                         }else {
                             self.dailyResetting()
@@ -116,7 +119,7 @@ class ViewController: UIViewController{
                         if self.pets.petArray.count == 0 {
                             if firstSignIn == 1 {
                                 self.squigglyArrow.isHidden = false
-                                UserDefaults.standard.set(0, forKey: "")
+                                UserDefaults.standard.set(0, forKey: "firstSignIn")
                             }
                         } else {
                             self.dailyResetting()
@@ -133,7 +136,7 @@ class ViewController: UIViewController{
                         if self.pets.petArray.count == 0 {
                             if firstSignIn == 1 {
                                 self.squigglyArrow.isHidden = false
-                                UserDefaults.standard.set(0, forKey: "")
+                                UserDefaults.standard.set(0, forKey: "firstSignIn")
                             }
                         } else {
                             self.dailyResetting()
@@ -151,7 +154,7 @@ class ViewController: UIViewController{
                         if self.pets.petArray.count == 0 {
                             if firstSignIn == 1 {
                                 self.squigglyArrow.isHidden = false
-                                UserDefaults.standard.set(0, forKey: "")
+                                UserDefaults.standard.set(0, forKey: "firstSignIn")
                             }
                         } else {
                             self.dailyResetting()
@@ -299,11 +302,12 @@ class ViewController: UIViewController{
                 print("Error in Daily Resettingx: \(err)")
             } else {
                 print("Daily Resetting Successful")
-                self.pets.petArray = []
-                self.pets.loadData {
-                    self.collectionView.reloadData()
-                }
-                
+//                self.pets.petArray = []
+//                self.pets.loadData {
+//                    self.collectionView.reloadData()
+//
+//                }
+                self.performSegue(withIdentifier: "resetVC", sender: nil)
             }
         }
     }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		95090890214EEEE000D1F261 /* KeyboardLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9509088F214EEEE000D1F261 /* KeyboardLayoutConstraint.swift */; };
+		950908922158434200D1F261 /* ResetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950908912158434200D1F261 /* ResetViewController.swift */; };
 		95091A0620F3CD0D00EFC7C3 /* CardsCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95091A0520F3CD0D00EFC7C3 /* CardsCollectionViewLayout.swift */; };
 		9509FFAB2092D3C500B7A094 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9509FFAA2092D3C500B7A094 /* AppDelegate.swift */; };
 		9509FFAD2092D3C500B7A094 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9509FFAC2092D3C500B7A094 /* ViewController.swift */; };
@@ -59,6 +60,7 @@
 		6E734293AA67C75045456E17 /* Pods_OneSignalNotificationServiceExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OneSignalNotificationServiceExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		73477B6A72B31D71A31F9E3C /* Pods_OurPet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OurPet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9509088F214EEEE000D1F261 /* KeyboardLayoutConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardLayoutConstraint.swift; sourceTree = "<group>"; };
+		950908912158434200D1F261 /* ResetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetViewController.swift; sourceTree = "<group>"; };
 		95091A0520F3CD0D00EFC7C3 /* CardsCollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsCollectionViewLayout.swift; sourceTree = "<group>"; };
 		9509FFA72092D3C500B7A094 /* OurPet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OurPet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9509FFAA2092D3C500B7A094 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 				9509FFAC2092D3C500B7A094 /* ViewController.swift */,
 				95C8294420FA2777006651DB /* CollectionViewCell.swift */,
 				9509FFAE2092D3C500B7A094 /* Main.storyboard */,
+				950908912158434200D1F261 /* ResetViewController.swift */,
 				9509088F214EEEE000D1F261 /* KeyboardLayoutConstraint.swift */,
 				95B72CEA20D6750F00B9AC71 /* ManageCarers.swift */,
 				95B72CE820D2B16F00B9AC71 /* UserProfileViewController.swift */,
@@ -446,6 +449,7 @@
 				95B72CEB20D6750F00B9AC71 /* ManageCarers.swift in Sources */,
 				9509FFAB2092D3C500B7A094 /* AppDelegate.swift in Sources */,
 				95930CAE2125CA6B00B7E2BF /* CardView.swift in Sources */,
+				950908922158434200D1F261 /* ResetViewController.swift in Sources */,
 				95C8294520FA2777006651DB /* CollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
