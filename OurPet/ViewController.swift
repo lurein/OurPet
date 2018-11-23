@@ -10,6 +10,8 @@ import UIKit
 import Firebase
 import FirebaseUI
 import AlertOnboarding
+import UserNotifications
+
 
 
 
@@ -302,12 +304,12 @@ class ViewController: UIViewController{
                 print("Error in Daily Resettingx: \(err)")
             } else {
                 print("Daily Resetting Successful")
-//                self.pets.petArray = []
-//                self.pets.loadData {
-//                    self.collectionView.reloadData()
-//
-//                }
-                self.performSegue(withIdentifier: "resetVC", sender: nil)
+                self.pets.petArray = Array(NSOrderedSet(array: self.pets.petArray)) as! [Pet]
+                self.pets.loadData {
+                    self.collectionView.reloadData()
+
+                }
+                //self.performSegue(withIdentifier: "resetVC", sender: nil)
             }
         }
     }
@@ -340,6 +342,8 @@ class ViewController: UIViewController{
         }
     }
     
+    // MARK: Reminder Functions
+
 }
 
 // MARK: Extensions
@@ -393,7 +397,6 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     // This determines the content of each card
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCellReuseIdentifier", for: indexPath) as! CollectionViewCell
-        
         if pets.petArray.count == 1{
             cell.activateShadowBinary = 1   // This enables the card shadow if there is just 1 card
         } else {
@@ -405,7 +408,8 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
             let storageRef = Storage.storage().reference()
             let reference = storageRef.child("pets/\(pets.petArray[indexPath.row].documentID)")
             let imageView: UIImageView = cell.petImage
-            let placeholderImage = UIImage(named: "dog_avatar2.jpg")
+            let placeholderImage = UIImage(named: "dog_avatar2.jpg")!
+            
             reference.downloadURL { url, error in
                 if let error = error {
                     // Handle any errors
@@ -425,7 +429,9 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
         if pets.petArray.count != 0 {
             if pets.petArray[indexPath.row].hasImage == 1{
                 downloadPetImage()
+                
             }
+            
             let pet = pets.petArray[indexPath.row]
             cell.layer.cornerRadius = 7.0
             cell.backgroundColor = colors[indexPath.row % colors.count] // picks a random color
