@@ -25,6 +25,8 @@ class ViewController: UIViewController{
     var authUI: FUIAuth!
     var pets: Pets!
     var globalIndexPath : IndexPath?
+    var checkerBool = false // this avoids the repetitive image reloading bug
+    
    
     
     // Setting up the onboarding alert
@@ -44,7 +46,7 @@ class ViewController: UIViewController{
         authUI = FUIAuth.defaultAuthUI()
         authUI?.delegate = self
         pets = Pets()
-        squigglyArrow.isHidden = true
+        squigglyArrow.isHidden = true // This is now the 'add pets by pressing + image'
    
         // Sets the navigation bar gradient
         var bgimage = UIImage(named: "moon_purple.jpg") as! UIImage
@@ -68,6 +70,7 @@ class ViewController: UIViewController{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         squigglyArrow.isHidden = true
+        self.checkerBool = false
         let firstSignIn = UserDefaults.standard.integer(forKey: "firstSignIn") ?? 1
         if firstSignIn == 1 {
             self.performSegue(withIdentifier: "MyProfile", sender: nil)
@@ -78,7 +81,7 @@ class ViewController: UIViewController{
             let sv = UIViewController.displaySpinner(onView: self.view) // Creates the loading spinner
             self.collectionView.reloadData()
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) { // change 1 to desired number of seconds
-                self.collectionView.reloadData()
+                if(self.checkerBool == false) {self.collectionView.reloadData()}
                 if self.pets.loadedBinary == 1 {
                 UIViewController.removeSpinner(spinner: sv)
                     self.collectionView.alpha = 1
@@ -96,7 +99,7 @@ class ViewController: UIViewController{
                 }
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { // change 2 to desired number of seconds
-               self.collectionView.reloadData()
+               if(self.checkerBool == false) {self.collectionView.reloadData()}
                 if self.pets.loadedBinary == 1 {
                     UIViewController.removeSpinner(spinner: sv)
                     self.collectionView.alpha = 1
@@ -113,7 +116,7 @@ class ViewController: UIViewController{
                 }
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) { // change 3 to desired number of seconds
-                self.collectionView.reloadData()
+                if(self.checkerBool == false) {self.collectionView.reloadData()}
                 if self.pets.loadedBinary == 1 {
                     UIViewController.removeSpinner(spinner: sv)
                     self.collectionView.alpha = 1
@@ -130,7 +133,7 @@ class ViewController: UIViewController{
                 }
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 4) { // change 4 to desired number of seconds
-                self.collectionView.reloadData()
+                if(self.checkerBool == false) {self.collectionView.reloadData()}
                 if self.pets.loadedBinary == 1 {
                     UIViewController.removeSpinner(spinner: sv)
                     self.collectionView.alpha = 1
@@ -148,7 +151,7 @@ class ViewController: UIViewController{
                 }
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 5) { // change 5 to desired number of seconds
-                self.collectionView.reloadData()
+                if(self.checkerBool == false) {self.collectionView.reloadData()}
                 if self.pets.loadedBinary == 1 {
                     UIViewController.removeSpinner(spinner: sv)
                     self.collectionView.alpha = 1
@@ -165,7 +168,7 @@ class ViewController: UIViewController{
                 }
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 6) { // change 6 to desired number of seconds
-                self.collectionView.reloadData()
+                if(self.checkerBool == false) {self.collectionView.reloadData()}
                 UIViewController.removeSpinner(spinner: sv)
                 self.collectionView.alpha = 1
                 if self.pets.loadedBinary == 0{
@@ -304,6 +307,7 @@ class ViewController: UIViewController{
                 print("Error in Daily Resettingx: \(err)")
             } else {
                 print("Daily Resetting Successful")
+                self.checkerBool = false
                 self.pets.petArray = Array(NSOrderedSet(array: self.pets.petArray)) as! [Pet]
                 self.pets.loadData {
                     self.collectionView.reloadData()
@@ -431,7 +435,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
                 downloadPetImage()
                 
             }
-            
+            self.checkerBool = true // indicates cards no longer need to be reloaded
             let pet = pets.petArray[indexPath.row]
             cell.layer.cornerRadius = 7.0
             cell.backgroundColor = colors[indexPath.row % colors.count] // picks a random color
