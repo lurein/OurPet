@@ -27,6 +27,7 @@
 		95C8294520FA2777006651DB /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C8294420FA2777006651DB /* CollectionViewCell.swift */; };
 		95E6867721021D760090028B /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E6867621021D760090028B /* NotificationService.swift */; };
 		95E6867B21021D760090028B /* OneSignalNotificationServiceExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 95E6867421021D760090028B /* OneSignalNotificationServiceExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		95E7710B2206125000B935C4 /* MyFamily.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E7710A2206125000B935C4 /* MyFamily.swift */; };
 		DC540B98061AF843966AB3B5 /* Pods_OneSignalNotificationServiceExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E734293AA67C75045456E17 /* Pods_OneSignalNotificationServiceExtension.framework */; };
 		F0E10FEDA435962057303965 /* Pods_OurPet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73477B6A72B31D71A31F9E3C /* Pods_OurPet.framework */; };
 /* End PBXBuildFile section */
@@ -85,6 +86,7 @@
 		95E6867621021D760090028B /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		95E6867821021D760090028B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		95E68680210225700090028B /* OneSignalNotificationServiceExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OneSignalNotificationServiceExtension.entitlements; sourceTree = "<group>"; };
+		95E7710A2206125000B935C4 /* MyFamily.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFamily.swift; sourceTree = "<group>"; };
 		C3E5C378128502C7A4983F50 /* Pods-OneSignalNotificationServiceExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.release.xcconfig"; path = "Pods/Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.release.xcconfig"; sourceTree = "<group>"; };
 		D1EB130963E68E9B2819889F /* Pods-OneSignalNotificationServiceExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OneSignalNotificationServiceExtension/Pods-OneSignalNotificationServiceExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		E2208159BC9C8392D1F2FB6F /* Pods-OurPet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OurPet.release.xcconfig"; path = "Pods/Target Support Files/Pods-OurPet/Pods-OurPet.release.xcconfig"; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				9509FFAC2092D3C500B7A094 /* ViewController.swift */,
 				95C8294420FA2777006651DB /* CollectionViewCell.swift */,
 				9509FFAE2092D3C500B7A094 /* Main.storyboard */,
+				95E7710A2206125000B935C4 /* MyFamily.swift */,
 				950908912158434200D1F261 /* ResetViewController.swift */,
 				9509088F214EEEE000D1F261 /* KeyboardLayoutConstraint.swift */,
 				95B72CEA20D6750F00B9AC71 /* ManageCarers.swift */,
@@ -391,6 +394,7 @@
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/LGButton/LGButton.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/SCLAlertView/SCLAlertView.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${PODS_ROOT}/TwitterCore/iOS/TwitterCore.framework",
 				"${PODS_ROOT}/TwitterKit/iOS/TwitterKit.framework",
@@ -414,6 +418,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LGButton.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SCLAlertView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TwitterCore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TwitterKit.framework",
@@ -448,6 +453,7 @@
 				9509FFC3209556A000B7A094 /* Pets.swift in Sources */,
 				95B72CEB20D6750F00B9AC71 /* ManageCarers.swift in Sources */,
 				9509FFAB2092D3C500B7A094 /* AppDelegate.swift in Sources */,
+				95E7710B2206125000B935C4 /* MyFamily.swift in Sources */,
 				95930CAE2125CA6B00B7E2BF /* CardView.swift in Sources */,
 				950908922158434200D1F261 /* ResetViewController.swift in Sources */,
 				95C8294520FA2777006651DB /* CollectionViewCell.swift in Sources */,

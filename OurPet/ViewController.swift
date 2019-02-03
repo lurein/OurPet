@@ -11,6 +11,8 @@ import Firebase
 import FirebaseUI
 import AlertOnboarding
 import UserNotifications
+import SCLAlertView
+
 
 
 
@@ -62,7 +64,6 @@ class ViewController: UIViewController{
         collectionView.delegate = self
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
-        
        
     }
 
@@ -71,8 +72,8 @@ class ViewController: UIViewController{
         super.viewWillAppear(animated)
         squigglyArrow.isHidden = true
         self.checkerBool = false
-        let firstSignIn = UserDefaults.standard.integer(forKey: "firstSignIn") ?? 1
-        if firstSignIn == 1 {
+        let signedInBefore = UserDefaults.standard.integer(forKey: "signedInBefore")
+        if signedInBefore == 0 && Auth.auth().currentUser?.uid != nil { //initial profile setup
             self.performSegue(withIdentifier: "MyProfile", sender: nil)
         }
         
@@ -87,9 +88,9 @@ class ViewController: UIViewController{
                     self.collectionView.alpha = 1
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1){
                         if self.pets.petArray.count == 0 {
-                            if firstSignIn == 1 {
+                            if signedInBefore == -1 {
                                 self.squigglyArrow.isHidden = false
-                                UserDefaults.standard.set(0, forKey: "firstSignIn")
+                                UserDefaults.standard.set(1, forKey: "signedInBefore")
                             }
                             
                         } else {
@@ -105,9 +106,9 @@ class ViewController: UIViewController{
                     self.collectionView.alpha = 1
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1){
                         if self.pets.petArray.count == 0 {
-                            if firstSignIn == 1 {
+                            if signedInBefore == -1 {
                                 self.squigglyArrow.isHidden = false
-                                UserDefaults.standard.set(0, forKey: "firstSignIn")
+                                UserDefaults.standard.set(1, forKey: "signedInBefore")
                             }
                         }else {
                             self.dailyResetting()
@@ -122,9 +123,9 @@ class ViewController: UIViewController{
                     self.collectionView.alpha = 1
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1){
                         if self.pets.petArray.count == 0 {
-                            if firstSignIn == 1 {
+                            if signedInBefore == -1 {
                                 self.squigglyArrow.isHidden = false
-                                UserDefaults.standard.set(0, forKey: "firstSignIn")
+                                UserDefaults.standard.set(1, forKey: "signedInBefore")
                             }
                         } else {
                             self.dailyResetting()
@@ -139,9 +140,9 @@ class ViewController: UIViewController{
                     self.collectionView.alpha = 1
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1){
                         if self.pets.petArray.count == 0 {
-                            if firstSignIn == 1 {
+                            if signedInBefore == -1 {
                                 self.squigglyArrow.isHidden = false
-                                UserDefaults.standard.set(0, forKey: "firstSignIn")
+                                UserDefaults.standard.set(1, forKey: "signedInBefore")
                             }
                         } else {
                             self.dailyResetting()
@@ -157,9 +158,9 @@ class ViewController: UIViewController{
                     self.collectionView.alpha = 1
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1){
                         if self.pets.petArray.count == 0 {
-                            if firstSignIn == 1 {
+                            if signedInBefore == -1 {
                                 self.squigglyArrow.isHidden = false
-                                UserDefaults.standard.set(0, forKey: "firstSignIn")
+                                UserDefaults.standard.set(1, forKey: "signedInBefore")
                             }
                         } else {
                             self.dailyResetting()
@@ -192,6 +193,12 @@ class ViewController: UIViewController{
         
     }
     
+    @IBAction func myFamilyButtonPressed(_ sender: UITapGestureRecognizer) {
+        self.performSegue(withIdentifier: "MyFamily", sender: nil)
+    }
+    
+    
+    
     // MARK: Segue Preperations
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -206,10 +213,17 @@ class ViewController: UIViewController{
                 
             }
         }
-        // Passes user information tp UserProfile scene
+        // Passes user information to UserProfile scene
         if segue.identifier == "MyProfile" {
             let nav = segue.destination as! UINavigationController
             let destination = nav.topViewController as! UserProfileViewController
+            destination.OPuser = pets.OPuser
+        }
+        
+        // Passes user information to MyFamily scene
+        if segue.identifier == "MyFamily" {
+            let nav = segue.destination as! UINavigationController
+            let destination = nav.topViewController as! MyFamily
             destination.OPuser = pets.OPuser
         }
     }
@@ -243,6 +257,7 @@ class ViewController: UIViewController{
     }
     
 
+    
     func authPickerViewController(forAuthUI authUI: FUIAuth) -> FUIAuthPickerViewController {
         
         // Create an instance of the FirebaseAuth login view controller
