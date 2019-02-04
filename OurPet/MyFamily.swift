@@ -11,6 +11,7 @@ import UIKit
 class MyFamily: UIViewController {
     
     var OPuser : OPUser!
+    @IBOutlet weak var searchField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +24,12 @@ class MyFamily: UIViewController {
         self.navigationController!.navigationBar.setBackgroundImage(bgimage,
                                                                     for: .default)
         assignbackground()
+        
+        searchField.layer.cornerRadius = 8.0
+       searchField.layer.masksToBounds = true
+        var lilac = UIColor(red:0.67, green:0.22, blue:0.96, alpha:1.0)
+        searchField.layer.borderColor = lilac.cgColor
+       searchField.layer.borderWidth = 1.0
     }
     
     // MARK: Functions

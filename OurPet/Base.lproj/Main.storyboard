@@ -1015,6 +1015,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="searchField" destination="40B-ww-v8x" id="dqD-Qo-6gk"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IhU-V8-n1s" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

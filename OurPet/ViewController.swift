@@ -194,7 +194,10 @@ class ViewController: UIViewController{
     }
     
     @IBAction func myFamilyButtonPressed(_ sender: UITapGestureRecognizer) {
-        self.performSegue(withIdentifier: "MyFamily", sender: nil)
+        if(pets.OPuser.family == ""){
+           self.performSegue(withIdentifier: "MyFamily", sender: nil) // Move this down
+        }
+        
     }
     
     
