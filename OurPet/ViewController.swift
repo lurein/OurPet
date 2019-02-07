@@ -195,7 +195,47 @@ class ViewController: UIViewController{
     
     @IBAction func myFamilyButtonPressed(_ sender: UITapGestureRecognizer) {
         if(pets.OPuser.family == ""){
-           self.performSegue(withIdentifier: "MyFamily", sender: nil) // Move this down
+            let appearance = SCLAlertView.SCLAppearance(
+                showCloseButton: false
+            )
+            let alert = SCLAlertView(appearance: appearance)
+            alert.addButton("Create a new family group") {
+                let alert2 = SCLAlertView(appearance: appearance)
+                let familyTxt = alert2.addTextField("Enter Family Name")
+                alert2.addButton("Create Family"){ // Create Family
+                     print("Text value: \(familyTxt.text)")
+                    // set up family creation function here
+                    let newFamily = Family()
+                    newFamily.familyName = familyTxt.text ?? ""
+                    newFamily.familyMembers = [self.authUI.auth?.currentUser?.uid] as! [String]
+                    newFamily.familyPets = self.pets.OPuser.userPets
+                    newFamily.saveData { success in
+                        if success {
+                        self.performSegue(withIdentifier: "MyFamily", sender: nil) // New family successfully saved
+                        } else{
+                            print("error saving new family")
+                        }
+                    }
+                    
+                    
+                    
+                    
+                }
+                alert2.showSuccess("Create a Family Group", subTitle: "Enter your family name below")
+               
+            }
+            alert.addButton("Join an existing family group"){ // Join Existing Family
+                let appearance2 = SCLAlertView.SCLAppearance(
+                    showCircularIcon: true
+                )
+                let existingAlertIcon = UIImage(named: "dog_avatar2")
+                let alert3 = SCLAlertView(appearance: appearance2).showWarning("Join An Existing Family", subTitle: "Ask a member of your family to add you to the group! \n                                                                                                                                                       Your username is: \(self.pets.OPuser.userName)", circleIconImage: existingAlertIcon)
+            }
+            alert.showEdit("One More Step", subTitle: "You don't have a family group set-up yet")
+
+        }
+        else{
+            self.performSegue(withIdentifier: "MyFamily", sender: nil)
         }
         
     }

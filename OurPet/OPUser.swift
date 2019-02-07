@@ -42,7 +42,7 @@ class OPUser  {
         let userPets = dictionary["userPets"] as! [String]? ?? [""]
         let family = dictionary["family"] as! String? ?? ""
         
-        self.init(fullName: fullName, userName: userName, userPets: userPets, postingUserID: "", family: "")
+        self.init(fullName: fullName, userName: userName, userPets: userPets, postingUserID: "", family: family)
     }
     
     // MARK: Class Functions
