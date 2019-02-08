@@ -260,9 +260,35 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         pet.morningFedBy = morningFedByField.text!
         pet.eveningFedStatus = String(eveningFedSegment.selectedSegmentIndex)
         pet.eveningFedBy = eveningFedByField.text!
+        
+        if self.presentingViewController is UINavigationController{
+            var family = Family()
+            let db = Firestore.firestore()
+            let fRef = db.collection("opusers").document((Auth.auth().currentUser?.uid)!)
+            fRef.getDocument { (document, error) in
+                if let doc = document, doc.exists {
+                    family = Family(familyName: doc.get("familyName") as! String, familyPets: doc.get("familyPets") as! [String], familyMembers: doc.get("familyMembers") as! [String])
+                    
+                    self.pet.carers = family.familyMembers
+                    for member in family.familyMembers {
+                        var userPetArray : [String]
+                        userPetArray = []
+                        let mRef = db.collection("opusers").document(member)
+                        fRef.getDocument { (document, error) in
+                            if let doc = document, doc.exists {
+                                userPetArray = doc.get("userPets") as! [String]
+                                userPetArray.append(self.pet.documentID)
+                            }
+                            mRef.updateData(["userPets" : userPetArray])
+                    }
+                }
+        }
+        }
+        }
 
         pet.saveData { success in
             if success {
+                
                 // This large block below handles push notifications
                 for eachCarer in self.pet.carers {
                     if eachCarer != Auth.auth().currentUser?.uid && self.pet.carers.count >= 1 {
