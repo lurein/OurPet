@@ -252,8 +252,6 @@ class ViewController: UIViewController{
             let selectedIndex = self.collectionView.indexPathsForSelectedItems?.first
             if pets.petArray.count != 0 {
                 destination.pet = pets.petArray[selectedIndex!.row]
-                
-                
             }
         }
         // Passes user information to UserProfile scene
@@ -436,12 +434,12 @@ extension ViewController: FUIAuthDelegate {
             collectionView.isHidden = false
             print("^^^ We signed in with the user \(user.email ?? "unknown e-mail")")
             // Alert Onboarding Code
-            var alertView = AlertOnboarding(arrayOfImage: arrayOfImage, arrayOfTitle: arrayOfTitle, arrayOfDescription: arrayOfDescription)
-            //Modify size of alertview (Purcentage of screen height and width)
-            alertView.percentageRatioHeight = 0.6
-            alertView.percentageRatioWidth = 0.7
-            alertView.titleGotItButton = "GOT IT!"
-            alertView.show()
+//            var alertView = AlertOnboarding(arrayOfImage: arrayOfImage, arrayOfTitle: arrayOfTitle, arrayOfDescription: arrayOfDescription)
+//            //Modify size of alertview (Purcentage of screen height and width)
+//            alertView.percentageRatioHeight = 0.6
+//            alertView.percentageRatioWidth = 0.7
+//            alertView.titleGotItButton = "GOT IT!"
+//            alertView.show()
         }
     }
     
