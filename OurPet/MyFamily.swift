@@ -160,8 +160,41 @@ class MyFamily: UIViewController {
     }
     
     @IBAction func addButtonPressed(_ sender: UIButton) {
+        var newMember = member(fullName: "", userName: "")
         let db = Firestore.firestore()
+        // Here we update the found users family and userPets fields
         db.collection("opusers").document(self.foundUserID).updateData(["family" : self.OPuser.family, "userPets" : self.OPuser.userPets])
+        
+        // Here we update each of the family's pet's carers array (from the OPusers userPets array)
+        for eachPet in self.OPuser.userPets{
+            var carersArray : [String] = []
+           db.collection("pets").document(eachPet).getDocument { (document, error) in
+                if let document = document, document.exists {
+                   carersArray = document.get("carers") as! [String]
+                }
+            carersArray.append(self.foundUserID)
+            db.collection("pets").document(eachPet).updateData(["carers" : carersArray])
+            }
+            
+        }
+        
+        // Here we update the family collection to include the found user
+        var newArray: [String]
+        self.family.familyMembers.append(self.foundUserID)
+        newArray = self.family.familyMembers
+        db.collection("families").document(self.OPuser.family).updateData(["familyMembers" : newArray])
+        
+        // Here we get the users 
+        let uRef = db.collection("opusers").document(self.foundUserID)
+        uRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                newMember.fullName = document.get("fullName") as! String
+               newMember.userName = document.get("userName") as! String
+                self.members.append(newMember)
+                self.tableView.reloadData()
+            }
+        }
+
     }
     
     

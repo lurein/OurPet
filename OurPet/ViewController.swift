@@ -458,7 +458,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCellReuseIdentifier", for: indexPath) as! CollectionViewCell
         if pets.petArray.count == 1{
-            cell.activateShadowBinary = 1   // This enables the card shadow if there is just 1 card
+            cell.activateShadowBinary = 0   // This enables the card shadow if there is just 1 card
         } else {
             cell.activateShadowBinary = 0
         }

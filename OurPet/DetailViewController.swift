@@ -261,6 +261,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         pet.eveningFedStatus = String(eveningFedSegment.selectedSegmentIndex)
         pet.eveningFedBy = eveningFedByField.text!
         
+        // This large block ensures the pet is added across the whole family
         if self.presentingViewController is UINavigationController{
             var family = Family()
             let db = Firestore.firestore()
