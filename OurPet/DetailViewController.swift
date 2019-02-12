@@ -262,31 +262,9 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         pet.eveningFedBy = eveningFedByField.text!
         
         // This large block ensures the pet is added across the whole family
-        if self.presentingViewController is UINavigationController{
-            var family = Family()
-            let db = Firestore.firestore()
-            let fRef = db.collection("opusers").document((Auth.auth().currentUser?.uid)!)
-            fRef.getDocument { (document, error) in
-                if let doc = document, doc.exists {
-                    family = Family(familyName: doc.get("familyName") as! String, familyPets: doc.get("familyPets") as! [String], familyMembers: doc.get("familyMembers") as! [String])
-                    
-                    self.pet.carers = family.familyMembers
-                    for member in family.familyMembers {
-                        var userPetArray : [String]
-                        userPetArray = []
-                        let mRef = db.collection("opusers").document(member)
-                        fRef.getDocument { (document, error) in
-                            if let doc = document, doc.exists {
-                                userPetArray = doc.get("userPets") as! [String]
-                                userPetArray.append(self.pet.documentID)
-                            }
-                            mRef.updateData(["userPets" : userPetArray])
-                    }
-                }
-        }
-        }
-        }
+        
 
+        
         pet.saveData { success in
             if success {
                 
