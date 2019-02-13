@@ -68,6 +68,8 @@ class Pet  {
     
     // MARK: Class Functions
     
+   
+    
     func saveData(completed: @escaping (Bool) -> ()) {
         let db = Firestore.firestore()
         // Grab the userID
@@ -78,6 +80,7 @@ class Pet  {
         self.postingUserID = postingUserID
         // Create the dictionary representing the data we want to save
         var dataToSave = self.dictionary
+        
         dataToSave["lastReset"] = dateStringer()
         // if we HAVE saved a record, we'll have a documentID
         if self.documentID != "" {
@@ -101,6 +104,58 @@ class Pet  {
                 } else {
                     print("^^^ new document created with ref ID \(ref?.documentID ?? "unknown")")
                     self.documentID = ref!.documentID
+                    
+                    // Beginning of Helper Block
+                    var family = Family()
+                    let db = Firestore.firestore()
+                    let uRef = db.collection("opusers").document((Auth.auth().currentUser?.uid)!)
+                    var familyID = ""
+                    var hasFamily = false
+                    uRef.getDocument{ (document, error) in
+                        if let doc = document, doc.exists{
+                            if doc.get("family") == nil {
+                            } else {
+                                familyID = doc.get("family") as! String
+                                hasFamily = true
+                            }
+                            
+                            if hasFamily {
+                                let fRef = db.collection("families").document(familyID)
+                                fRef.getDocument { (document, error) in
+                                    if let doc2 = document, doc2.exists {
+                                        family = Family(familyName: doc2.get("familyName") as! String, familyPets: doc2.get("familyPets") as! [String], familyMembers: doc2.get("familyMembers") as! [String], documentID: familyID as! String)
+                                        
+                                        family.familyPets.append(self.documentID)
+                                        fRef.updateData(["familyPets" : family.familyPets])
+                                        
+                                        let pRef = db.collection("pets").document(self.documentID)
+                                        pRef.updateData(["carers" : family.familyMembers])
+
+                                        for member in family.familyMembers {
+                                            if member != (Auth.auth().currentUser?.uid)! {
+                                                var userPetArray : [String]
+                                                userPetArray = []
+                                                let mRef = db.collection("opusers").document(member)
+                                                mRef.getDocument { (document, error) in
+                                                    if let doc3 = document, doc3.exists {
+                                                        userPetArray = doc3.get("userPets") as! [String]
+                                                        userPetArray.append(self.documentID)
+                                                    }
+                                                    mRef.updateData(["userPets" : userPetArray])
+                                                }
+                                            }
+                                            
+                                        }
+                                    }
+                                }
+                                
+                                
+                            }
+                        }
+                    }
+                    // End of Helper Block
+                    
+                    
                     let userDocRef = db.collection("opusers").document((Auth.auth().currentUser?.uid)!)
                     userDocRef.getDocument { (document, error) in
                         if let document = document, document.exists {

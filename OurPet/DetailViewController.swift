@@ -260,9 +260,14 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         pet.morningFedBy = morningFedByField.text!
         pet.eveningFedStatus = String(eveningFedSegment.selectedSegmentIndex)
         pet.eveningFedBy = eveningFedByField.text!
+        
+        // This large block ensures the pet is added across the whole family
+        
 
+        
         pet.saveData { success in
             if success {
+                
                 // This large block below handles push notifications
                 for eachCarer in self.pet.carers {
                     if eachCarer != Auth.auth().currentUser?.uid && self.pet.carers.count >= 1 {

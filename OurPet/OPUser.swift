@@ -14,32 +14,35 @@ class OPUser  {
     var userName: String
     var postingUserID: String
     var userPets: [String]
+    var family: String
     
     
     var dictionary: [String: Any] {
-        return ["fullName": fullName, "userName": userName, "userPets": userPets]
+        return ["fullName": fullName, "userName": userName, "userPets": userPets, "family": family]
     }
     
     // MARK: Initializers
     
     init(fullName: String, userName: String,
-         userPets: [String], postingUserID: String) {
+         userPets: [String], postingUserID: String, family: String) {
         self.fullName = fullName
         self.userName = userName
         self.userPets = userPets
         self.postingUserID = postingUserID
+        self.family =  family
     }
     
     convenience init() {
-        self.init(fullName: "", userName: "", userPets: [""], postingUserID: "")
+        self.init(fullName: "", userName: "", userPets: [""], postingUserID: "", family: "")
     }
     
     convenience init(dictionary: [String: Any]) {
         let fullName = dictionary["fullName"] as! String? ?? ""
         let userName = dictionary["userName"] as! String? ?? ""
         let userPets = dictionary["userPets"] as! [String]? ?? [""]
+        let family = dictionary["family"] as! String? ?? ""
         
-        self.init(fullName: fullName, userName: userName, userPets: userPets, postingUserID: "")
+        self.init(fullName: fullName, userName: userName, userPets: userPets, postingUserID: "", family: family)
     }
     
     // MARK: Class Functions

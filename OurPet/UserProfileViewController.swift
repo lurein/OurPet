@@ -35,9 +35,10 @@ class UserProfileViewController: UIViewController, UIImagePickerControllerDelega
         }
         updateUserInterface()
         
-        let firstSignIn = UserDefaults.standard.integer(forKey: "firstSignIn")
-        if firstSignIn == 1 {
+        let signedInBefore = UserDefaults.standard.integer(forKey: "signedInBefore")
+        if signedInBefore == 0 {
             cancelBarButton.isEnabled = false
+            UserDefaults.standard.set(-1, forKey: "signedInBefore")
         }
         
         usernameUnavailableMessage.isHidden = true

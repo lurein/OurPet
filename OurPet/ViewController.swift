@@ -11,6 +11,8 @@ import Firebase
 import FirebaseUI
 import AlertOnboarding
 import UserNotifications
+import SCLAlertView
+
 
 
 
@@ -62,7 +64,6 @@ class ViewController: UIViewController{
         collectionView.delegate = self
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
-        
        
     }
 
@@ -71,8 +72,8 @@ class ViewController: UIViewController{
         super.viewWillAppear(animated)
         squigglyArrow.isHidden = true
         self.checkerBool = false
-        let firstSignIn = UserDefaults.standard.integer(forKey: "firstSignIn") ?? 1
-        if firstSignIn == 1 {
+        let signedInBefore = UserDefaults.standard.integer(forKey: "signedInBefore")
+        if signedInBefore == 0 && Auth.auth().currentUser?.uid != nil { //initial profile setup
             self.performSegue(withIdentifier: "MyProfile", sender: nil)
         }
         
@@ -87,13 +88,11 @@ class ViewController: UIViewController{
                     self.collectionView.alpha = 1
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1){
                         if self.pets.petArray.count == 0 {
-                            if firstSignIn == 1 {
+                            if signedInBefore == -1 {
                                 self.squigglyArrow.isHidden = false
-                                UserDefaults.standard.set(0, forKey: "firstSignIn")
+                                UserDefaults.standard.set(1, forKey: "signedInBefore")
                             }
                             
-                        } else {
-                            self.dailyResetting()
                         }
                     }
                 }
@@ -105,12 +104,10 @@ class ViewController: UIViewController{
                     self.collectionView.alpha = 1
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1){
                         if self.pets.petArray.count == 0 {
-                            if firstSignIn == 1 {
+                            if signedInBefore == -1 {
                                 self.squigglyArrow.isHidden = false
-                                UserDefaults.standard.set(0, forKey: "firstSignIn")
+                                UserDefaults.standard.set(1, forKey: "signedInBefore")
                             }
-                        }else {
-                            self.dailyResetting()
                         }
                     }
                 }
@@ -122,12 +119,10 @@ class ViewController: UIViewController{
                     self.collectionView.alpha = 1
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1){
                         if self.pets.petArray.count == 0 {
-                            if firstSignIn == 1 {
+                            if signedInBefore == -1 {
                                 self.squigglyArrow.isHidden = false
-                                UserDefaults.standard.set(0, forKey: "firstSignIn")
+                                UserDefaults.standard.set(1, forKey: "signedInBefore")
                             }
-                        } else {
-                            self.dailyResetting()
                         }
                     }
                 }
@@ -139,12 +134,10 @@ class ViewController: UIViewController{
                     self.collectionView.alpha = 1
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1){
                         if self.pets.petArray.count == 0 {
-                            if firstSignIn == 1 {
+                            if signedInBefore == -1 {
                                 self.squigglyArrow.isHidden = false
-                                UserDefaults.standard.set(0, forKey: "firstSignIn")
+                                UserDefaults.standard.set(1, forKey: "signedInBefore")
                             }
-                        } else {
-                            self.dailyResetting()
                         }
                     }
                     
@@ -157,12 +150,10 @@ class ViewController: UIViewController{
                     self.collectionView.alpha = 1
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1){
                         if self.pets.petArray.count == 0 {
-                            if firstSignIn == 1 {
+                            if signedInBefore == -1 {
                                 self.squigglyArrow.isHidden = false
-                                UserDefaults.standard.set(0, forKey: "firstSignIn")
+                                UserDefaults.standard.set(1, forKey: "signedInBefore")
                             }
-                        } else {
-                            self.dailyResetting()
                         }
                     }
                 }
@@ -192,6 +183,56 @@ class ViewController: UIViewController{
         
     }
     
+    @IBAction func myFamilyButtonPressed(_ sender: UITapGestureRecognizer) {
+        if(pets.OPuser.family == ""){
+            let appearance = SCLAlertView.SCLAppearance(
+                showCloseButton: false
+            )
+            let alert = SCLAlertView(appearance: appearance)
+            alert.addButton("Create a new family group") {
+                let alert2 = SCLAlertView(appearance: appearance)
+                let familyTxt = alert2.addTextField("Enter Family Name")
+                alert2.addButton("Create Family"){ // Create Family
+                     print("Text value: \(familyTxt.text)")
+                    // set up family creation function here
+                    let newFamily = Family()
+                    newFamily.familyName = familyTxt.text ?? ""
+                    newFamily.familyMembers = [self.authUI.auth?.currentUser?.uid] as! [String]
+                    newFamily.familyPets = self.pets.OPuser.userPets
+                    newFamily.saveData { success in
+                        if success {
+                            self.pets.OPuser.family = newFamily.documentID
+                            self.performSegue(withIdentifier: "MyFamily", sender: nil) // New family successfully saved
+                        } else{
+                            print("error saving new family")
+                        }
+                    }
+                    
+                    
+                    
+                    
+                }
+                alert2.showSuccess("Create a Family Group", subTitle: "Enter your family name below")
+               
+            }
+            alert.addButton("Join an existing family group"){ // Join Existing Family
+                let appearance2 = SCLAlertView.SCLAppearance(
+                    showCircularIcon: true
+                )
+                let existingAlertIcon = UIImage(named: "dog_avatar2")
+                let alert3 = SCLAlertView(appearance: appearance2).showWarning("Join An Existing Family", subTitle: "Ask a member of your family to add you to the group! \n                                                                                                                                                       Your username is: \(self.pets.OPuser.userName)", circleIconImage: existingAlertIcon)
+            }
+            alert.showEdit("One More Step", subTitle: "You don't have a family group set-up yet")
+
+        }
+        else{
+            self.performSegue(withIdentifier: "MyFamily", sender: nil)
+        }
+        
+    }
+    
+    
+    
     // MARK: Segue Preperations
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -202,14 +243,19 @@ class ViewController: UIViewController{
             let selectedIndex = self.collectionView.indexPathsForSelectedItems?.first
             if pets.petArray.count != 0 {
                 destination.pet = pets.petArray[selectedIndex!.row]
-                
-                
             }
         }
-        // Passes user information tp UserProfile scene
+        // Passes user information to UserProfile scene
         if segue.identifier == "MyProfile" {
             let nav = segue.destination as! UINavigationController
             let destination = nav.topViewController as! UserProfileViewController
+            destination.OPuser = pets.OPuser
+        }
+        
+        // Passes user information to MyFamily scene
+        if segue.identifier == "MyFamily" {
+            let nav = segue.destination as! UINavigationController
+            let destination = nav.topViewController as! MyFamily
             destination.OPuser = pets.OPuser
         }
     }
@@ -243,6 +289,7 @@ class ViewController: UIViewController{
     }
     
 
+    
     func authPickerViewController(forAuthUI authUI: FUIAuth) -> FUIAuthPickerViewController {
         
         // Create an instance of the FirebaseAuth login view controller
@@ -378,12 +425,12 @@ extension ViewController: FUIAuthDelegate {
             collectionView.isHidden = false
             print("^^^ We signed in with the user \(user.email ?? "unknown e-mail")")
             // Alert Onboarding Code
-            var alertView = AlertOnboarding(arrayOfImage: arrayOfImage, arrayOfTitle: arrayOfTitle, arrayOfDescription: arrayOfDescription)
-            //Modify size of alertview (Purcentage of screen height and width)
-            alertView.percentageRatioHeight = 0.6
-            alertView.percentageRatioWidth = 0.7
-            alertView.titleGotItButton = "GOT IT!"
-            alertView.show()
+//            var alertView = AlertOnboarding(arrayOfImage: arrayOfImage, arrayOfTitle: arrayOfTitle, arrayOfDescription: arrayOfDescription)
+//            //Modify size of alertview (Purcentage of screen height and width)
+//            alertView.percentageRatioHeight = 0.6
+//            alertView.percentageRatioWidth = 0.7
+//            alertView.titleGotItButton = "GOT IT!"
+//            alertView.show()
         }
     }
     
@@ -402,7 +449,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCellReuseIdentifier", for: indexPath) as! CollectionViewCell
         if pets.petArray.count == 1{
-            cell.activateShadowBinary = 1   // This enables the card shadow if there is just 1 card
+            cell.activateShadowBinary = 0   // This enables the card shadow if there is just 1 card
         } else {
             cell.activateShadowBinary = 0
         }
