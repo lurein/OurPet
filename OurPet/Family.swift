@@ -14,6 +14,7 @@ class Family  {
     var familyName: String
     var familyMembers: [String]
     var familyPets: [String]
+    var documentID: String
 
     
     
@@ -24,14 +25,15 @@ class Family  {
     // MARK: Initializers
     
     init(familyName: String,
-         familyPets: [String], familyMembers: [String]) {
+         familyPets: [String], familyMembers: [String], documentID: String) {
         self.familyName = familyName
         self.familyPets = familyPets
-        self.familyMembers =  familyMembers
+        self.familyMembers = familyMembers
+        self.documentID = documentID
     }
     
     convenience init() {
-        self.init(familyName: "", familyPets: [""], familyMembers: [""])
+        self.init(familyName: "", familyPets: [""], familyMembers: [""], documentID: "")
     }
     
     convenience init(dictionary: [String: Any]) {
@@ -39,9 +41,11 @@ class Family  {
         let familyPets = dictionary["familyPets"] as! [String]? ?? [""]
         let familyMembers = dictionary["familyMembers"] as! [String]? ?? [""]
         
-        self.init(familyName: familyName, familyPets: familyPets, familyMembers: familyMembers)
+        self.init(familyName: familyName, familyPets: familyPets, familyMembers: familyMembers, documentID: "")
     }
     
+    
+    // MARK: Class Functions
     
     func saveData(completed: @escaping (Bool) -> ()) {
         let db = Firestore.firestore()
@@ -60,6 +64,7 @@ class Family  {
                 completed(false)
             } else {
                 print("^^^ new family created with ref ID \(ref?.documentID ?? "unknown")")
+                self.documentID = (ref?.documentID)!
                 let userDocRef = db.collection("opusers").document((Auth.auth().currentUser?.uid)!)
                 userDocRef.updateData(["family" : ref?.documentID])
                 completed(true)

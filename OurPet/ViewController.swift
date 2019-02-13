@@ -93,8 +93,6 @@ class ViewController: UIViewController{
                                 UserDefaults.standard.set(1, forKey: "signedInBefore")
                             }
                             
-                        } else {
-                            self.dailyResetting()
                         }
                     }
                 }
@@ -110,8 +108,6 @@ class ViewController: UIViewController{
                                 self.squigglyArrow.isHidden = false
                                 UserDefaults.standard.set(1, forKey: "signedInBefore")
                             }
-                        }else {
-                            self.dailyResetting()
                         }
                     }
                 }
@@ -127,8 +123,6 @@ class ViewController: UIViewController{
                                 self.squigglyArrow.isHidden = false
                                 UserDefaults.standard.set(1, forKey: "signedInBefore")
                             }
-                        } else {
-                            self.dailyResetting()
                         }
                     }
                 }
@@ -144,8 +138,6 @@ class ViewController: UIViewController{
                                 self.squigglyArrow.isHidden = false
                                 UserDefaults.standard.set(1, forKey: "signedInBefore")
                             }
-                        } else {
-                            self.dailyResetting()
                         }
                     }
                     
@@ -162,8 +154,6 @@ class ViewController: UIViewController{
                                 self.squigglyArrow.isHidden = false
                                 UserDefaults.standard.set(1, forKey: "signedInBefore")
                             }
-                        } else {
-                            self.dailyResetting()
                         }
                     }
                 }
@@ -211,7 +201,8 @@ class ViewController: UIViewController{
                     newFamily.familyPets = self.pets.OPuser.userPets
                     newFamily.saveData { success in
                         if success {
-                        self.performSegue(withIdentifier: "MyFamily", sender: nil) // New family successfully saved
+                            self.pets.OPuser.family = newFamily.documentID
+                            self.performSegue(withIdentifier: "MyFamily", sender: nil) // New family successfully saved
                         } else{
                             print("error saving new family")
                         }

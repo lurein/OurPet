@@ -43,7 +43,7 @@ class MyFamily: UIViewController {
         let fRef = db.collection("families").document(OPuser.family)
         fRef.getDocument { (document, error) in
             if let doc = document, doc.exists {
-                self.family = Family(familyName: doc.get("familyName") as! String, familyPets: doc.get("familyPets") as! [String], familyMembers: doc.get("familyMembers") as! [String])
+                self.family = Family(familyName: doc.get("familyName") as! String, familyPets: doc.get("familyPets") as! [String], familyMembers: doc.get("familyMembers") as! [String], documentID: self.OPuser.family as! String)
             }
             let carers = self.family.familyMembers
             self.familyLabel.text = "The \(self.family.familyName) Family"

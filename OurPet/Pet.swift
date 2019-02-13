@@ -123,7 +123,7 @@ class Pet  {
                                 let fRef = db.collection("families").document(familyID)
                                 fRef.getDocument { (document, error) in
                                     if let doc2 = document, doc2.exists {
-                                        family = Family(familyName: doc2.get("familyName") as! String, familyPets: doc2.get("familyPets") as! [String], familyMembers: doc2.get("familyMembers") as! [String])
+                                        family = Family(familyName: doc2.get("familyName") as! String, familyPets: doc2.get("familyPets") as! [String], familyMembers: doc2.get("familyMembers") as! [String], documentID: familyID as! String)
                                         
                                         family.familyPets.append(self.documentID)
                                         fRef.updateData(["familyPets" : family.familyPets])
