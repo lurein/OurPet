@@ -28,6 +28,16 @@
 				<string>com.googleusercontent.apps.205852820086-ki3vlip3rptp3lv0q3cod8b5p7i0oh42</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>Bundle ID</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>GLRLP.OurPet</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>

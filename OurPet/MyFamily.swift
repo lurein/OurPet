@@ -99,6 +99,8 @@ class MyFamily: UIViewController {
             DispatchQueue.main.asyncAfter(deadline: .now() + 3){
                 self.tableView.reloadData()
                 print(self.family.familyMembers)
+                print(self.generateContentLink())
+                //DynamicLinks.performDiagnostics(completion: nil)
             }
         }
         
@@ -199,6 +201,51 @@ class MyFamily: UIViewController {
     
     
     //MARK: Class Functions
+    func generateContentLink() {
+        // This block generates the website URL
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = "ourpet.app"
+        components.path = "/"
+        let familyIDQueryItem = URLQueryItem(name: "familyID", value: self.OPuser.family)
+        components.queryItems = [familyIDQueryItem]
+        let linkParameter = components.url!
+        
+        // This block generates the dynamic link
+       // let baseURL = URL(string: self.OPuser.family)! // needs work fucko
+        //let domain = "ourpet.page.link/invite"
+        let linkBuilder = DynamicLinkComponents(link: linkParameter, domain: "ourpet.page.link")
+        if let myBundleId = Bundle.main.bundleIdentifier {
+            linkBuilder.iOSParameters = DynamicLinkIOSParameters(bundleID: myBundleId)
+        }
+        linkBuilder.iOSParameters?.appStoreID = "1435861045"
+        
+        linkBuilder.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
+        linkBuilder.socialMetaTagParameters?.title = "Join the \(self.family.familyName) family on OurPet"
+        linkBuilder.socialMetaTagParameters?.descriptionText = "Join my family on OurPet to make our family pet care a WHOLE lot easier!"
+        
+        // Fall back to the base url if we can't generate a dynamic link.
+        linkBuilder.shorten { (url, warnings, error) in
+            if let error = error {
+                print("Oh no! Got an error! \(error)" )
+                return
+            }
+            if let warnings = warnings {
+                for warning in warnings {
+                    print("FDL Warnings (NonCrit): \(warning)")
+                }
+            }
+            guard let url = url else {return}
+            print("short url: \(url.absoluteString)")
+            self.showShareSheet(url: url)
+        }
+        
+    }
+    func showShareSheet(url: URL) {
+        let promoText = "Join the \(self.family.familyName) family on OurPet!"
+        let activityVC = UIActivityViewController(activityItems: [promoText, url], applicationActivities: nil)
+        present(activityVC, animated: true)
+    }
     
     func loadFamilyData(completed: @escaping () -> ()) {
        let db = Firestore.firestore()

@@ -14,12 +14,12 @@
 		9509FFAD2092D3C500B7A094 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9509FFAC2092D3C500B7A094 /* ViewController.swift */; };
 		9509FFB02092D3C500B7A094 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9509FFAE2092D3C500B7A094 /* Main.storyboard */; };
 		9509FFB52092D3C800B7A094 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9509FFB32092D3C800B7A094 /* LaunchScreen.storyboard */; };
-		9509FFBD2092D71A00B7A094 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9509FFBC2092D71A00B7A094 /* GoogleService-Info.plist */; };
 		9509FFBF209419FE00B7A094 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9509FFBE209419FE00B7A094 /* DetailViewController.swift */; };
 		9509FFC12095506400B7A094 /* Pet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9509FFC02095506400B7A094 /* Pet.swift */; };
 		9509FFC3209556A000B7A094 /* Pets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9509FFC2209556A000B7A094 /* Pets.swift */; };
 		95930CAE2125CA6B00B7E2BF /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95930CAD2125CA6B00B7E2BF /* CardView.swift */; };
 		95930CB02126FE4800B7E2BF /* Assets 15-00-24-161.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 95930CAF2126FE4700B7E2BF /* Assets 15-00-24-161.xcassets */; };
+		95AC9C37222081B200F5BD05 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 95AC9C36222081B200F5BD05 /* GoogleService-Info.plist */; };
 		95B72CE720CED1AC00B9AC71 /* OPUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B72CE620CED1AB00B9AC71 /* OPUser.swift */; };
 		95B72CE920D2B16F00B9AC71 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B72CE820D2B16F00B9AC71 /* UserProfileViewController.swift */; };
 		95B72CEB20D6750F00B9AC71 /* ManageCarers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B72CEA20D6750F00B9AC71 /* ManageCarers.swift */; };
@@ -70,13 +70,13 @@
 		9509FFAF2092D3C500B7A094 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9509FFB42092D3C800B7A094 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9509FFB62092D3C800B7A094 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9509FFBC2092D71A00B7A094 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9509FFBE209419FE00B7A094 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		9509FFC02095506400B7A094 /* Pet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pet.swift; sourceTree = "<group>"; };
 		9509FFC2209556A000B7A094 /* Pets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pets.swift; sourceTree = "<group>"; };
 		95930C9F2125C61A00B7E2BF /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DetailViewController.swift; path = Cards/Sources/DetailViewController.swift; sourceTree = "<group>"; };
 		95930CAD2125CA6B00B7E2BF /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		95930CAF2126FE4700B7E2BF /* Assets 15-00-24-161.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets 15-00-24-161.xcassets"; sourceTree = "<group>"; };
+		95AC9C36222081B200F5BD05 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		95B72CE620CED1AB00B9AC71 /* OPUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OPUser.swift; path = /Users/enokajayamanne/Desktop/OurPet/OurPet/OPUser.swift; sourceTree = "<absolute>"; };
 		95B72CE820D2B16F00B9AC71 /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		95B72CEA20D6750F00B9AC71 /* ManageCarers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageCarers.swift; sourceTree = "<group>"; };
@@ -166,8 +166,8 @@
 				95E7710C220C96BB00B935C4 /* Family.swift */,
 				95930CAD2125CA6B00B7E2BF /* CardView.swift */,
 				9509FFB32092D3C800B7A094 /* LaunchScreen.storyboard */,
+				95AC9C36222081B200F5BD05 /* GoogleService-Info.plist */,
 				9509FFB62092D3C800B7A094 /* Info.plist */,
-				9509FFBC2092D71A00B7A094 /* GoogleService-Info.plist */,
 				95930CAF2126FE4700B7E2BF /* Assets 15-00-24-161.xcassets */,
 			);
 			path = OurPet;
@@ -259,6 +259,9 @@
 							com.apple.Push = {
 								enabled = 1;
 							};
+							com.apple.SafariKeychain = {
+								enabled = 1;
+							};
 						};
 					};
 					95E6867321021D760090028B = {
@@ -296,7 +299,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9509FFB52092D3C800B7A094 /* LaunchScreen.storyboard in Resources */,
-				9509FFBD2092D71A00B7A094 /* GoogleService-Info.plist in Resources */,
+				95AC9C37222081B200F5BD05 /* GoogleService-Info.plist in Resources */,
 				95930CB02126FE4800B7E2BF /* Assets 15-00-24-161.xcassets in Resources */,
 				9509FFB02092D3C500B7A094 /* Main.storyboard in Resources */,
 			);
