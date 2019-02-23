@@ -99,8 +99,6 @@ class MyFamily: UIViewController {
             DispatchQueue.main.asyncAfter(deadline: .now() + 3){
                 self.tableView.reloadData()
                 print(self.family.familyMembers)
-                print(self.generateContentLink())
-                //DynamicLinks.performDiagnostics(completion: nil)
             }
         }
         
@@ -199,6 +197,11 @@ class MyFamily: UIViewController {
 
     }
     
+    @IBAction func inviteButtonPressed(_ sender: UITapGestureRecognizer) {
+        generateContentLink()
+    }
+    
+    
     
     //MARK: Class Functions
     func generateContentLink() {
@@ -211,9 +214,6 @@ class MyFamily: UIViewController {
         components.queryItems = [familyIDQueryItem]
         let linkParameter = components.url!
         
-        // This block generates the dynamic link
-       // let baseURL = URL(string: self.OPuser.family)! // needs work fucko
-        //let domain = "ourpet.page.link/invite"
         let linkBuilder = DynamicLinkComponents(link: linkParameter, domain: "ourpet.page.link")
         if let myBundleId = Bundle.main.bundleIdentifier {
             linkBuilder.iOSParameters = DynamicLinkIOSParameters(bundleID: myBundleId)
