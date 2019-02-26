@@ -11,7 +11,8 @@ import Firebase
 import SDWebImage
 import WXImageCompress
 import OneSignal
-//import Cards
+import CropViewController
+
 
 class DetailViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     // MARK: Outlets and Declarations
@@ -174,6 +175,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         imageView.image = selectedImage
         dismiss(animated: true, completion: nil)
         self.imageAdded = true
+        presentCropViewController()
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -408,5 +410,25 @@ extension UIViewController {
     }
     
 
+}
+
+extension DetailViewController: CropViewControllerDelegate {
+    func presentCropViewController() {
+        let image: UIImage = self.imageView.image! //Load an image
+        let cropViewController = CropViewController(image: image)
+        cropViewController.delegate = self
+        cropViewController.cancelButtonTitle = ""
+        present(cropViewController, animated: true, completion: nil)
+    }
+    
+    func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
+        // 'image' is the newly cropped version of the original image
+        cropViewController.dismiss(animated: true)
+        self.imageView.image = image
+    }
+    
+    func cropViewController(_ cropViewController: CropViewController, didFinishCancelled cancelled: Bool) {
+        cropViewController.dismiss(animated: true)
+    }
 }
 

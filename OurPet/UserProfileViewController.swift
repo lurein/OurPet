@@ -11,6 +11,7 @@ import Firebase
 import QuartzCore
 import WXImageCompress
 import OneSignal
+import CropViewController
 
 class UserProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     // MARK: Outlets and Declarations
@@ -57,6 +58,7 @@ class UserProfileViewController: UIViewController, UIImagePickerControllerDelega
         self.navigationController!.navigationBar.setBackgroundImage(bgimage,
                                                                     for: .default)
         assignbackground()
+        
         
         let anyAvatarImage = imageView.image
         imageView.maskCircle(anyImage: anyAvatarImage!)
@@ -155,6 +157,8 @@ class UserProfileViewController: UIViewController, UIImagePickerControllerDelega
     
     // MARK: Image Functions
     
+    
+    
     @IBAction func imageTapped(_ sender: UITapGestureRecognizer) {
         imagePicker.sourceType = .photoLibrary
         imagePicker.delegate = self
@@ -165,12 +169,7 @@ class UserProfileViewController: UIViewController, UIImagePickerControllerDelega
         let selectedImage = info[UIImagePickerControllerOriginalImage] as! UIImage
         imageView.image = selectedImage
         dismiss(animated: true, completion: nil)
-        if let compressedImage = imageView.image?.wxCompress() {
-            print("image compressed")
-            uploadImagePic(img1: compressedImage)
-        } else{
-            uploadImagePic(img1: imageView.image!)
-        }
+        presentCropViewController()
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -235,6 +234,7 @@ class UserProfileViewController: UIViewController, UIImagePickerControllerDelega
 }
 // MARK: Extensions
 
+
 extension UIImageView {
     public func maskCircle(anyImage: UIImage) {
         self.contentMode = UIViewContentMode.scaleAspectFill
@@ -248,5 +248,32 @@ extension UIImageView {
         self.image = anyImage
     }
 }
+
+extension UserProfileViewController: CropViewControllerDelegate {
+    func presentCropViewController() {
+        let image: UIImage = self.imageView.image! //Load an image
+        let cropViewController = CropViewController(image: image)
+        cropViewController.delegate = self
+        cropViewController.cancelButtonTitle = ""
+        present(cropViewController, animated: true, completion: nil)
+    }
+    
+    func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
+        // 'image' is the newly cropped version of the original image
+        cropViewController.dismiss(animated: true)
+        self.imageView.image = image
+        if let compressedImage = imageView.image?.wxCompress() {
+            print("image compressed")
+            uploadImagePic(img1: compressedImage)
+        } else{
+            uploadImagePic(img1: imageView.image!)
+        }
+    }
+    
+    func cropViewController(_ cropViewController: CropViewController, didFinishCancelled cancelled: Bool) {
+        cropViewController.dismiss(animated: true)
+    }
+}
+
 
 
