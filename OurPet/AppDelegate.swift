@@ -35,6 +35,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
+    func handleDynamicLink(_ dynamicLink: DynamicLink){
+        guard let url = dynamicLink.url else {
+            print("Odd, dynamic link has no url")
+            return
+        }
+        print("incoming link parameter is: \(url.absoluteString)")
+        // Put in custom logic for adding to the family here
+    }
+    // The following is for dynamic links
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+        if let incomingURL = userActivity.webpageURL{
+            print("incoming URL is \(incomingURL)")
+            let linkHandled = DynamicLinks.dynamicLinks().handleUniversalLink(incomingURL) { (dynamicLink, error) in
+                guard error == nil else {
+                    print("found an error! \(error!.localizedDescription)")
+                    return
+                }
+                if let dynamicLink = dynamicLink{
+                    self.handleDynamicLink(dynamicLink)
+                }
+            }
+            return true
+        }
+        return false
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        if let dynamicLink = DynamicLinks.dynamicLinks().dynamicLink(fromCustomSchemeURL: url){
+            self.handleDynamicLink(dynamicLink)
+            return true
+        } else {
+            // May have to handle sign-in stuff here
+            return false
+        }
+        
+    }
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

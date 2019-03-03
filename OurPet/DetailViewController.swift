@@ -11,7 +11,8 @@ import Firebase
 import SDWebImage
 import WXImageCompress
 import OneSignal
-//import Cards
+import CropViewController
+
 
 class DetailViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     // MARK: Outlets and Declarations
@@ -46,7 +47,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     var walkedValueChangedBinary : Int = 0
     var morningFedValueChangedBinary : Int = 0
     var eveningFedValueChangedBinary : Int = 0
-    
+    var imageAdded = false
     // MARK: View Setup
     
     override func viewDidLoad() {
@@ -163,25 +164,18 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     @IBAction func imageViewTapped(_ sender: UITapGestureRecognizer) {
-        let isPresentingInAddMode = presentingViewController is UINavigationController
-        if !isPresentingInAddMode {
             print("tapped")
             imagePicker.sourceType = .photoLibrary
             imagePicker.delegate = self
             present(imagePicker, animated: true, completion: nil)
-        }
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let selectedImage = info[UIImagePickerControllerOriginalImage] as! UIImage
         imageView.image = selectedImage
         dismiss(animated: true, completion: nil)
-        if let compressedImage = imageView.image?.wxCompress() {
-            print("image compressed")
-            uploadImagePic(img1: compressedImage)
-        } else{
-        uploadImagePic(img1: imageView.image!)
-        }
+        self.imageAdded = true
+        presentCropViewController()
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -261,6 +255,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         pet.eveningFedStatus = String(eveningFedSegment.selectedSegmentIndex)
         pet.eveningFedBy = eveningFedByField.text!
         
+        
         // This large block ensures the pet is added across the whole family
         
 
@@ -268,6 +263,14 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         pet.saveData { success in
             if success {
                 
+                if self.imageAdded {
+                    if let compressedImage = self.imageView.image?.wxCompress() {
+                        print("image compressed")
+                        self.uploadImagePic(img1: compressedImage)
+                    } else{
+                        self.uploadImagePic(img1: self.imageView.image!)
+                    }
+                }
                 // This large block below handles push notifications
                 for eachCarer in self.pet.carers {
                     if eachCarer != Auth.auth().currentUser?.uid && self.pet.carers.count >= 1 {
@@ -407,5 +410,25 @@ extension UIViewController {
     }
     
 
+}
+
+extension DetailViewController: CropViewControllerDelegate {
+    func presentCropViewController() {
+        let image: UIImage = self.imageView.image! //Load an image
+        let cropViewController = CropViewController(image: image)
+        cropViewController.delegate = self
+        cropViewController.cancelButtonTitle = ""
+        present(cropViewController, animated: true, completion: nil)
+    }
+    
+    func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
+        // 'image' is the newly cropped version of the original image
+        cropViewController.dismiss(animated: true)
+        self.imageView.image = image
+    }
+    
+    func cropViewController(_ cropViewController: CropViewController, didFinishCancelled cancelled: Bool) {
+        cropViewController.dismiss(animated: true)
+    }
 }
 

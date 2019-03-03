@@ -165,7 +165,7 @@ class ViewController: UIViewController{
                 if self.pets.loadedBinary == 0{
                     // Creates the Check Internet Connection Alert
                     self.collectionView.alpha = 0
-                    let internetAlert = UIAlertController(title: "Poor Network Connection", message: "The internet connection was too slow, try open and close 'My Profile' or restarting the app", preferredStyle: .alert)
+                    let internetAlert = UIAlertController(title: "Poor Network Connection", message: "The internet connection was too slow, try opening and closing MyProfile to reload the page.", preferredStyle: .alert)
                     let action = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
                     internetAlert.addAction(action)
                     self.present(internetAlert, animated: true, completion: nil)
