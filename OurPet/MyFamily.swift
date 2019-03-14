@@ -197,9 +197,10 @@ class MyFamily: UIViewController {
 
     }
     
-    @IBAction func inviteButtonPressed(_ sender: UITapGestureRecognizer) {
+    @IBAction func inviteButtonPressed(_ sender: UIControl) {
         generateContentLink()
     }
+    
     
     
     
