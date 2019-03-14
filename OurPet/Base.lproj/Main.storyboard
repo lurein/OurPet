@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ahJ-yJ-S8F">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ahJ-yJ-S8F">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -52,7 +50,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <outletCollection property="gestureRecognizers" destination="P3S-7T-4s1" appends="YES" id="cq2-SO-pNp"/>
+                                    <action selector="myFamilyButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FZh-zK-MC0"/>
                                 </connections>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="xWD-rQ-4sj">
@@ -169,7 +167,7 @@
                                 </cells>
                             </collectionView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noPets" translatesAutoresizingMaskIntoConstraints="NO" id="rUs-TV-fZZ">
-                                <rect key="frame" x="16" y="70" width="343" height="418"/>
+                                <rect key="frame" x="16" y="70" width="343" height="419"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ase-1R-fLj" customClass="LGButton" customModule="LGButton">
                                 <rect key="frame" x="16" y="524" width="144" height="42"/>
@@ -203,7 +201,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <outletCollection property="gestureRecognizers" destination="Hn9-qx-jyz" appends="YES" id="hsY-mD-nxv"/>
+                                    <action selector="myProfileButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2ss-Ll-6tn"/>
                                 </connections>
                             </view>
                         </subviews>
@@ -244,19 +242,10 @@
                         <outlet property="squigglyArrow" destination="rUs-TV-fZZ" id="wF6-VS-cvP"/>
                         <segue destination="Me3-f2-lSM" kind="showDetail" identifier="resetVC" animates="NO" id="AvP-Ni-uE8"/>
                         <segue destination="RWL-rn-gQB" kind="presentation" identifier="MyFamily" id="5Kf-uv-pvV"/>
+                        <segue destination="o00-nd-mt6" kind="presentation" identifier="MyProfile" id="6ri-V7-Xvf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="Hn9-qx-jyz">
-                    <connections>
-                        <segue destination="o00-nd-mt6" kind="presentation" identifier="MyProfile" id="FR5-i6-gbo"/>
-                    </connections>
-                </tapGestureRecognizer>
-                <tapGestureRecognizer id="P3S-7T-4s1">
-                    <connections>
-                        <action selector="myFamilyButtonPressed:" destination="BYZ-38-t0r" id="Fu7-k6-LSu"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1904.8" y="113.79310344827587"/>
         </scene>
@@ -272,7 +261,7 @@
                                 <rect key="frame" x="16" y="150" width="343" height="367"/>
                                 <subviews>
                                     <imageView contentMode="scaleAspectFit" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="profile_image" translatesAutoresizingMaskIntoConstraints="NO" id="ldR-IT-2xk">
-                                        <rect key="frame" x="82" y="8" width="179" height="180"/>
+                                        <rect key="frame" x="82" y="8" width="179" height="181"/>
                                         <gestureRecognizers/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="roundness">
@@ -284,7 +273,7 @@
                                         </connections>
                                     </imageView>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Edo-4W-muo">
-                                        <rect key="frame" x="82" y="218" width="253" height="30"/>
+                                        <rect key="frame" x="82" y="219" width="253" height="30"/>
                                         <color key="tintColor" red="0.58105844259999995" green="0.12855249639999999" blue="0.57453137639999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="uEA-Il-6uk"/>
@@ -297,7 +286,7 @@
                                         </connections>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username*:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vqN-0U-z4d">
-                                        <rect key="frame" x="11" y="264" width="107" height="45"/>
+                                        <rect key="frame" x="11" y="265" width="107" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="107" id="HkY-vb-na7"/>
                                         </constraints>
@@ -306,13 +295,13 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VMb-Cm-LiL">
-                                        <rect key="frame" x="11" y="211" width="66" height="45"/>
+                                        <rect key="frame" x="11" y="211" width="66" height="46"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <color key="textColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4FU-RQ-srF">
-                                        <rect key="frame" x="126" y="271" width="209" height="30"/>
+                                        <rect key="frame" x="126" y="272" width="209" height="30"/>
                                         <color key="tintColor" red="0.58105844259999995" green="0.12855249639999999" blue="0.57453137639999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="cML-s0-9eP"/>
@@ -418,7 +407,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3eq-M9-eDP" customClass="LGButton" customModule="LGButton">
-                                <rect key="frame" x="114" y="617" width="148.5" height="36"/>
+                                <rect key="frame" x="107" y="615" width="155.5" height="38"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <gestureRecognizers/>
                                 <constraints>
@@ -448,11 +437,11 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <outletCollection property="gestureRecognizers" destination="gvY-jh-Eh7" appends="YES" id="Rrk-gI-TpQ"/>
+                                    <action selector="manageCarersButtonPressed:" destination="6YG-vm-2j1" eventType="touchUpInside" id="YAZ-go-tKt"/>
                                 </connections>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jyn-ie-MKS">
-                                <rect key="frame" x="0.0" y="615" width="32" height="32"/>
+                                <rect key="frame" x="0.0" y="622" width="25" height="25"/>
                                 <color key="tintColor" red="0.0" green="0.32852089410000002" blue="0.57488495110000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" image="rubbish-bin">
                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -703,17 +692,13 @@
                         <outlet property="petNameField" destination="aC8-SN-URp" id="h6r-Bw-G7a"/>
                         <outlet property="saveButtonPressed" destination="IHE-iG-9VU" id="7Mm-g5-XfZ"/>
                         <outlet property="walkedTodaySegment" destination="276-4g-xic" id="yvZ-uJ-hgq"/>
+                        <segue destination="DA7-x9-6PX" kind="presentation" identifier="ManageCarers" id="bw2-Fy-2uy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iJ0-id-4ha" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="Eok-mI-KgQ">
                     <connections>
                         <action selector="imageViewTapped:" destination="6YG-vm-2j1" id="tSF-E8-EQr"/>
-                    </connections>
-                </tapGestureRecognizer>
-                <tapGestureRecognizer id="gvY-jh-Eh7">
-                    <connections>
-                        <segue destination="DA7-x9-6PX" kind="presentation" identifier="ManageCarers" id="lt7-Fd-g3I"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
@@ -990,7 +975,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <outletCollection property="gestureRecognizers" destination="zTq-PQ-IB7" appends="YES" id="lFV-zd-FTX"/>
+                                            <action selector="inviteButtonPressed:" destination="uvA-Gf-2Dj" eventType="touchUpInside" id="nfl-Nw-gIx"/>
                                         </connections>
                                     </view>
                                 </subviews>
@@ -1092,11 +1077,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IhU-V8-n1s" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="zTq-PQ-IB7">
-                    <connections>
-                        <action selector="inviteButtonPressed:" destination="uvA-Gf-2Dj" id="Mk3-51-g8I"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-1471.2" y="390.85457271364322"/>
         </scene>
@@ -1304,13 +1284,13 @@
         <image name="Flare" width="1280" height="800"/>
         <image name="dog_avatar2" width="630" height="630"/>
         <image name="logo_2" width="1300" height="2078"/>
-        <image name="moon" width="24" height="24"/>
+        <image name="moon" width="19.200000762939453" height="19.200000762939453"/>
         <image name="noPets" width="1948" height="940"/>
         <image name="pet_image" width="802" height="805"/>
         <image name="profile_image" width="802" height="805"/>
-        <image name="rubbish-bin" width="32" height="32"/>
-        <image name="sun" width="24" height="24"/>
-        <image name="walking-with-dog" width="24" height="24"/>
+        <image name="rubbish-bin" width="25.600000381469727" height="25.600000381469727"/>
+        <image name="sun" width="19.200000762939453" height="19.200000762939453"/>
+        <image name="walking-with-dog" width="19.200000762939453" height="19.200000762939453"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="niN-fM-jbK"/>

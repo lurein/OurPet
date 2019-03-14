@@ -314,6 +314,11 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     // MARK: Additional Functions
     
+    @IBAction func manageCarersButtonPressed(_ sender: UIControl) {
+        self.performSegue(withIdentifier: "ManageCarers", sender: nil)
+    }
+    
+    
     @IBAction func walkedTodayValueChanged(_ sender: UISegmentedControl) {
         walkedValueChangedBinary = 1
     }

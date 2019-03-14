@@ -15,7 +15,7 @@ import OneSignal
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var familyInviteID = ""
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -42,6 +42,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         print("incoming link parameter is: \(url.absoluteString)")
         // Put in custom logic for adding to the family here
+        guard let urlComp = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return }
+        familyInviteID = (urlComp.queryItems?.first?.value)!
+        
+        
     }
     // The following is for dynamic links
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {

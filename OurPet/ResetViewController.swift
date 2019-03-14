@@ -10,6 +10,9 @@ import UIKit
 
 class ResetViewController: UIViewController {
     override func viewDidLoad() {
-        dismiss(animated: false, completion: nil)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.dismiss(animated: false, completion: nil)
+            
+        }
     }
 }

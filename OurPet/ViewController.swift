@@ -12,6 +12,7 @@ import FirebaseUI
 import AlertOnboarding
 import UserNotifications
 import SCLAlertView
+import LGButton
 
 
 
@@ -96,6 +97,14 @@ class ViewController: UIViewController{
                         }
                     }
                 }
+                // Here we check if a user recently clicked on an invite link
+                
+                let hasProcessedFamilyLink = UserDefaults.standard.bool(forKey: "hasProcessedFamilyLink") ?? false
+                print(hasProcessedFamilyLink)
+                if hasProcessedFamilyLink != true {
+                    self.addToFamily()
+                }
+                
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { // change 2 to desired number of seconds
                if(self.checkerBool == false) {self.collectionView.reloadData()}
@@ -183,7 +192,10 @@ class ViewController: UIViewController{
         
     }
     
-    @IBAction func myFamilyButtonPressed(_ sender: UITapGestureRecognizer) {
+
+    // MARK: Family Functions
+
+    @IBAction func myFamilyButtonPressed(_ sender: UIControl) {
         if(pets.OPuser.family == ""){
             let appearance = SCLAlertView.SCLAppearance(
                 showCloseButton: false
@@ -193,7 +205,7 @@ class ViewController: UIViewController{
                 let alert2 = SCLAlertView(appearance: appearance)
                 let familyTxt = alert2.addTextField("Enter Family Name")
                 alert2.addButton("Create Family"){ // Create Family
-                     print("Text value: \(familyTxt.text)")
+                    print("Text value: \(familyTxt.text)")
                     // set up family creation function here
                     let newFamily = Family()
                     newFamily.familyName = familyTxt.text ?? ""
@@ -213,7 +225,7 @@ class ViewController: UIViewController{
                     
                 }
                 alert2.showSuccess("Create a Family Group", subTitle: "Enter your family name below")
-               
+                
             }
             alert.addButton("Join an existing family group"){ // Join Existing Family
                 let appearance2 = SCLAlertView.SCLAppearance(
@@ -223,14 +235,78 @@ class ViewController: UIViewController{
                 let alert3 = SCLAlertView(appearance: appearance2).showWarning("Join An Existing Family", subTitle: "Ask a member of your family to add you to the group! \n                                                                                                                                                       Your username is: \(self.pets.OPuser.userName)", circleIconImage: existingAlertIcon)
             }
             alert.showEdit("One More Step", subTitle: "You don't have a family group set-up yet")
-
+            
         }
         else{
             self.performSegue(withIdentifier: "MyFamily", sender: nil)
         }
+    }
+    
+    func addToFamily(){
+        
+       
+        
+        var tempFamily = Family()
+        let accessDelegate = UIApplication.shared.delegate as! AppDelegate
+        let familyInviteID = accessDelegate.familyInviteID
+        
+        if Auth.auth().currentUser?.uid != nil && familyInviteID != ""  {
+            UserDefaults.standard.set(true, forKey: "hasProcessedFamilyLink")
+            print("Adding user to family")
+            self.pets.OPuser.family = familyInviteID
+            let db = Firestore.firestore()
+            
+            let familyRef = db.collection("families").document(familyInviteID)
+            familyRef.getDocument { (document, error) in
+                if let document = document, document.exists {
+                    let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
+                    tempFamily = Family(dictionary: document.data()!)
+                    print(dataDescription)
+                    // This section adds the user to the family's members
+                    var newFamilyArray : [String] = []
+                    newFamilyArray = tempFamily.familyMembers
+                    newFamilyArray.append((self.authUI.auth?.currentUser?.uid)!)
+                    familyRef.updateData(["familyMembers": newFamilyArray])
+                    
+                    // This section adds the  user to each of the family's pets
+                    var userPetArray : [String] = []
+                    for eachPet in tempFamily.familyPets{
+                        print(eachPet)
+                        userPetArray.append(eachPet)
+                        let petRef = db.collection("pets").document(eachPet)
+                        petRef.getDocument { (document, error) in
+                            if let document = document, document.exists {
+                                var tempPet = Pet()
+                                tempPet = Pet(dictionary: document.data()!)
+                                var tempCarersArray : [String] = []
+                                tempCarersArray = tempPet.carers
+                                tempCarersArray.append((self.authUI.auth?.currentUser?.uid)!)
+                                petRef.updateData(["carers": tempCarersArray])
+                            }
+                            
+                            else{
+                                print("error adding user to family pets")
+                            }
+                        }
+                    }
+                    
+                    // This section adds the pets and family to the User
+                    let userDocRef = db.collection("opusers").document((Auth.auth().currentUser?.uid)!)
+                    userDocRef.updateData(["family": familyInviteID, "userPets": userPetArray])
+                    
+                    self.performSegue(withIdentifier: "resetVC", sender: nil)
+                    
+                } else {
+                    print("Document does not exist")
+                }
+            }
+        }
         
     }
     
+    @IBAction func myProfileButtonPressed(_ sender: UIControl) {
+         self.performSegue(withIdentifier: "MyProfile", sender: nil)
+    }
     
     
     // MARK: Segue Preperations
