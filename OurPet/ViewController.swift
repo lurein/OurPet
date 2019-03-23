@@ -28,7 +28,7 @@ class ViewController: UIViewController{
     var pets: Pets!
     var globalIndexPath : IndexPath?
     var checkerBool = false // this avoids the repetitive image reloading bug
-    
+    @IBOutlet weak var squigglyArrow: UIImageView!
    
     
     // Setting up the onboarding alert
@@ -48,6 +48,9 @@ class ViewController: UIViewController{
         authUI = FUIAuth.defaultAuthUI()
         authUI?.delegate = self
         pets = Pets()
+        squigglyArrow.isHidden = true
+        collectionView.isHidden = false
+        collectionView.backgroundColor = UIColor.clear
    
         // Sets the navigation bar gradient
         var bgimage = UIImage(named: "moon_purple.jpg") as! UIImage
@@ -67,10 +70,12 @@ class ViewController: UIViewController{
     }
     
     func addNoPets() {
-        let image = UIImage(named: "noPets") as! UIImage
-        let imageView = UIImageView(image: image)
-        imageView.frame = collectionView.frame
-        self.view.addSubview(imageView)
+        squigglyArrow.isHidden = false
+        collectionView.isHidden = true
+        let width = view.frame.width - 80
+        let height = width / 1948 * 940 // maintain aspect ratio
+        squigglyArrow.frame = CGRect(x: 40, y: (view.frame.height/2 - (height/2)), width: width, height: height)
+            
     }
 
     
