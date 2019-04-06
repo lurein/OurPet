@@ -29,9 +29,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         OneSignal.inFocusDisplayType = OSNotificationDisplayType.notification;
         
-        OneSignal.promptForPushNotifications(userResponse: { accepted in
-            print("User accepted notifications: \(accepted)")
-        })
+        //OneSignal.promptForPushNotifications(userResponse: { accepted in
+         //   print("User accepted notifications: \(accepted)")
+       // })
         
         return true
     }

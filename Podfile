@@ -13,6 +13,7 @@ use_frameworks!
     pod 'OneSignal', '>= 2.5.2', '< 3.0'
     pod 'SCLAlertView' 
     pod 'CropViewController'
+    pod 'OnboardKit'
 
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|

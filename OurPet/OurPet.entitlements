@@ -12,5 +12,9 @@
 	<array>
 		<string>group.GLRLP.OurPet.onesignal</string>
 	</array>
+	<key>keychain-access-groups</key>
+	<array>
+		<string>$(AppIdentifierPrefix)GLRLP.OurPet</string>
+	</array>
 </dict>
 </plist>

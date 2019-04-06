@@ -13,8 +13,8 @@ import AlertOnboarding
 import UserNotifications
 import SCLAlertView
 import LGButton
-
-
+import OnboardKit
+import OneSignal
 
 
 
@@ -29,9 +29,10 @@ class ViewController: UIViewController{
     var globalIndexPath : IndexPath?
     var checkerBool = false // this avoids the repetitive image reloading bug
     @IBOutlet weak var squigglyArrow: UIImageView!
+
    
     
-    // Setting up the onboarding alert
+    // Setting up the onboarding alert (DEPRECATED)
     var arrayOfImage = ["dog_avatar2", "Avatar_Dog-512", "friend_avatar"]
     var arrayOfTitle = ["WELCOME TO OURPET", "SET-UP YOUR PETS", "ADD CO-CARERS"]
     var arrayOfDescription = ["Welcome to OurPet, the simplest way for a group of people to effectively care for their pets. Invite your friends and family to get the group pet care started!",
@@ -345,14 +346,67 @@ class ViewController: UIViewController{
         }
     }
     
-    // MARK: Auth Code
+    // MARK: Auth Code and Onboarding
     
     func signIn() {
         let providers: [FUIAuthProvider] = [
-            FUIGoogleAuth(),
+            FUIGoogleAuth(), FUIEmailAuth(), FUIFacebookAuth()
             ]
         if authUI.auth?.currentUser == nil {
             self.authUI?.providers = providers
+            
+            let kFirebaseTermsOfService = URL(string: "https://ourpet.app/terms_and_conditions.html")!
+            let kFirebasePrivacyPolicy = URL(string: "https://ourpet.app/privacy_policy.html")!
+            authUI.tosurl = kFirebaseTermsOfService
+            authUI.privacyPolicyURL = kFirebasePrivacyPolicy
+            
+            
+            
+            // MARK: Onboarding Here
+            
+            let hasOnboarded = UserDefaults.standard.bool(forKey: "hasOnboarded")
+            
+            let onboardAppearance = OnboardViewController.AppearanceConfiguration(tintColor: .purple)
+            
+            let pageOne = OnboardPage(title: "Welcome to OurPet",
+                                   imageName: "smallJustDoggo",
+                                   description: "OurPet is about to simplify your family's petcare and bring some much needed peace of mind.")
+            
+            let pageTwo = OnboardPage(title: "Unite your Family",
+                                      imageName: "happyFamily",
+                                      description: "Spread the workload and make petcare a full family affair, delegating your feeding, walking and grooming.")
+            
+            let pageThree = OnboardPage(title: "Know it All",
+                                        imageName: "notificationBell",
+                                        description: "Get notified everytime your beloved doggo gets walked or fed - or when he hasn't. We highly recommend this.",
+                                        advanceButtonTitle: "Decide Later",
+                                        actionButtonTitle: "Enable Notifications",
+                                        action: { [weak self] completion in
+                                            OneSignal.promptForPushNotifications(userResponse: { accepted in
+                                                print("User accepted notifications: \(accepted)")
+                                                completion(true, nil)
+                                                
+                                            })
+            })
+            
+            let pageFour = OnboardPage(title: "Almost There!",
+                                      imageName: "successMan",
+                                      description: "You're just one step away from leveling up your pet care! Just set up your account and you're ready.",
+                                      advanceButtonTitle: "Woof!")
+            
+            
+            let onboardingViewController = OnboardViewController(pageItems: [pageOne, pageTwo, pageThree, pageFour], appearanceConfiguration: onboardAppearance)
+            
+            if !hasOnboarded {
+                onboardingViewController.presentFrom(self, animated: true) // Present onboarding
+                UserDefaults.standard.set(true, forKey: "hasOnboarded")
+            }
+            
+            
+            
+
+            // end of onboarding block
+            
             present(authUI.authViewController(), animated: true, completion: nil)
         } else {
             collectionView.isHidden = false
@@ -393,7 +447,7 @@ class ViewController: UIViewController{
         
         // Create the UIImageView using the frame created above & add the "logo_2" image
         let logoImageView = UIImageView(frame: logoFrame)
-        logoImageView.image = UIImage(named: "logo_2")
+        logoImageView.image = UIImage(named: "appLogo_transparent")
         logoImageView.contentMode = .scaleAspectFit // Set imageView to Aspect Fit
         loginViewController.view.addSubview(logoImageView) // Add ImageView to the login controller's main view
         return loginViewController
