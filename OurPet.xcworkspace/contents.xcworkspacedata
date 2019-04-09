@@ -2,12 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/enokajayamanne/Desktop/OurPet/OurPet/AboutOPViewController.swift">
-   </FileRef>
-   <FileRef
-      location = "group:/Users/enokajayamanne/Desktop/OurPet/OurPet/OPUser.swift">
-   </FileRef>
-   <FileRef
       location = "group:OurPet.xcodeproj">
    </FileRef>
    <FileRef
