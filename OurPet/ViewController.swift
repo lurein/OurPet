@@ -24,6 +24,7 @@ class ViewController: UIViewController{
     
     @IBOutlet weak var addButtonPressed: UIBarButtonItem!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var squigglyArrow: UIImageView!
     var authUI: FUIAuth!
     var pets: Pets!
     var globalIndexPath : IndexPath?
@@ -53,6 +54,7 @@ class ViewController: UIViewController{
         authUI = FUIAuth.defaultAuthUI()
         authUI?.delegate = self
         pets = Pets()
+        squigglyArrow.isHidden = true // This is now the 'add pets by pressing + image'
    
         // Sets the navigation bar gradient
         var bgimage = UIImage(named: "moon_purple.jpg") as! UIImage
@@ -70,17 +72,11 @@ class ViewController: UIViewController{
         collectionView.showsHorizontalScrollIndicator = false
        
     }
-    
-    func addNoPets() {
-        let image = UIImage(named: "noPets") as! UIImage
-        let imageView = UIImageView(image: image)
-        imageView.frame = collectionView.frame
-        self.view.addSubview(imageView)
-    }
 
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        squigglyArrow.isHidden = true
         self.checkerBool = false
         let signedInBefore = UserDefaults.standard.integer(forKey: "signedInBefore")
         if signedInBefore == 0 && Auth.auth().currentUser?.uid != nil { //initial profile setup
@@ -99,7 +95,7 @@ class ViewController: UIViewController{
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1){
                         if self.pets.petArray.count == 0 {
                             if signedInBefore == -1 {
-                                self.addNoPets()
+                                self.squigglyArrow.isHidden = false
                                 UserDefaults.standard.set(1, forKey: "signedInBefore")
                             }
                             
@@ -123,7 +119,7 @@ class ViewController: UIViewController{
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1){
                         if self.pets.petArray.count == 0 {
                             if signedInBefore == -1 {
-                                self.addNoPets()
+                                self.squigglyArrow.isHidden = false
                                 UserDefaults.standard.set(1, forKey: "signedInBefore")
                             }
                         }
@@ -138,7 +134,7 @@ class ViewController: UIViewController{
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1){
                         if self.pets.petArray.count == 0 {
                             if signedInBefore == -1 {
-                                self.addNoPets()
+                                self.squigglyArrow.isHidden = false
                                 UserDefaults.standard.set(1, forKey: "signedInBefore")
                             }
                         }
@@ -153,7 +149,7 @@ class ViewController: UIViewController{
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1){
                         if self.pets.petArray.count == 0 {
                             if signedInBefore == -1 {
-                                self.addNoPets()
+                                self.squigglyArrow.isHidden = false
                                 UserDefaults.standard.set(1, forKey: "signedInBefore")
                             }
                         }
@@ -169,7 +165,7 @@ class ViewController: UIViewController{
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1){
                         if self.pets.petArray.count == 0 {
                             if signedInBefore == -1 {
-                                self.addNoPets()
+                                self.squigglyArrow.isHidden = false
                                 UserDefaults.standard.set(1, forKey: "signedInBefore")
                             }
                         }
