@@ -30,6 +30,7 @@ class ViewController: UIViewController{
     var checkerBool = false // this avoids the repetitive image reloading bug
     @IBOutlet weak var squigglyArrow: UIImageView!
 
+
    
     
     // Setting up the onboarding alert (DEPRECATED)
@@ -49,10 +50,9 @@ class ViewController: UIViewController{
         authUI = FUIAuth.defaultAuthUI()
         authUI?.delegate = self
         pets = Pets()
-        squigglyArrow.isHidden = true
-        collectionView.isHidden = false
+        squigglyArrow.isHidden = true // This is now the 'add pets by pressing + image'
         collectionView.backgroundColor = UIColor.clear
-   
+
         // Sets the navigation bar gradient
         var bgimage = UIImage(named: "moon_purple.jpg") as! UIImage
         self.navigationController!.navigationBar.setBackgroundImage(bgimage,
