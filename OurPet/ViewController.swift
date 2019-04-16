@@ -29,12 +29,8 @@ class ViewController: UIViewController{
     var pets: Pets!
     var globalIndexPath : IndexPath?
     var checkerBool = false // this avoids the repetitive image reloading bug
-<<<<<<< HEAD
-    @IBOutlet weak var squigglyArrow: UIImageView!
-
-=======
     
->>>>>>> parent of 878103e... all views constrained
+
    
     
     // Setting up the onboarding alert (DEPRECATED)
@@ -55,7 +51,8 @@ class ViewController: UIViewController{
         authUI?.delegate = self
         pets = Pets()
         squigglyArrow.isHidden = true // This is now the 'add pets by pressing + image'
-   
+        collectionView.backgroundColor = UIColor.clear
+        
         // Sets the navigation bar gradient
         var bgimage = UIImage(named: "moon_purple.jpg") as! UIImage
         self.navigationController!.navigationBar.setBackgroundImage(bgimage,
