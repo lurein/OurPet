@@ -15,25 +15,27 @@ class OPUser  {
     var postingUserID: String
     var userPets: [String]
     var family: String
+    var weeklyPoints : Int
     
     
     var dictionary: [String: Any] {
-        return ["fullName": fullName, "userName": userName, "userPets": userPets, "family": family]
+        return ["fullName": fullName, "userName": userName, "userPets": userPets, "family": family, "weeklyPoints": weeklyPoints]
     }
     
     // MARK: Initializers
     
     init(fullName: String, userName: String,
-         userPets: [String], postingUserID: String, family: String) {
+         userPets: [String], postingUserID: String, family: String, weeklyPoints: Int) {
         self.fullName = fullName
         self.userName = userName
         self.userPets = userPets
         self.postingUserID = postingUserID
         self.family =  family
+        self.weeklyPoints = weeklyPoints
     }
     
     convenience init() {
-        self.init(fullName: "", userName: "", userPets: [""], postingUserID: "", family: "")
+        self.init(fullName: "", userName: "", userPets: [""], postingUserID: "", family: "", weeklyPoints: 0)
     }
     
     convenience init(dictionary: [String: Any]) {
@@ -41,8 +43,9 @@ class OPUser  {
         let userName = dictionary["userName"] as! String? ?? ""
         let userPets = dictionary["userPets"] as! [String]? ?? [""]
         let family = dictionary["family"] as! String? ?? ""
+        let weeklyPoints = dictionary["weeklyPoints"] as! Int? ?? 0
         
-        self.init(fullName: fullName, userName: userName, userPets: userPets, postingUserID: "", family: family)
+        self.init(fullName: fullName, userName: userName, userPets: userPets, postingUserID: "", family: family, weeklyPoints: weeklyPoints)
     }
     
     // MARK: Class Functions

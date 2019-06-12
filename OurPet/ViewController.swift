@@ -15,6 +15,7 @@ import SCLAlertView
 import LGButton
 import OnboardKit
 import OneSignal
+import BadgeSwift
 
 
 
@@ -25,6 +26,7 @@ class ViewController: UIViewController{
     @IBOutlet weak var addButtonPressed: UIBarButtonItem!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var squigglyArrow: UIImageView!
+    
     var authUI: FUIAuth!
     var pets: Pets!
     var globalIndexPath : IndexPath?
@@ -322,6 +324,8 @@ class ViewController: UIViewController{
             if pets.petArray.count != 0 {
                 destination.pet = pets.petArray[selectedIndex!.row]
             }
+            destination.currUser = pets.OPuser
+            destination.currUID = (authUI.auth?.currentUser?.uid)!
         }
         // Passes user information to UserProfile scene
         if segue.identifier == "MyProfile" {
@@ -624,6 +628,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
             else{cell.morningFedLabel.text = "Fed"}
             if(Int(pet.eveningFedStatus) == 0){cell.eveningFedLabel.text = "Not fed"}
             else{cell.eveningFedLabel.text = "Fed"}
+            cell.streakBadge.text = String(pet.streak)
         }
         return cell
     }

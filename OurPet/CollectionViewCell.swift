@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreMotion
+import BadgeSwift
 
 class CollectionViewCell: UICollectionViewCell {
     
@@ -16,6 +17,7 @@ class CollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var morningFedLabel: UILabel!
     @IBOutlet weak var eveningFedLabel: UILabel!
     @IBOutlet weak var petNameLabel: UILabel!
+    @IBOutlet weak var streakBadge: BadgeSwift!
     
     var activateShadowBinary: Int = 0
     private static let kInnerMargin: CGFloat = 20.0

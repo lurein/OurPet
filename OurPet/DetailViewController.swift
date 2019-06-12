@@ -23,6 +23,8 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet weak var eveningFedSegment: UISegmentedControl!
     @IBOutlet weak var eveningFedByField: UITextField!
     var pet: Pet!
+    var currUser : OPUser!
+    var currUID : String!
     var imagePicker = UIImagePickerController()
     @IBOutlet weak var saveButtonPressed: UIBarButtonItem!
     
@@ -254,6 +256,7 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
         pet.morningFedBy = morningFedByField.text!
         pet.eveningFedStatus = String(eveningFedSegment.selectedSegmentIndex)
         pet.eveningFedBy = eveningFedByField.text!
+        updateStreaks()
         
         
         // This large block ensures the pet is added across the whole family
@@ -283,15 +286,23 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
                                     OneSignal.postNotification([
                                         "include_player_ids": [notificationID],
                                         "headings": ["en": "\(self.pet.petName) has been walked"],
-                                        "contents": ["en": "Tap to see details"],
+                                        "contents": ["en": "You're on a \(self.pet.streak) day streak🔥 Keep it up!"],
                                         ])
+                                    // update points
+                                    let userRef = db.collection("opusers").document(self.currUID)
+                                    var newPoints = self.currUser.weeklyPoints + 10
+                                    userRef.updateData(["weeklyPoints": newPoints])
                                 }
                                 if (self.morningFedValueChangedBinary == 1 && self.morningFedSegment.selectedSegmentIndex == 1) || (self.eveningFedValueChangedBinary == 1 && self.eveningFedSegment.selectedSegmentIndex == 1) {
                                     OneSignal.postNotification([
                                         "include_player_ids": [notificationID],
                                         "headings": ["en": "\(self.pet.petName) has been fed"],
-                                        "contents": ["en": "Tap to see details"],
+                                        "contents": ["en": "You're on a \(self.pet.streak) day streak🔥 Keep it up!"],
                                         ])
+                                    // update points
+                                    let userRef = db.collection("opusers").document(self.currUID)
+                                    var newPoints = self.currUser.weeklyPoints + 10
+                                    userRef.updateData(["weeklyPoints": newPoints])
                                 }
                                 
                             }
@@ -313,6 +324,20 @@ class DetailViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     // MARK: Additional Functions
+    
+    func updateStreaks(){
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd"
+        let currentDate = Date()
+        var curr1 = dateFormatter.string(from: currentDate)
+        var currentDay = Int(curr1)
+        
+        
+        if(currentDay! > self.pet.lastUpdateDay){
+            self.pet.streak += 1
+        }
+        self.pet.lastUpdateDay = currentDay!
+    }
     
     @IBAction func manageCarersButtonPressed(_ sender: UIControl) {
         self.performSegue(withIdentifier: "ManageCarers", sender: nil)

@@ -1,5 +1,6 @@
 PODS:
   - AlertOnboarding (2.0)
+  - BadgeSwift (7.0.0)
   - Bolts (1.9.0):
     - Bolts/AppLinks (= 1.9.0)
     - Bolts/Tasks (= 1.9.0)
@@ -196,6 +197,7 @@ PODS:
 
 DEPENDENCIES:
   - AlertOnboarding
+  - BadgeSwift
   - CropViewController
   - Firebase/Core
   - Firebase/DynamicLinks
@@ -212,6 +214,7 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - AlertOnboarding
+    - BadgeSwift
     - Bolts
     - BoringSSL-GRPC
     - CropViewController
@@ -250,6 +253,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   AlertOnboarding: 2e6804e67894894807c5d24bcfcd7905897e6f08
+  BadgeSwift: 5cfacfad916d85e2f68d93dbb9ade4e9555903da
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   BoringSSL-GRPC: 2a230d9cd93e7ce39916044f645cebb31f37dde6
   CropViewController: a090820b15fc3da68e694d7c192a4708c576828b
@@ -286,6 +290,6 @@ SPEC CHECKSUMS:
   TwitterKit: 5e4f41d70b9abdb41df5467f52d7aa2c0fd26ebb
   WXImageCompress: 4003213a788574c3e307faec0130359c52e43887
 
-PODFILE CHECKSUM: 9730d3eae31d435cd935c279588731da4801761e
+PODFILE CHECKSUM: c9785a9f0f53e70e57fa899050f5c49a31f4c052
 
 COCOAPODS: 1.5.3
