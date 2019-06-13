@@ -15,6 +15,7 @@ class MyFamily: UIViewController {
     
     var OPuser : OPUser!
     var family : Family!
+    var mostPoints = 0
     @IBOutlet weak var searchField: UITextField!
 
     @IBOutlet weak var tableView: UITableView!
@@ -26,6 +27,7 @@ class MyFamily: UIViewController {
     struct member {
         var fullName: String
         var userName: String
+        var weeklyPoints: Int
     }
     
     var members = [member]()
@@ -54,7 +56,12 @@ class MyFamily: UIViewController {
                     if let document = document, document.exists {
                         var carerFullName = document.get("fullName") as! String
                         var carerUsername = document.get("userName") as! String
-                        self.members.append(member(fullName: carerFullName, userName: carerUsername))
+                        var carerPoints = document.get("weeklyPoints") ?? 0
+                        if (carerPoints as! Int) > self.mostPoints {
+                            self.mostPoints = carerPoints as! Int
+                        }
+                        self.members.append(member(fullName: carerFullName, userName: carerUsername, weeklyPoints: carerPoints as! Int))
+                        self.members.sort { (lhs, rhs) in return lhs.weeklyPoints > rhs.weeklyPoints }
                     }
                 }
             }
@@ -160,7 +167,7 @@ class MyFamily: UIViewController {
     }
     
     @IBAction func addButtonPressed(_ sender: UIButton) {
-        var newMember = member(fullName: "", userName: "")
+        var newMember = member(fullName: "", userName: "", weeklyPoints: 0)
         let db = Firestore.firestore()
         // Here we update the found users family and userPets fields
         db.collection("opusers").document(self.foundUserID).updateData(["family" : self.OPuser.family, "userPets" : self.OPuser.userPets])
@@ -287,10 +294,16 @@ extension MyFamily: UITableViewDelegate, UITableViewDataSource {
     // you don't want to do your database calls from here
     // cellForRowAt gets called a lot
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell" , for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell" , for: indexPath) as! FamilyTableViewCell
         
-        cell.textLabel?.text = members[indexPath.row].fullName
-        cell.detailTextLabel?.text = members[indexPath.row].userName
+        cell.nameLabel?.text = members[indexPath.row].fullName
+        cell.usernameLabel?.text = members[indexPath.row].userName
+        if(members[indexPath.row].weeklyPoints == self.mostPoints) {
+            cell.pointsLabel?.text = "👑 " + String(members[indexPath.row].weeklyPoints) + " pts"
+        } else{
+            cell.pointsLabel?.text = String(members[indexPath.row].weeklyPoints) + " pts"
+        }
+        
         
         return cell
     }

@@ -24,16 +24,19 @@ class Pet  {
     var userPets : [String] = [""]
     var hasImage : Int
     var lastReset : String
+    var streak : Int
+    var lastUpdateDay : Int
+    var streakLost: Bool
     
     var dictionary: [String: Any] {
         return ["petName": petName, "walkedToday": walkedToday, "morningFedStatus": morningFedStatus,
-                "morningFedBy": morningFedBy, "eveningFedStatus": eveningFedStatus, "eveningFedBy": eveningFedBy,  "postingUserID": postingUserID, "carers": carers, "hasImage": hasImage, "lastReset": lastReset]
+                "morningFedBy": morningFedBy, "eveningFedStatus": eveningFedStatus, "eveningFedBy": eveningFedBy,  "postingUserID": postingUserID, "carers": carers, "hasImage": hasImage, "lastReset": lastReset, "streak": streak, "lastUpdateDay": lastUpdateDay, "streakLost": streakLost]
     }
     
     //MARK: Initializers
     
     init(petName: String, walkedToday: String,
-         morningFedStatus: String, morningFedBy: String, eveningFedStatus: String, postingUserID: String, eveningFedBy: String, documentID: String, carers: [String], hasImage: Int, lastReset: String) {
+         morningFedStatus: String, morningFedBy: String, eveningFedStatus: String, postingUserID: String, eveningFedBy: String, documentID: String, carers: [String], hasImage: Int, lastReset: String, streak: Int, lastUpdateDay: Int, streakLost: Bool) {
         self.petName = petName
         self.walkedToday = walkedToday
         self.morningFedStatus = morningFedStatus
@@ -45,11 +48,14 @@ class Pet  {
         self.carers = carers
         self.hasImage = hasImage
         self.lastReset = lastReset
+        self.streak = streak
+        self.lastUpdateDay = lastUpdateDay
+        self.streakLost = streakLost
     }
     
     
     convenience init() {
-        self.init(petName: "", walkedToday: "", morningFedStatus: "", morningFedBy: "", eveningFedStatus: "", postingUserID: "", eveningFedBy: "", documentID: "", carers: [(Auth.auth().currentUser?.uid)!], hasImage: 0, lastReset: "")
+        self.init(petName: "", walkedToday: "", morningFedStatus: "", morningFedBy: "", eveningFedStatus: "", postingUserID: "", eveningFedBy: "", documentID: "", carers: [(Auth.auth().currentUser?.uid)!], hasImage: 0, lastReset: "", streak: 0, lastUpdateDay: 0, streakLost: false)
     }
     
     convenience init(dictionary: [String: Any]) {
@@ -63,7 +69,10 @@ class Pet  {
         let carers = dictionary["carers"] as! [String]? ?? [(Auth.auth().currentUser?.uid)!]
         let hasImage = dictionary["hasImage"] as! Int? ?? 0
         let lastReset = dictionary["lastReset"] as! String? ?? ""
-        self.init(petName: petName, walkedToday: walkedToday, morningFedStatus: morningFedStatus, morningFedBy: morningFedBy, eveningFedStatus: eveningFedStatus, postingUserID: postingUserID, eveningFedBy: eveningFedBy, documentID: "", carers: carers, hasImage: hasImage, lastReset: lastReset)
+        let streak = dictionary["streak"] as! Int? ?? 0
+        let lastUpdateDay = dictionary["lastUpdateDay"] as! Int? ?? 0
+        let streakLost = dictionary["streakLost"] as! Bool? ?? false
+        self.init(petName: petName, walkedToday: walkedToday, morningFedStatus: morningFedStatus, morningFedBy: morningFedBy, eveningFedStatus: eveningFedStatus, postingUserID: postingUserID, eveningFedBy: eveningFedBy, documentID: "", carers: carers, hasImage: hasImage, lastReset: lastReset, streak: streak, lastUpdateDay: lastUpdateDay, streakLost: streakLost)
     }
     
     // MARK: Class Functions

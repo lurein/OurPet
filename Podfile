@@ -14,6 +14,7 @@ use_frameworks!
     pod 'SCLAlertView' 
     pod 'CropViewController'
     pod 'OnboardKit'
+    pod 'BadgeSwift'
 
 post_install do |installer|
   installer.pods_project.build_configurations.each do |config|
